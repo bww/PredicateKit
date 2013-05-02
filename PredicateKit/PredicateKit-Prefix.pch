@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'PredicateKit' target in the 'PredicateKit' project
+//
+
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+#endif
