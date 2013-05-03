@@ -12,8 +12,18 @@ typedef union {
 } PKValue;
 
 typedef struct PKToken {
-  void        * node;
-  PKValue       value;
   unsigned int  token;
+  PKValue       value;
+  void        * node;
 } PKToken;
+
+static inline PKToken PKTokenMake(unsigned int token, PKValue value) {
+  return (PKToken){ token, value, NULL };
+}
+
+static inline PKToken PKTokenMakeZero() {
+  PKValue value;
+  bzero(&value, sizeof(PKValue));
+  return (PKToken){ 0, value, NULL };
+}
 

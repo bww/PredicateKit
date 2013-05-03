@@ -64,7 +64,6 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   BOOL status = FALSE;
   
   PKPredicate *predicate = nil;
-  PKToken token;
   int z;
   
   // make sure our input is valid
@@ -86,15 +85,13 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   // parser our input source
   YYSTYPE value;
   while((z = yylex(&value, lexer)) > 0){
-    token.value = value;
-    token.token = z;
-    __PKParser(parser, z, token, NULL);
+    __PKParser(parser, z, PKTokenMake(z, value), NULL);
   }
   
   // end of input (we pass the last token again, which should be ignored)
-  __PKParser(parser, 0, token, &predicate);
+  __PKParser(parser, 0, PKTokenMakeZero(), &predicate);
   
-  if(predicate != nil) NSLog(@"OK: %@", predicate);
+  if(predicate != nil) NSLog(@"<== %@", predicate);
   
   // make sure we didn't finish with an error
   if(z < 0){
