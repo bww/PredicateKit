@@ -10,6 +10,7 @@
 #import "PKLexer.h"
 #import "PKTypes.h"
 #import "PKGrammar.h"
+#import "PKPredicate.h"
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef void * yyscan_t;
@@ -61,6 +62,8 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   yyscan_t lexer = NULL;
   void *parser = NULL;
   BOOL status = FALSE;
+  
+  PKPredicate *predicate = nil;
   PKToken token;
   int z;
   
@@ -85,11 +88,13 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   while((z = yylex(&value, lexer)) > 0){
     token.value = value;
     token.token = z;
-    __PKParser(parser, z, token, &token);
+    __PKParser(parser, z, token, NULL);
   }
   
   // end of input (we pass the last token again, which should be ignored)
-  __PKParser(parser, 0, token, &token);
+  __PKParser(parser, 0, token, &predicate);
+  
+  if(predicate != nil) NSLog(@"OK: %@", predicate);
   
   // make sure we didn't finish with an error
   if(z < 0){

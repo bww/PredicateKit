@@ -1,0 +1,23 @@
+a && b
+a || b
+a == b
+a != b
+a < b
+a <= b
+a > b
+a >= b
+(a && b)
+(a && b) || (b && c)
+(a == b) && (b != c)
+(a == b) <= (b != c)
+true || false
+a == 1[cd]
+(a == 1)[cd]
+(a == 1 || false)[cd]
+~a
+!a
+!(a || b == c)
+a in { a, b, c, 1, 2, 3 }
+a.b
+a.b.c
+a.b.c.d.e.f.gee

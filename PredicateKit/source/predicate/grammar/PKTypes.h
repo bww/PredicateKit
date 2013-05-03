@@ -12,6 +12,7 @@ typedef union {
 } PKValue;
 
 typedef struct PKToken {
+  void        * node;
   PKValue       value;
   unsigned int  token;
 } PKToken;

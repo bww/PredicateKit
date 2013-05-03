@@ -19,6 +19,8 @@ typedef enum {
  */
 @interface PKCompoundExpression : PKExpression
 
++(PKCompoundExpression *)compoundExpressionWithType:(PKCompoundType)type expressions:(NSArray *)expressions;
+
 -(id)initWithType:(PKCompoundType)type expressions:(NSArray *)expressions;
 
 @property (readonly) PKCompoundType type;

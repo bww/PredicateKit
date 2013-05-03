@@ -15,13 +15,16 @@ typedef enum {
   kPKComparisonLessThanOrEqualTo,
   kPKComparisonGreaterThan,
   kPKComparisonGreaterThanOrEqualTo,
-  kPKComparisonMatches
+  kPKComparisonMatches,
+  kPKComparisonIn
 } PKComparisonType;
 
 /**
- * A compound expression.
+ * A comparison expression.
  */
 @interface PKComparisonExpression : PKExpression
+
++(PKComparisonExpression *)comparisonExpressionWithType:(PKComparisonType)type operands:(NSArray *)operands;
 
 -(id)initWithType:(PKComparisonType)type operands:(NSArray *)operands;
 

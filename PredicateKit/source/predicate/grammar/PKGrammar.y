@@ -2,6 +2,12 @@
 #include <assert.h>
 #include "PKLexer.h"
 #include "PKTypes.h"
+#include "PKPredicate.h"
+#include "PKCompoundExpression.h"
+#include "PKBitwiseExpression.h"
+#include "PKComparisonExpression.h"
+#include "PKIdentifierExpression.h"
+#include "PKLiteralExpression.h"
 }
 
 %name "__PKParser"
@@ -9,7 +15,7 @@
 
 %token_type     { PKToken }
 %default_type   { PKToken }
-%extra_argument { PKToken *context }
+%extra_argument { PKPredicate **context }
 
 %parse_accept {
   fprintf(stderr, "OK!\n");
@@ -44,41 +50,42 @@
 %left MUL DIV MOD.
 %right EXP.
 
-predicate ::= expression. { printf("PREDICATE\n"); }
+predicate ::= expression(A). {
+  if(context != NULL) *context = (PKPredicate *)A.node;
+}
 
-expression ::= bitwise LAND bitwise. { printf("&&\n"); }
-expression ::= bitwise LOR bitwise. { printf("||\n"); }
-expression ::= bitwise LNOT bitwise. { printf("!\n"); }
-expression ::= bitwise.
+expression(A) ::= bitwise(B) LAND bitwise(C). { A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+expression(A) ::= bitwise(B) LOR bitwise(C). { A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+expression(A) ::= bitwise(B). { A.node = B.node; }
 
-bitwise ::= modified BOR modified. { printf("|\n"); }
-bitwise ::= modified BAND modified. { printf("&\n"); }
-bitwise ::= modified BXOR modified. { printf("^\n"); }
-bitwise ::= modified.
+bitwise(A) ::= modified(B) BOR modified(C). { A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+bitwise(A) ::= modified(B) BAND modified(C). { A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+bitwise(A) ::= modified(B) BXOR modified(C). { A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+bitwise(A) ::= modified(B). { A.node = B.node; }
 
 modified ::= equality LBRACK IDENT RBRACK.
-modified ::= equality.
+modified(A) ::= equality(B). { A.node = B.node; }
 
-equality ::= relational EQ relational. { printf("==\n"); }
-equality ::= relational NE relational. { printf("!=\n"); }
-equality ::= relational MATCH relational. { printf("=~\n"); }
-equality ::= relational IN relational. { printf("in\n"); }
-equality ::= relational.
+equality(A) ::= relational(B) EQ relational(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+equality(A) ::= relational(B) NE relational(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+equality(A) ::= relational(B) MATCH relational(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+equality(A) ::= relational(B) IN relational(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+equality(A) ::= relational(B). { A.node = B.node; }
 
-relational ::= unary GT unary. { printf(">\n"); }
-relational ::= unary GE unary. { printf(">=\n"); }
-relational ::= unary LT unary. { printf("<\n"); }
-relational ::= unary LE unary. { printf("<=\n"); }
-relational ::= unary.
+relational(A) ::= unary(B) GT unary(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+relational(A) ::= unary(B) GE unary(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+relational(A) ::= unary(B) LT unary(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+relational(A) ::= unary(B) LE unary(C). { A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]]; }
+relational(A) ::= unary(B). { A.node = B.node; }
 
-unary ::= BNOT dereference.
-unary ::= LNOT dereference.
-unary ::= dereference.
+unary(A) ::= BNOT dereference(B). { A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:B.node, nil]]; }
+unary(A) ::= LNOT dereference(B). { A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:B.node, nil]]; }
+unary(A) ::= dereference(B). { A.node = B.node; }
 
-dereference ::= primary DOT IDENT(A). { printf(". %s\n", A.value.asString); }
-dereference ::= primary.
+dereference ::= dereference DOT IDENT(A). { printf(". %s\n", A.value.asString); }
+dereference(A) ::= primary(B). { A.node = B.node; }
 
-primary ::= literal.
+primary(A) ::= literal(B). { A.node = B.node; }
 primary ::= collection.
 primary ::= LPAREN expression RPAREN. { printf("()\n"); }
 
@@ -87,10 +94,10 @@ collection ::= LBRACE parameters RBRACE.
 parameters ::= parameters COMMA expression.
 parameters ::= expression.
 
-literal ::= BOOL(A). { printf("B %d\n", A.value.asBool); }
-literal ::= INT(A). { printf("I %d\n", A.value.asInt); }
-literal ::= LONG(A). { printf("L %ld\n", A.value.asLong); }
-literal ::= FLOAT(A). { printf("F %f\n", A.value.asFloat); }
-literal ::= DOUBLE(A). { printf("D %f\n", A.value.asDouble); }
-literal ::= IDENT(A). { printf("~ %s\n", A.value.asString); }
+literal(A) ::= BOOL(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:B.value.asBool]]; }
+literal(A) ::= INT(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:B.value.asInt]]; }
+literal(A) ::= LONG(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:B.value.asLong]]; }
+literal(A) ::= FLOAT(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:B.value.asFloat]]; }
+literal(A) ::= DOUBLE(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:B.value.asDouble]]; }
+literal(A) ::= IDENT(B). { A.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:B.value.asString]]; }
 

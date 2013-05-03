@@ -6,10 +6,12 @@
 // Developed in New York City
 // 
 
+#import "PKPredicate.h"
+
 /**
  * An expression.
  */
-@interface PKExpression : NSObject
+@interface PKExpression : PKPredicate
 
 @end
 

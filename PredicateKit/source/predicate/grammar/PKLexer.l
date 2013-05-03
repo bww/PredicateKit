@@ -64,56 +64,62 @@ COMMENT     ("/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*"*"+"/")|("//".*)
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
 
+/* Multi-line comments state */
+%x M_COMMENT
+
 %%
 
-"&&"  { return T_LAND; }
-"||"  { return T_LOR; }
-"=="  { return T_EQ; }
-"!="  { return T_NE; }
-"=~"  { return T_MATCH; }
-">="  { return T_GE; }
-"<="  { return T_LE; }
-">"   { return T_GT; }
-"<"   { return T_LT; }
-"!"   { return T_LNOT; }
+"/*"            { BEGIN(M_COMMENT); }
+<M_COMMENT>"*/" { BEGIN(INITIAL); }
+<M_COMMENT>.    { /* ignore comments */ }
 
-"("   { return T_LPAREN; }
-")"   { return T_RPAREN; }
-"{"   { return T_LBRACE; }
-"}"   { return T_RBRACE; }
-"["   { return T_LBRACK; }
-"]"   { return T_RBRACK; }
+"&&"            { return T_LAND; }
+"||"            { return T_LOR; }
+"=="            { return T_EQ; }
+"!="            { return T_NE; }
+"=~"            { return T_MATCH; }
+">="            { return T_GE; }
+"<="            { return T_LE; }
+">"             { return T_GT; }
+"<"             { return T_LT; }
+"!"             { return T_LNOT; }
 
-"&"   { return T_BAND; }
-"|"   { return T_BOR; }
-"^"   { return T_BXOR; }
-"~"   { return T_BNOT; }
+"("             { return T_LPAREN; }
+")"             { return T_RPAREN; }
+"{"             { return T_LBRACE; }
+"}"             { return T_RBRACE; }
+"["             { return T_LBRACK; }
+"]"             { return T_RBRACK; }
 
-"%"   { return T_MOD; }
-"/"   { return T_DIV; }
-"*"   { return T_MUL; }
-"+"   { return T_ADD; }
-"-"   { return T_SUB; }
+"&"             { return T_BAND; }
+"|"             { return T_BOR; }
+"^"             { return T_BXOR; }
+"~"             { return T_BNOT; }
 
-"."   { return T_DOT; }
-","   { return T_COMMA; }
+"%"             { return T_MOD; }
+"/"             { return T_DIV; }
+"*"             { return T_MUL; }
+"+"             { return T_ADD; }
+"-"             { return T_SUB; }
 
-"in"          { return T_IN; }
-"true"        { yylval->asBool = 1; return T_BOOL; }
-"false"       { yylval->asBool = 0; return T_BOOL; }
+"."             { return T_DOT; }
+","             { return T_COMMA; }
 
-\n            { pk_col = 0; ++pk_line; }
-{WS}+         { pk_col += strlen(yytext); }
+"in"            { return T_IN; }
+"true"          { yylval->asBool = 1; return T_BOOL; }
+"false"         { yylval->asBool = 0; return T_BOOL; }
 
-{LONG}        { yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
-{HEX_LONG}    { yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
-{INTEGER}     { yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
-{HEX_INTEGER} { yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
-{FLOAT}       { yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
-{DOUBLE}      { yylval->asFloat = atof(yytext); return T_DOUBLE; }
-{STRING}      { printf("STR: %s\n", yytext); }
-{IDENT}       { yylval->asString = yytext; return T_IDENT; }
-{COMMENT}     { /* ignore comments */ }
+\n              { pk_col = 0; ++pk_line; }
+{WS}+           { pk_col += strlen(yytext); }
+
+{LONG}          { yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
+{HEX_LONG}      { yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
+{INTEGER}       { yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
+{HEX_INTEGER}   { yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
+{FLOAT}         { yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
+{DOUBLE}        { yylval->asFloat = atof(yytext); return T_DOUBLE; }
+{STRING}        { printf("STR: %s\n", yytext); }
+{IDENT}         { yylval->asString = yytext; return T_IDENT; }
 
 . {
   pk_col += strlen(yytext);
