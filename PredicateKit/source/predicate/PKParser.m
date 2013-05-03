@@ -58,12 +58,14 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
  * Parse a predicate
  */
 -(BOOL)parse:(NSString *)source error:(NSError **)error {
+  BOOL status = FALSE;
+  
   YY_BUFFER_STATE buffer = NULL;
   yyscan_t lexer = NULL;
   void *parser = NULL;
-  BOOL status = FALSE;
   
   PKPredicate *predicate = nil;
+  NSError *inner = nil;
   int z;
   
   // make sure our input is valid
@@ -88,16 +90,28 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
     __PKParser(parser, z, PKTokenMake(z, value), NULL);
   }
   
-  // end of input (we pass the last token again, which should be ignored)
-  __PKParser(parser, 0, PKTokenMakeZero(), &predicate);
-  
-  if(predicate != nil) NSLog(@"<PP %@", predicate);
-  
   // make sure we didn't finish with an error
   if(z < 0){
     if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse source");
     goto error;
   }
+  
+  // end of input (we pass the last token again, which should be ignored)
+  __PKParser(parser, 0, PKTokenMakeZero(), &predicate);
+  
+  // make sure we wound up with a predicate
+  if(predicate == nil){
+    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate");
+    goto error;
+  }
+  
+  // validate the predicate
+  if(![predicate validate:&inner]){
+    if(error) *error = NSERROR_WITH_CAUSE(PKPredicateErrorDomain, PKStatusError, inner, @"Predicate is invalid");
+    goto error;
+  }
+  
+  NSLog(@"<PP %@", predicate);
   
   status = TRUE;
 error:

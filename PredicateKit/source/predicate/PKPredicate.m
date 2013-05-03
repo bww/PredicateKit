@@ -10,5 +10,13 @@
 
 @implementation PKPredicate
 
+-(BOOL)validate:(NSError **)error {
+  return TRUE;
+}
+
+-(id)evaluateWithObject:(id)object {
+  return nil;
+}
+
 @end
 

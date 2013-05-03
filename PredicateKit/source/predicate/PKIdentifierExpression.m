@@ -28,6 +28,10 @@
   return self;
 }
 
+-(id)evaluateWithObject:(id)object {
+  return nil;
+}
+
 -(NSString *)description {
   return _identifier;
 }

@@ -11,5 +11,8 @@
  */
 @interface PKPredicate : NSObject
 
+-(BOOL)validate:(NSError **)error;
+-(id)evaluateWithObject:(id)object;
+
 @end
 

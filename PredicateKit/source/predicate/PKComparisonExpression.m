@@ -30,6 +30,10 @@
   return self;
 }
 
+-(id)evaluateWithObject:(id)object {
+  return nil;
+}
+
 -(NSString *)description {
   NSMutableString *string = [NSMutableString string];
   
