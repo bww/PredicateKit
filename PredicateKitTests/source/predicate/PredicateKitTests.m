@@ -29,7 +29,7 @@
   NSArray *lines = [source componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
   STAssertNotNil(lines, @"Could not parse source lines");
   for(NSString *line in lines){
-    NSLog(@"==> %@", line);
+    NSLog(@"VV> %@", line);
     STAssertTrue([[PKParser parser] parse:line error:&error], @"Could not parse predicate: %@", [error localizedDescription]);
   }
   [source release];

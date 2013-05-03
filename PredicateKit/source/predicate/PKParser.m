@@ -91,7 +91,7 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   // end of input (we pass the last token again, which should be ignored)
   __PKParser(parser, 0, PKTokenMakeZero(), &predicate);
   
-  if(predicate != nil) NSLog(@"<== %@", predicate);
+  if(predicate != nil) NSLog(@"<PP %@", predicate);
   
   // make sure we didn't finish with an error
   if(z < 0){

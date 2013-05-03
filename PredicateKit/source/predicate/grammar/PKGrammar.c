@@ -9,13 +9,14 @@
 #include <assert.h>
 #include "PKLexer.h"
 #include "PKTypes.h"
+#include "PKGrammar.h"
 #include "PKPredicate.h"
 #include "PKCompoundExpression.h"
 #include "PKBitwiseExpression.h"
 #include "PKComparisonExpression.h"
 #include "PKIdentifierExpression.h"
 #include "PKLiteralExpression.h"
-#line 19 "PKGrammar.c"
+#line 20 "PKGrammar.c"
 /* Next is all token values, in a form suitable for use by makeheaders.
 ** This section will be null unless lemon is run with the -m switch.
 */
@@ -66,13 +67,13 @@
 **                       defined, then do no error processing.
 */
 #define YYCODETYPE unsigned char
-#define YYNOCODE 50
+#define YYNOCODE 51
 #define YYACTIONTYPE unsigned char
 #define __PKParserTOKENTYPE  PKToken 
 typedef union {
   int yyinit;
   __PKParserTOKENTYPE yy0;
-  PKToken yy83;
+  PKToken yy53;
 } YYMINORTYPE;
 #ifndef YYSTACKDEPTH
 #define YYSTACKDEPTH 100
@@ -81,8 +82,8 @@ typedef union {
 #define __PKParserARG_PDECL , PKPredicate **context 
 #define __PKParserARG_FETCH  PKPredicate **context  = yypParser->context 
 #define __PKParserARG_STORE yypParser->context  = context 
-#define YYNSTATE 61
-#define YYNRULE 37
+#define YYNSTATE 62
+#define YYNRULE 38
 #define YY_NO_ACTION      (YYNSTATE+YYNRULE+2)
 #define YY_ACCEPT_ACTION  (YYNSTATE+YYNRULE+1)
 #define YY_ERROR_ACTION   (YYNSTATE+YYNRULE)
@@ -151,73 +152,75 @@ static const YYMINORTYPE yyzerominor = { 0 };
 **                     shifting non-terminals after a reduce.
 **  yy_default[]       Default action for each state.
 */
-#define YY_ACTTAB_COUNT (180)
+#define YY_ACTTAB_COUNT (184)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */    43,   23,   21,   31,   20,   19,   25,   54,   53,   52,
- /*    10 */    22,   99,   32,   23,   21,   31,   20,   19,   25,   54,
- /*    20 */    53,   52,    3,   61,    1,    7,    8,    6,   17,   18,
- /*    30 */    24,   23,   21,   31,   20,   19,   25,   54,   53,   52,
- /*    40 */    59,   31,   20,   19,   25,   54,   53,   52,   44,    5,
- /*    50 */     4,   30,   49,   48,   47,   46,   45,   50,   23,   21,
- /*    60 */    31,   20,   19,   25,   54,   53,   52,   58,   60,   21,
- /*    70 */    31,   20,   19,   25,   54,   53,   52,   33,   21,   31,
- /*    80 */    20,   19,   25,   54,   53,   52,    3,   51,    1,   35,
- /*    90 */    31,   20,   19,   25,   54,   53,   52,   34,   31,   20,
- /*   100 */    19,   25,   54,   53,   52,   57,   19,   25,   54,   53,
- /*   110 */    52,   29,   44,    2,   55,  100,   49,   48,   47,   46,
- /*   120 */    45,   38,   19,   25,   54,   53,   52,   27,   37,   19,
- /*   130 */    25,   54,   53,   52,   36,   19,   25,   54,   53,   52,
- /*   140 */    56,   25,   54,   53,   52,   41,   25,   54,   53,   52,
- /*   150 */    40,   25,   54,   53,   52,   42,   39,   25,   54,   53,
- /*   160 */    52,   12,   11,   28,   54,   53,   52,   10,   16,   15,
- /*   170 */    14,   13,  100,  100,  100,    9,   26,   54,   53,   52,
+ /*     0 */     3,   52,    1,    7,    8,    6,   17,   18,   43,   23,
+ /*    10 */    21,   31,   20,   19,   25,   55,   54,   53,   22,   58,
+ /*    20 */    19,   25,   55,   54,   53,   62,   45,    2,    5,    4,
+ /*    30 */    50,   49,   48,   47,   46,   44,  101,   32,   23,   21,
+ /*    40 */    31,   20,   19,   25,   55,   54,   53,   24,   23,   21,
+ /*    50 */    31,   20,   19,   25,   55,   54,   53,   51,   23,   21,
+ /*    60 */    31,   20,   19,   25,   55,   54,   53,    3,   30,    1,
+ /*    70 */    29,   61,   21,   31,   20,   19,   25,   55,   54,   53,
+ /*    80 */    33,   21,   31,   20,   19,   25,   55,   54,   53,   16,
+ /*    90 */    15,   14,   13,   45,   27,   59,   56,   50,   49,   48,
+ /*   100 */    47,   46,   44,   60,   31,   20,   19,   25,   55,   54,
+ /*   110 */    53,   35,   31,   20,   19,   25,   55,   54,   53,   34,
+ /*   120 */    31,   20,   19,   25,   55,   54,   53,   38,   19,   25,
+ /*   130 */    55,   54,   53,   28,   55,   54,   53,   37,   19,   25,
+ /*   140 */    55,   54,   53,   36,   19,   25,   55,   54,   53,   57,
+ /*   150 */    25,   55,   54,   53,   41,   25,   55,   54,   53,   40,
+ /*   160 */    25,   55,   54,   53,   39,   25,   55,   54,   53,   12,
+ /*   170 */    11,   26,   55,   54,   53,   10,   42,  102,  102,  102,
+ /*   180 */   102,  102,  102,    9,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */    38,   39,   40,   41,   42,   43,   44,   45,   46,   47,
- /*    10 */    48,   37,   38,   39,   40,   41,   42,   43,   44,   45,
- /*    20 */    46,   47,    1,    0,    3,   11,   12,   13,    7,    8,
- /*    30 */    38,   39,   40,   41,   42,   43,   44,   45,   46,   47,
- /*    40 */    40,   41,   42,   43,   44,   45,   46,   47,   27,    9,
- /*    50 */    10,    5,   31,   32,   33,   34,   35,   38,   39,   40,
- /*    60 */    41,   42,   43,   44,   45,   46,   47,    6,   39,   40,
- /*    70 */    41,   42,   43,   44,   45,   46,   47,   39,   40,   41,
- /*    80 */    42,   43,   44,   45,   46,   47,    1,    4,    3,   40,
- /*    90 */    41,   42,   43,   44,   45,   46,   47,   40,   41,   42,
- /*   100 */    43,   44,   45,   46,   47,   42,   43,   44,   45,   46,
- /*   110 */    47,   27,   27,   30,   27,   49,   31,   32,   33,   34,
- /*   120 */    35,   42,   43,   44,   45,   46,   47,   29,   42,   43,
- /*   130 */    44,   45,   46,   47,   42,   43,   44,   45,   46,   47,
- /*   140 */    43,   44,   45,   46,   47,   43,   44,   45,   46,   47,
- /*   150 */    43,   44,   45,   46,   47,    2,   43,   44,   45,   46,
- /*   160 */    47,   14,   15,   44,   45,   46,   47,   20,   16,   17,
- /*   170 */    18,   19,   49,   49,   49,   28,   44,   45,   46,   47,
+ /*     0 */     1,    4,    3,   11,   12,   13,    7,    8,   39,   40,
+ /*    10 */    41,   42,   43,   44,   45,   46,   47,   48,   49,   43,
+ /*    20 */    44,   45,   46,   47,   48,    0,   27,   30,    9,   10,
+ /*    30 */    31,   32,   33,   34,   35,   36,   38,   39,   40,   41,
+ /*    40 */    42,   43,   44,   45,   46,   47,   48,   39,   40,   41,
+ /*    50 */    42,   43,   44,   45,   46,   47,   48,   39,   40,   41,
+ /*    60 */    42,   43,   44,   45,   46,   47,   48,    1,    5,    3,
+ /*    70 */    27,   40,   41,   42,   43,   44,   45,   46,   47,   48,
+ /*    80 */    40,   41,   42,   43,   44,   45,   46,   47,   48,   16,
+ /*    90 */    17,   18,   19,   27,   29,    6,   27,   31,   32,   33,
+ /*   100 */    34,   35,   36,   41,   42,   43,   44,   45,   46,   47,
+ /*   110 */    48,   41,   42,   43,   44,   45,   46,   47,   48,   41,
+ /*   120 */    42,   43,   44,   45,   46,   47,   48,   43,   44,   45,
+ /*   130 */    46,   47,   48,   45,   46,   47,   48,   43,   44,   45,
+ /*   140 */    46,   47,   48,   43,   44,   45,   46,   47,   48,   44,
+ /*   150 */    45,   46,   47,   48,   44,   45,   46,   47,   48,   44,
+ /*   160 */    45,   46,   47,   48,   44,   45,   46,   47,   48,   14,
+ /*   170 */    15,   45,   46,   47,   48,   20,    2,   50,   50,   50,
+ /*   180 */    50,   50,   50,   28,
 };
-#define YY_SHIFT_USE_DFLT (-1)
+#define YY_SHIFT_USE_DFLT (-9)
 #define YY_SHIFT_COUNT (32)
-#define YY_SHIFT_MIN   (0)
-#define YY_SHIFT_MAX   (153)
+#define YY_SHIFT_MIN   (-8)
+#define YY_SHIFT_MAX   (174)
 static const short yy_shift_ofst[] = {
- /*     0 */    21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
- /*    10 */    21,   21,   21,   21,   21,   21,   21,   85,   85,  152,
- /*    20 */   147,   14,   83,   40,  153,   98,   98,   87,   98,   61,
- /*    30 */    84,   46,   23,
+ /*     0 */    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+ /*    10 */    -1,   -1,   -1,   -1,   -1,   -1,   -1,   66,   66,   73,
+ /*    20 */   155,   -8,   -3,   19,  174,   65,   65,   69,   65,   89,
+ /*    30 */    43,   63,   25,
 };
-#define YY_REDUCE_USE_DFLT (-39)
+#define YY_REDUCE_USE_DFLT (-32)
 #define YY_REDUCE_COUNT (18)
-#define YY_REDUCE_MIN   (-38)
-#define YY_REDUCE_MAX   (132)
-static const short yy_reduce_ofst[] = {
- /*     0 */   -26,  -38,   19,   -8,   38,   29,   57,   49,    0,   92,
- /*    10 */    86,   79,   63,  113,  107,  102,   97,  132,  119,
+#define YY_REDUCE_MIN   (-31)
+#define YY_REDUCE_MAX   (126)
+static const signed char yy_reduce_ofst[] = {
+ /*     0 */    -2,  -31,   18,    8,   40,   31,   78,   70,   62,  100,
+ /*    10 */    94,   84,  -24,  120,  115,  110,  105,  126,   88,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */    98,   98,   98,   98,   98,   98,   98,   98,   98,   98,
- /*    10 */    98,   98,   98,   98,   98,   98,   98,   98,   98,   80,
- /*    20 */    75,   68,   98,   64,   98,   83,   82,   98,   81,   98,
- /*    30 */    98,   70,   98,   63,   67,   66,   74,   73,   72,   79,
- /*    40 */    78,   77,   88,   91,   97,   96,   95,   94,   93,   92,
- /*    50 */    90,   89,   87,   86,   85,   84,   76,   71,   69,   65,
- /*    60 */    62,
+ /*     0 */   100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+ /*    10 */   100,  100,  100,  100,  100,  100,  100,  100,  100,   81,
+ /*    20 */    76,   69,  100,   65,  100,   84,   83,  100,   82,  100,
+ /*    30 */   100,   71,  100,   64,   68,   67,   75,   74,   73,   80,
+ /*    40 */    79,   78,   89,   92,   99,   98,   97,   96,   95,   94,
+ /*    50 */    93,   91,   90,   88,   87,   86,   85,   77,   72,   70,
+ /*    60 */    66,   63,
 };
 
 /* The next table maps tokens into fallback tokens.  If a construct
@@ -319,10 +322,10 @@ static const char *const yyTokenName[] = {
   "DIV",           "MOD",           "EXP",           "IDENT",       
   "IN",            "DOT",           "COMMA",         "BOOL",        
   "INT",           "LONG",          "FLOAT",         "DOUBLE",      
-  "error",         "predicate",     "expression",    "bitwise",     
-  "modified",      "equality",      "relational",    "unary",       
-  "dereference",   "primary",       "literal",       "collection",  
-  "parameters",  
+  "QUOTED_STRING",  "error",         "predicate",     "expression",  
+  "bitwise",       "modified",      "equality",      "relational",  
+  "unary",         "dereference",   "primary",       "literal",     
+  "collection",    "parameters",  
 };
 #endif /* NDEBUG */
 
@@ -367,6 +370,7 @@ static const char *const yyRuleName[] = {
  /*  34 */ "literal ::= FLOAT",
  /*  35 */ "literal ::= DOUBLE",
  /*  36 */ "literal ::= IDENT",
+ /*  37 */ "literal ::= QUOTED_STRING",
 };
 #endif /* NDEBUG */
 
@@ -624,11 +628,11 @@ static void yyStackOverflow(yyParser *yypParser, YYMINORTYPE *yypMinor){
    while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
    /* Here code is inserted which will execute if the parser
    ** stack every overflows */
-#line 33 "PKGrammar.y"
+#line 34 "PKGrammar.y"
 
   context = context;
   fprintf(stderr,"Giving up.  Parser stack overflow\n");
-#line 632 "PKGrammar.c"
+#line 636 "PKGrammar.c"
    __PKParserARG_STORE; /* Suppress warning about unused %extra_argument var */
 }
 
@@ -685,43 +689,44 @@ static const struct {
   YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
   unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
-  { 37, 1 },
-  { 38, 3 },
-  { 38, 3 },
   { 38, 1 },
   { 39, 3 },
   { 39, 3 },
-  { 39, 3 },
   { 39, 1 },
-  { 40, 4 },
+  { 40, 3 },
+  { 40, 3 },
+  { 40, 3 },
   { 40, 1 },
-  { 41, 3 },
-  { 41, 3 },
-  { 41, 3 },
-  { 41, 3 },
+  { 41, 4 },
   { 41, 1 },
   { 42, 3 },
   { 42, 3 },
   { 42, 3 },
   { 42, 3 },
   { 42, 1 },
-  { 43, 2 },
-  { 43, 2 },
+  { 43, 3 },
+  { 43, 3 },
+  { 43, 3 },
+  { 43, 3 },
   { 43, 1 },
-  { 44, 3 },
+  { 44, 2 },
+  { 44, 2 },
   { 44, 1 },
-  { 45, 1 },
-  { 45, 1 },
   { 45, 3 },
-  { 47, 3 },
+  { 45, 1 },
+  { 46, 1 },
+  { 46, 1 },
+  { 46, 3 },
   { 48, 3 },
-  { 48, 1 },
-  { 46, 1 },
-  { 46, 1 },
-  { 46, 1 },
-  { 46, 1 },
-  { 46, 1 },
-  { 46, 1 },
+  { 49, 3 },
+  { 49, 1 },
+  { 47, 1 },
+  { 47, 1 },
+  { 47, 1 },
+  { 47, 1 },
+  { 47, 1 },
+  { 47, 1 },
+  { 47, 1 },
 };
 
 static void yy_accept(yyParser*);  /* Forward Declaration */
@@ -777,21 +782,21 @@ static void yy_reduce(
   **     break;
   */
       case 0: /* predicate ::= expression */
-#line 53 "PKGrammar.y"
+#line 54 "PKGrammar.y"
 {
-  if(context != NULL) *context = (PKPredicate *)yymsp[0].minor.yy83.node;
+  if(context != NULL) *context = (PKPredicate *)yymsp[0].minor.yy53.node;
 }
-#line 785 "PKGrammar.c"
-        break;
-      case 1: /* expression ::= bitwise LAND bitwise */
-#line 57 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
 #line 790 "PKGrammar.c"
         break;
-      case 2: /* expression ::= bitwise LOR bitwise */
+      case 1: /* expression ::= bitwise LAND bitwise */
 #line 58 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 795 "PKGrammar.c"
+        break;
+      case 2: /* expression ::= bitwise LOR bitwise */
+#line 59 "PKGrammar.y"
+{ yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
+#line 800 "PKGrammar.c"
         break;
       case 3: /* expression ::= bitwise */
       case 7: /* bitwise ::= modified */ yytestcase(yyruleno==7);
@@ -801,114 +806,127 @@ static void yy_reduce(
       case 22: /* unary ::= dereference */ yytestcase(yyruleno==22);
       case 24: /* dereference ::= primary */ yytestcase(yyruleno==24);
       case 25: /* primary ::= literal */ yytestcase(yyruleno==25);
-#line 59 "PKGrammar.y"
-{ yygotominor.yy83.node = yymsp[0].minor.yy83.node; }
-#line 807 "PKGrammar.c"
-        break;
-      case 4: /* bitwise ::= modified BOR modified */
-#line 61 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+#line 60 "PKGrammar.y"
+{ yygotominor.yy53.node = yymsp[0].minor.yy53.node; }
 #line 812 "PKGrammar.c"
         break;
-      case 5: /* bitwise ::= modified BAND modified */
+      case 4: /* bitwise ::= modified BOR modified */
 #line 62 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 817 "PKGrammar.c"
         break;
-      case 6: /* bitwise ::= modified BXOR modified */
+      case 5: /* bitwise ::= modified BAND modified */
 #line 63 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 822 "PKGrammar.c"
         break;
-      case 10: /* equality ::= relational EQ relational */
-#line 69 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+      case 6: /* bitwise ::= modified BXOR modified */
+#line 64 "PKGrammar.y"
+{ yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 827 "PKGrammar.c"
         break;
-      case 11: /* equality ::= relational NE relational */
+      case 10: /* equality ::= relational EQ relational */
 #line 70 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 832 "PKGrammar.c"
         break;
-      case 12: /* equality ::= relational MATCH relational */
+      case 11: /* equality ::= relational NE relational */
 #line 71 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 837 "PKGrammar.c"
         break;
-      case 13: /* equality ::= relational IN relational */
+      case 12: /* equality ::= relational MATCH relational */
 #line 72 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 842 "PKGrammar.c"
         break;
-      case 15: /* relational ::= unary GT unary */
-#line 75 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+      case 13: /* equality ::= relational IN relational */
+#line 73 "PKGrammar.y"
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 847 "PKGrammar.c"
         break;
-      case 16: /* relational ::= unary GE unary */
+      case 15: /* relational ::= unary GT unary */
 #line 76 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 852 "PKGrammar.c"
         break;
-      case 17: /* relational ::= unary LT unary */
+      case 16: /* relational ::= unary GE unary */
 #line 77 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 857 "PKGrammar.c"
         break;
-      case 18: /* relational ::= unary LE unary */
+      case 17: /* relational ::= unary LT unary */
 #line 78 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy83.node, yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 862 "PKGrammar.c"
         break;
-      case 20: /* unary ::= BNOT dereference */
-#line 81 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy83.node, nil]]; }
+      case 18: /* relational ::= unary LE unary */
+#line 79 "PKGrammar.y"
+{ yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
 #line 867 "PKGrammar.c"
         break;
-      case 21: /* unary ::= LNOT dereference */
+      case 20: /* unary ::= BNOT dereference */
 #line 82 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy83.node, nil]]; }
+{ yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy53.node, nil]]; }
 #line 872 "PKGrammar.c"
         break;
-      case 23: /* dereference ::= dereference DOT IDENT */
-#line 85 "PKGrammar.y"
-{ printf(". %s\n", yymsp[0].minor.yy0.value.asString); }
+      case 21: /* unary ::= LNOT dereference */
+#line 83 "PKGrammar.y"
+{ yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy53.node, nil]]; }
 #line 877 "PKGrammar.c"
         break;
-      case 27: /* primary ::= LPAREN expression RPAREN */
-#line 90 "PKGrammar.y"
-{ printf("()\n"); }
+      case 23: /* dereference ::= dereference DOT IDENT */
+#line 86 "PKGrammar.y"
+{  }
 #line 882 "PKGrammar.c"
         break;
-      case 31: /* literal ::= BOOL */
-#line 97 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]]; }
+      case 27: /* primary ::= LPAREN expression RPAREN */
+#line 91 "PKGrammar.y"
+{ yygotominor.yy53.node = yymsp[-1].minor.yy53.node; }
 #line 887 "PKGrammar.c"
         break;
-      case 32: /* literal ::= INT */
+      case 31: /* literal ::= BOOL */
 #line 98 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]]; }
+{ yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]]; }
 #line 892 "PKGrammar.c"
         break;
-      case 33: /* literal ::= LONG */
+      case 32: /* literal ::= INT */
 #line 99 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]]; }
+{ yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]]; }
 #line 897 "PKGrammar.c"
         break;
-      case 34: /* literal ::= FLOAT */
+      case 33: /* literal ::= LONG */
 #line 100 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]]; }
+{ yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]]; }
 #line 902 "PKGrammar.c"
         break;
-      case 35: /* literal ::= DOUBLE */
+      case 34: /* literal ::= FLOAT */
 #line 101 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]]; }
+{ yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]]; }
 #line 907 "PKGrammar.c"
         break;
-      case 36: /* literal ::= IDENT */
+      case 35: /* literal ::= DOUBLE */
 #line 102 "PKGrammar.y"
-{ yygotominor.yy83.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]]; }
+{ yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]]; }
 #line 912 "PKGrammar.c"
+        break;
+      case 36: /* literal ::= IDENT */
+#line 104 "PKGrammar.y"
+{
+  yygotominor.yy53.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
+  free((void *)yymsp[0].minor.yy0.value.asString);
+  yymsp[0].minor.yy0.value.asString = NULL;
+}
+#line 921 "PKGrammar.c"
+        break;
+      case 37: /* literal ::= QUOTED_STRING */
+#line 110 "PKGrammar.y"
+{
+  yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
+  free((void *)yymsp[0].minor.yy0.value.asString);
+  yymsp[0].minor.yy0.value.asString = NULL;
+}
+#line 930 "PKGrammar.c"
         break;
       default:
       /* (8) modified ::= equality LBRACK IDENT RBRACK */ yytestcase(yyruleno==8);
@@ -961,10 +979,10 @@ static void yy_parse_failed(
   while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
   /* Here code is inserted which will be executed whenever the
   ** parser fails */
-#line 24 "PKGrammar.y"
+#line 25 "PKGrammar.y"
 
   fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
-#line 968 "PKGrammar.c"
+#line 986 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
@@ -979,11 +997,11 @@ static void yy_syntax_error(
 ){
   __PKParserARG_FETCH;
 #define TOKEN (yyminor.yy0)
-#line 28 "PKGrammar.y"
+#line 29 "PKGrammar.y"
 
   context = context;
   fprintf(stderr, "Syntax error: %d\n", TOKEN.token);
-#line 987 "PKGrammar.c"
+#line 1005 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
@@ -1002,10 +1020,10 @@ static void yy_accept(
   while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
   /* Here code is inserted which will be executed whenever the
   ** parser accepts */
-#line 20 "PKGrammar.y"
+#line 21 "PKGrammar.y"
 
-  fprintf(stderr, "OK!\n");
-#line 1009 "PKGrammar.c"
+  // ...
+#line 1027 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 

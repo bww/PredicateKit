@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "PKLexer.h"
 #include "PKTypes.h"
+#include "PKGrammar.h"
 #include "PKPredicate.h"
 #include "PKCompoundExpression.h"
 #include "PKBitwiseExpression.h"
@@ -18,7 +19,7 @@
 %extra_argument { PKPredicate **context }
 
 %parse_accept {
-  fprintf(stderr, "OK!\n");
+  // ...
 }
 
 %parse_failure {
@@ -82,12 +83,12 @@ unary(A) ::= BNOT dereference(B). { A.node = [PKBitwiseExpression bitwiseExpress
 unary(A) ::= LNOT dereference(B). { A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:B.node, nil]]; }
 unary(A) ::= dereference(B). { A.node = B.node; }
 
-dereference ::= dereference DOT IDENT(A). { printf(". %s\n", A.value.asString); }
+dereference ::= dereference DOT IDENT. {  }
 dereference(A) ::= primary(B). { A.node = B.node; }
 
 primary(A) ::= literal(B). { A.node = B.node; }
 primary ::= collection.
-primary ::= LPAREN expression RPAREN. { printf("()\n"); }
+primary(A) ::= LPAREN expression(B) RPAREN. { A.node = B.node; }
 
 collection ::= LBRACE parameters RBRACE.
 
@@ -99,5 +100,16 @@ literal(A) ::= INT(B). { A.node = [PKLiteralExpression literalExpressionWithValu
 literal(A) ::= LONG(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:B.value.asLong]]; }
 literal(A) ::= FLOAT(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:B.value.asFloat]]; }
 literal(A) ::= DOUBLE(B). { A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:B.value.asDouble]]; }
-literal(A) ::= IDENT(B). { A.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:B.value.asString]]; }
+
+literal(A) ::= IDENT(B). {
+  A.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:B.value.asString]];
+  free((void *)B.value.asString);
+  B.value.asString = NULL;
+}
+
+literal(A) ::= QUOTED_STRING(B). {
+  A.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:B.value.asString]];
+  free((void *)B.value.asString);
+  B.value.asString = NULL;
+}
 

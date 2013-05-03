@@ -1151,12 +1151,12 @@ YY_RULE_SETUP
 case 42:
 YY_RULE_SETUP
 #line 121 "PKLexer.l"
-{ printf("STR: %s\n", yytext); }
+{ yylval->asString = strdup(yytext); return T_QUOTED_STRING; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 122 "PKLexer.l"
-{ yylval->asString = yytext; return T_IDENT; }
+{ yylval->asString = strdup(yytext); return T_IDENT; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP

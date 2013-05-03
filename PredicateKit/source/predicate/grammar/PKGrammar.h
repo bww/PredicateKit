@@ -33,3 +33,4 @@
 #define T_LONG                           33
 #define T_FLOAT                          34
 #define T_DOUBLE                         35
+#define T_QUOTED_STRING                  36

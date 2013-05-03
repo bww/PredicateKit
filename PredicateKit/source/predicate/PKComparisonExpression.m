@@ -34,20 +34,25 @@
   NSMutableString *string = [NSMutableString string];
   
   if(_operands != nil){
-    if([_operands count] > 1) [string appendString:[[_operands objectAtIndex:0] description]];
-    for(int i = 1; i < [_operands count]; i++){
+    [string appendString:@"("];
+    
+    int i = 0;
+    if([_operands count] > 1) [string appendString:[[_operands objectAtIndex:i++] description]];
+    for( ; i < [_operands count]; i++){
       switch(_type){
-        case kPKComparisonEqualTo:              [string appendString:@" == "];
-        case kPKComparisonNotEqualTo:           [string appendString:@" != "];
-        case kPKComparisonLessThan:             [string appendString:@" < "];
-        case kPKComparisonLessThanOrEqualTo:    [string appendString:@" <= "];
-        case kPKComparisonGreaterThan:          [string appendString:@" > "];
-        case kPKComparisonGreaterThanOrEqualTo: [string appendString:@" >= "];
-        case kPKComparisonMatches:              [string appendString:@" =~ "];
-        case kPKComparisonIn:                   [string appendString:@" in "];
+        case kPKComparisonEqualTo:              [string appendString:@" == "];  break;
+        case kPKComparisonNotEqualTo:           [string appendString:@" != "];  break;
+        case kPKComparisonLessThan:             [string appendString:@" < "];   break;
+        case kPKComparisonLessThanOrEqualTo:    [string appendString:@" <= "];  break;
+        case kPKComparisonGreaterThan:          [string appendString:@" > "];   break;
+        case kPKComparisonGreaterThanOrEqualTo: [string appendString:@" >= "];  break;
+        case kPKComparisonMatches:              [string appendString:@" =~ "];  break;
+        case kPKComparisonIn:                   [string appendString:@" in "];  break;
       }
       [string appendString:[[_operands objectAtIndex:i] description]];
     }
+    
+    [string appendString:@")"];
   }
   
   return string;

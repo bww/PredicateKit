@@ -34,16 +34,21 @@
   NSMutableString *string = [NSMutableString string];
   
   if(_operands != nil){
-    if([_operands count] > 1) [string appendString:[[_operands objectAtIndex:0] description]];
-    for(int i = 1; i < [_operands count]; i++){
+    [string appendString:@"("];
+    
+    int i = 0;
+    if([_operands count] > 1) [string appendString:[[_operands objectAtIndex:i++] description]];
+    for( ; i < [_operands count]; i++){
       switch(_type){
-        case kPKBitwiseAnd:         [string appendString:@" & "];
-        case kPKBitwiseOr:          [string appendString:@" | "];
-        case kPKBitwiseExclusiveOr: [string appendString:@" ^ "];
-        case kPKBitwiseNot:         [string appendString:@" ~"];
+        case kPKBitwiseAnd:         [string appendString:@" & "]; break;
+        case kPKBitwiseOr:          [string appendString:@" | "]; break;
+        case kPKBitwiseExclusiveOr: [string appendString:@" ^ "]; break;
+        case kPKBitwiseNot:         [string appendString:@"~"];  break;
       }
       [string appendString:[[_operands objectAtIndex:i] description]];
     }
+    
+    [string appendString:@")"];
   }
   
   return string;

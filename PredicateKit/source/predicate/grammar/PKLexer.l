@@ -118,8 +118,8 @@ WS          [ \t]
 {HEX_INTEGER}   { yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
 {FLOAT}         { yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 {DOUBLE}        { yylval->asFloat = atof(yytext); return T_DOUBLE; }
-{STRING}        { printf("STR: %s\n", yytext); }
-{IDENT}         { yylval->asString = yytext; return T_IDENT; }
+{STRING}        { yylval->asString = strdup(yytext); return T_QUOTED_STRING; }
+{IDENT}         { yylval->asString = strdup(yytext); return T_IDENT; }
 
 . {
   pk_col += strlen(yytext);

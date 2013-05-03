@@ -34,15 +34,20 @@
   NSMutableString *string = [NSMutableString string];
   
   if(_expressions != nil){
-    if([_expressions count] > 1) [string appendString:[[_expressions objectAtIndex:0] description]];
-    for(int i = 1; i < [_expressions count]; i++){
+    [string appendString:@"("];
+    
+    int i = 0;
+    if([_expressions count] > 1) [string appendString:[[_expressions objectAtIndex:i++] description]];
+    for( ; i < [_expressions count]; i++){
       switch(_type){
-        case kPKCompoundAnd:  [string appendString:@" && "];
-        case kPKCompoundOr:   [string appendString:@" || "];
-        case kPKCompoundNot:  [string appendString:@" !"];
+        case kPKCompoundAnd:  [string appendString:@" && "];  break;
+        case kPKCompoundOr:   [string appendString:@" || "];  break;
+        case kPKCompoundNot:  [string appendString:@"!"];    break;
       }
       [string appendString:[[_expressions objectAtIndex:i] description]];
     }
+    
+    [string appendString:@")"];
   }
   
   return string;

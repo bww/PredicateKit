@@ -15,6 +15,7 @@ a == 1[cd]
 (a == 1)[cd]
 (a == 1 || false)[cd]
 ~a
+a & ~(b | c)
 !a
 !(a || b == c)
 a in { a, b, c, 1, 2, 3 }
