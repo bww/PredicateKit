@@ -15,3 +15,28 @@ typedef enum {
 #define PKPredicateException    @"PKPredicateException"
 #define PKPredicateErrorDomain  @"PKPredicateErrorDomain"
 
+/** Create an NSError the easy way */
+#if !defined(NSERROR)
+#define NSERROR(d, c, m...) \
+  [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, nil]]
+#endif
+
+/** Create an NSError the easy way */
+#if !defined(NSERROR_WITH_FILE)
+#define NSERROR_WITH_FILE(d, c, p, m...) \
+  [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, (p), NSFilePathErrorKey, nil]]
+#endif
+
+/** Create an NSError the easy way */
+#if !defined(NSERROR_WITH_URL)
+#define NSERROR_WITH_URL(d, c, u, m...) \
+  [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, (u), NSURLErrorKey, nil]]
+#endif
+
+/** Create an NSError the easy way */
+#if !defined(NSERROR_WITH_CAUSE)
+#define NSERROR_WITH_CAUSE(d, c, r, m...) \
+  [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, (r), NSUnderlyingErrorKey, nil]]
+#endif
+
+

@@ -11,7 +11,6 @@ typedef union {
 } PKValue;
 
 typedef struct PKToken {
-  const char  * text;
   PKValue       value;
   unsigned int  token;
 } PKToken;

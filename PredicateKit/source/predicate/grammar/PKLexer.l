@@ -102,12 +102,12 @@ WS          [ \t]
 \n            { pk_col = 0; ++pk_line; }
 {WS}+         { pk_col += strlen(yytext); }
 
-{LONG}        { printf("LONG: %s\n", yytext); }
-{HEX_LONG}    { printf("0xLONG: %s\n", yytext); }
-{INTEGER}     { printf("INT: %s\n", yytext); }
-{HEX_INTEGER} { printf("0xINT: %s\n", yytext); }
-{FLOAT}       { printf("FLOAT: %s\n", yytext); }
-{DOUBLE}      { printf("DOUBLE: %s\n", yytext); }
+{LONG}        { yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
+{HEX_LONG}    { yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
+{INTEGER}     { yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
+{HEX_INTEGER} { yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
+{FLOAT}       { yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
+{DOUBLE}      { yylval->asFloat = atof(yytext); return T_DOUBLE; }
 {STRING}      { printf("STR: %s\n", yytext); }
 {IDENT}       { yylval->asString = yytext; return T_IDENT; }
 {COMMENT}     { /* ignore comments */ }
@@ -118,14 +118,4 @@ WS          [ \t]
 }
 
 %%
-
-/*
-int main() {
-  void *lexer;
-  yylex_init(&lexer);
-  yylex(lexer);
-  yylex_destroy(lexer);
-  return 0;
-}
-*/
 

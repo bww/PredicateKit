@@ -7,7 +7,6 @@
 // 
 
 #import "PKParser.h"
-#import "PKError.h"
 #import "PKLexer.h"
 #import "PKTypes.h"
 #import "PKGrammar.h"
@@ -84,13 +83,9 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   // parser our input source
   YYSTYPE value;
   while((z = yylex(&value, lexer)) > 0){
-    
-    token.text = yyget_text(lexer);
     token.value = value;
     token.token = z;
-    
     __PKParser(parser, z, token, &token);
-    
   }
   
   // end of input (we pass the last token again, which should be ignored)

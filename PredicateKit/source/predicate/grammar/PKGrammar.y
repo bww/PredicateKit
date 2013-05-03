@@ -29,17 +29,6 @@
   fprintf(stderr,"Giving up.  Parser stack overflow\n");
 }
 
-/*
-%type INT       { PKToken }
-%type HEX_INT   { PKToken }
-%type LONG      { PKToken }
-%type HEX_LONG  { PKToken }
-%type FLOAT     { PKToken } 
-%type DOUBLE    { PKToken }
-%type STRING    { PKToken }
-%type IDENT     { PKToken }
-*/
-
 %nonassoc LPAREN RPAREN LBRACE RBRACE LBRACK RBRACK.
 
 %left LAND.
@@ -56,18 +45,21 @@
 
 %start_symbol predicate
 
-predicate ::= expr. {
+predicate ::= expression. {
   printf("PREDICATE\n");
-  printf("  EXTRA %s\n", context->text);
 }
 
-expr ::= expr IDENT(A). {
-  printf("EXPRESSION + IDENT\n");
-  printf("  TOKEN %s\n", A.text);
-}
+expression ::= expression BOR expression. { printf("|\n"); }
+expression ::= expression BAND expression. { printf("&\n"); }
+expression ::= expression BXOR expression. { printf("^\n"); }
+expression ::= expression LAND expression. { printf("&&\n"); }
+expression ::= expression LOR expression. { printf("||\n"); }
+expression ::= LPAREN expression RPAREN. { printf("(\n"); }
+expression ::= primary.
 
-expr ::= IDENT(A). {
-  printf("IDENT\n");
-  printf("  TOKEN %s\n", A.text);
-}
+primary ::= INT(A). { printf("I %d\n", A.value.asInt); }
+primary ::= LONG(A). { printf("L %ld\n", A.value.asLong); }
+primary ::= FLOAT(A). { printf("F %f\n", A.value.asFloat); }
+primary ::= DOUBLE(A). { printf("D %f\n", A.value.asDouble); }
+primary ::= IDENT(A). { printf("? %s\n", A.value.asString); }
 

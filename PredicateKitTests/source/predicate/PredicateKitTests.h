@@ -1,10 +1,10 @@
-//
-//  PredicateKitTests.h
-//  PredicateKitTests
-//
-//  Created by Brian William Wolter on 5/2/13.
-//  Copyright (c) 2013 Brian William Wolter. All rights reserved.
-//
+// 
+// Copyright (c) 2013 Brian William Wolter. All rights reserved.
+// 
+// @LICENSE@
+// 
+// Developed in New York City
+// 
 
 #import <SenTestingKit/SenTestingKit.h>
 
