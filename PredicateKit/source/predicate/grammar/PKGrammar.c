@@ -60,13 +60,13 @@
 **                       defined, then do no error processing.
 */
 #define YYCODETYPE unsigned char
-#define YYNOCODE 40
+#define YYNOCODE 50
 #define YYACTIONTYPE unsigned char
 #define __PKParserTOKENTYPE  PKToken 
 typedef union {
   int yyinit;
   __PKParserTOKENTYPE yy0;
-  PKToken yy35;
+  PKToken yy83;
 } YYMINORTYPE;
 #ifndef YYSTACKDEPTH
 #define YYSTACKDEPTH 100
@@ -75,8 +75,8 @@ typedef union {
 #define __PKParserARG_PDECL , PKToken *context 
 #define __PKParserARG_FETCH  PKToken *context  = yypParser->context 
 #define __PKParserARG_STORE yypParser->context  = context 
-#define YYNSTATE 21
-#define YYNRULE 13
+#define YYNSTATE 63
+#define YYNRULE 38
 #define YY_NO_ACTION      (YYNSTATE+YYNRULE+2)
 #define YY_ACCEPT_ACTION  (YYNSTATE+YYNRULE+1)
 #define YY_ERROR_ACTION   (YYNSTATE+YYNRULE)
@@ -145,40 +145,75 @@ static const YYMINORTYPE yyzerominor = { 0 };
 **                     shifting non-terminals after a reduce.
 **  yy_default[]       Default action for each state.
 */
-#define YY_ACTTAB_COUNT (46)
+#define YY_ACTTAB_COUNT (190)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */    21,   36,    1,    2,    5,    6,    4,    3,    2,    5,
- /*    10 */     6,    4,   18,    5,    6,    4,   36,    3,    2,    5,
- /*    20 */     6,    4,   35,    8,   17,    6,    4,   20,   17,   11,
- /*    30 */    17,   16,   15,   14,   13,   12,   19,   17,   36,   36,
- /*    40 */     9,   17,   10,   17,    7,   17,
+ /*     0 */    43,   23,   22,   30,   21,   20,   52,   27,   55,   54,
+ /*    10 */    24,  102,   31,   23,   22,   30,   21,   20,   52,   27,
+ /*    20 */    55,   54,    3,    4,    1,    6,    5,   63,   18,   19,
+ /*    30 */    25,   23,   22,   30,   21,   20,   52,   27,   55,   54,
+ /*    40 */    61,   30,   21,   20,   52,   27,   55,   54,   44,   29,
+ /*    50 */    28,   60,   49,   48,   47,   46,   45,   50,   23,   22,
+ /*    60 */    30,   21,   20,   52,   27,   55,   54,   56,   62,   22,
+ /*    70 */    30,   21,   20,   52,   27,   55,   54,   33,   22,   30,
+ /*    80 */    21,   20,   52,   27,   55,   54,   26,   42,   32,   22,
+ /*    90 */    30,   21,   20,   52,   27,   55,   54,    3,   51,    1,
+ /*   100 */    35,   30,   21,   20,   52,   27,   55,   54,  103,   34,
+ /*   110 */    30,   21,   20,   52,   27,   55,   54,   59,   20,   52,
+ /*   120 */    27,   55,   54,   44,    2,  103,  103,   49,   48,   47,
+ /*   130 */    46,   45,   38,   20,   52,   27,   55,   54,  103,   37,
+ /*   140 */    20,   52,   27,   55,   54,   36,   20,   52,   27,   55,
+ /*   150 */    54,   58,   52,   27,   55,   54,   41,   52,   27,   55,
+ /*   160 */    54,   40,   52,   27,   55,   54,   39,   52,   27,   55,
+ /*   170 */    54,   13,   12,   57,   27,   55,   54,   11,   17,   16,
+ /*   180 */    15,   14,    8,    9,    7,   10,   53,   27,   55,   54,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */     0,   39,    1,    8,    9,   10,   11,    7,    8,    9,
- /*    10 */    10,   11,    2,    9,   10,   11,   39,    7,    8,    9,
- /*    20 */    10,   11,   36,   37,   38,   10,   11,   37,   38,   37,
- /*    30 */    38,   30,   31,   32,   33,   34,   37,   38,   39,   39,
- /*    40 */    37,   38,   37,   38,   37,   38,
+ /*     0 */    38,   39,   40,   41,   42,   43,   44,   45,   46,   47,
+ /*    10 */    48,   37,   38,   39,   40,   41,   42,   43,   44,   45,
+ /*    20 */    46,   47,    1,    7,    3,    9,   10,    0,    7,    8,
+ /*    30 */    38,   39,   40,   41,   42,   43,   44,   45,   46,   47,
+ /*    40 */    40,   41,   42,   43,   44,   45,   46,   47,   27,    5,
+ /*    50 */    27,    6,   31,   32,   33,   34,   35,   38,   39,   40,
+ /*    60 */    41,   42,   43,   44,   45,   46,   47,   27,   39,   40,
+ /*    70 */    41,   42,   43,   44,   45,   46,   47,   39,   40,   41,
+ /*    80 */    42,   43,   44,   45,   46,   47,   29,    2,   39,   40,
+ /*    90 */    41,   42,   43,   44,   45,   46,   47,    1,    4,    3,
+ /*   100 */    40,   41,   42,   43,   44,   45,   46,   47,   49,   40,
+ /*   110 */    41,   42,   43,   44,   45,   46,   47,   42,   43,   44,
+ /*   120 */    45,   46,   47,   27,   30,   49,   49,   31,   32,   33,
+ /*   130 */    34,   35,   42,   43,   44,   45,   46,   47,   49,   42,
+ /*   140 */    43,   44,   45,   46,   47,   42,   43,   44,   45,   46,
+ /*   150 */    47,   43,   44,   45,   46,   47,   43,   44,   45,   46,
+ /*   160 */    47,   43,   44,   45,   46,   47,   43,   44,   45,   46,
+ /*   170 */    47,   14,   15,   44,   45,   46,   47,   20,   16,   17,
+ /*   180 */    18,   19,   11,   12,   13,   28,   44,   45,   46,   47,
 };
-#define YY_SHIFT_USE_DFLT (-6)
-#define YY_SHIFT_COUNT (11)
-#define YY_SHIFT_MIN   (-5)
-#define YY_SHIFT_MAX   (15)
-static const signed char yy_shift_ofst[] = {
- /*     0 */     1,    1,    1,    1,    1,    1,    1,   10,    0,   -5,
- /*    10 */     4,   15,
+#define YY_SHIFT_USE_DFLT (-1)
+#define YY_SHIFT_COUNT (31)
+#define YY_SHIFT_MIN   (0)
+#define YY_SHIFT_MAX   (171)
+static const short yy_shift_ofst[] = {
+ /*     0 */    21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
+ /*    10 */    21,   21,   21,   21,   21,   21,   21,   21,   96,   96,
+ /*    20 */   162,  157,  171,   16,   94,   85,   40,   57,   45,   23,
+ /*    30 */    44,   27,
 };
-#define YY_REDUCE_USE_DFLT (-15)
-#define YY_REDUCE_COUNT (6)
-#define YY_REDUCE_MIN   (-14)
-#define YY_REDUCE_MAX   (7)
-static const signed char yy_reduce_ofst[] = {
- /*     0 */   -14,    7,    5,    3,   -1,   -8,  -10,
+#define YY_REDUCE_USE_DFLT (-39)
+#define YY_REDUCE_COUNT (19)
+#define YY_REDUCE_MIN   (-38)
+#define YY_REDUCE_MAX   (142)
+static const short yy_reduce_ofst[] = {
+ /*     0 */   -26,  -38,   19,   -8,   49,   38,   29,   69,   60,    0,
+ /*    10 */   103,   97,   90,   75,  123,  118,  113,  108,  142,  129,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */    34,   34,   34,   34,   34,   34,   34,   34,   34,   25,
- /*    10 */    26,   23,   33,   32,   31,   30,   29,   28,   27,   24,
- /*    20 */    22,
+ /*     0 */   101,  101,  101,  101,  101,  101,  101,  101,  101,  101,
+ /*    10 */   101,  101,  101,  101,  101,  101,  101,  101,  101,  101,
+ /*    20 */    83,   78,   71,   67,  101,  101,  101,   88,  101,  101,
+ /*    30 */    73,  101,   66,   65,   70,   69,   77,   76,   75,   82,
+ /*    40 */    81,   80,   91,   94,  100,   99,   98,   97,   96,   95,
+ /*    50 */    93,   92,   86,   85,   90,   89,   87,   84,   79,   74,
+ /*    60 */    72,   68,   64,
 };
 
 /* The next table maps tokens into fallback tokens.  If a construct
@@ -272,15 +307,18 @@ void __PKParserTrace(FILE *TraceFILE, char *zTracePrompt){
 ** are required.  The following table supplies these names */
 static const char *const yyTokenName[] = { 
   "$",             "LPAREN",        "RPAREN",        "LBRACE",      
-  "RBRACE",        "LBRACK",        "RBRACK",        "LAND",        
-  "LOR",           "BAND",          "BOR",           "BXOR",        
-  "EQ",            "NE",            "GT",            "GE",          
-  "LT",            "LE",            "MATCH",         "QUESTION",    
-  "ADD",           "SUB",           "MUL",           "DIV",         
-  "MOD",           "EXP",           "LNOT",          "BNOT",        
-  "COMMA",         "SEMI",          "INT",           "LONG",        
-  "FLOAT",         "DOUBLE",        "IDENT",         "error",       
-  "predicate",     "expression",    "primary",     
+  "RBRACE",        "LBRACK",        "RBRACK",        "LNOT",        
+  "BNOT",          "LAND",          "LOR",           "BAND",        
+  "BOR",           "BXOR",          "EQ",            "NE",          
+  "GT",            "GE",            "LT",            "LE",          
+  "MATCH",         "ADD",           "SUB",           "MUL",         
+  "DIV",           "MOD",           "EXP",           "IDENT",       
+  "IN",            "DOT",           "COMMA",         "BOOL",        
+  "INT",           "LONG",          "FLOAT",         "DOUBLE",      
+  "error",         "predicate",     "expression",    "bitwise",     
+  "modified",      "equality",      "relational",    "unary",       
+  "dereference",   "primary",       "literal",       "collection",  
+  "parameters",  
 };
 #endif /* NDEBUG */
 
@@ -289,18 +327,43 @@ static const char *const yyTokenName[] = {
 */
 static const char *const yyRuleName[] = {
  /*   0 */ "predicate ::= expression",
- /*   1 */ "expression ::= expression BOR expression",
- /*   2 */ "expression ::= expression BAND expression",
- /*   3 */ "expression ::= expression BXOR expression",
- /*   4 */ "expression ::= expression LAND expression",
- /*   5 */ "expression ::= expression LOR expression",
- /*   6 */ "expression ::= LPAREN expression RPAREN",
- /*   7 */ "expression ::= primary",
- /*   8 */ "primary ::= INT",
- /*   9 */ "primary ::= LONG",
- /*  10 */ "primary ::= FLOAT",
- /*  11 */ "primary ::= DOUBLE",
- /*  12 */ "primary ::= IDENT",
+ /*   1 */ "expression ::= bitwise LAND bitwise",
+ /*   2 */ "expression ::= bitwise LOR bitwise",
+ /*   3 */ "expression ::= bitwise LNOT bitwise",
+ /*   4 */ "expression ::= bitwise",
+ /*   5 */ "bitwise ::= modified BOR modified",
+ /*   6 */ "bitwise ::= modified BAND modified",
+ /*   7 */ "bitwise ::= modified BXOR modified",
+ /*   8 */ "bitwise ::= modified",
+ /*   9 */ "modified ::= equality LBRACK IDENT RBRACK",
+ /*  10 */ "modified ::= equality",
+ /*  11 */ "equality ::= relational EQ relational",
+ /*  12 */ "equality ::= relational NE relational",
+ /*  13 */ "equality ::= relational MATCH relational",
+ /*  14 */ "equality ::= relational IN relational",
+ /*  15 */ "equality ::= relational",
+ /*  16 */ "relational ::= unary GT unary",
+ /*  17 */ "relational ::= unary GE unary",
+ /*  18 */ "relational ::= unary LT unary",
+ /*  19 */ "relational ::= unary LE unary",
+ /*  20 */ "relational ::= unary",
+ /*  21 */ "unary ::= BNOT dereference",
+ /*  22 */ "unary ::= LNOT dereference",
+ /*  23 */ "unary ::= dereference",
+ /*  24 */ "dereference ::= primary DOT IDENT",
+ /*  25 */ "dereference ::= primary",
+ /*  26 */ "primary ::= literal",
+ /*  27 */ "primary ::= collection",
+ /*  28 */ "primary ::= LPAREN expression RPAREN",
+ /*  29 */ "collection ::= LBRACE parameters RBRACE",
+ /*  30 */ "parameters ::= parameters COMMA expression",
+ /*  31 */ "parameters ::= expression",
+ /*  32 */ "literal ::= BOOL",
+ /*  33 */ "literal ::= INT",
+ /*  34 */ "literal ::= LONG",
+ /*  35 */ "literal ::= FLOAT",
+ /*  36 */ "literal ::= DOUBLE",
+ /*  37 */ "literal ::= IDENT",
 };
 #endif /* NDEBUG */
 
@@ -562,7 +625,7 @@ static void yyStackOverflow(yyParser *yypParser, YYMINORTYPE *yypMinor){
 
   context = context;
   fprintf(stderr,"Giving up.  Parser stack overflow\n");
-#line 566 "PKGrammar.c"
+#line 629 "PKGrammar.c"
    __PKParserARG_STORE; /* Suppress warning about unused %extra_argument var */
 }
 
@@ -619,19 +682,44 @@ static const struct {
   YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
   unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
-  { 36, 1 },
-  { 37, 3 },
-  { 37, 3 },
-  { 37, 3 },
-  { 37, 3 },
-  { 37, 3 },
-  { 37, 3 },
   { 37, 1 },
+  { 38, 3 },
+  { 38, 3 },
+  { 38, 3 },
   { 38, 1 },
-  { 38, 1 },
-  { 38, 1 },
-  { 38, 1 },
-  { 38, 1 },
+  { 39, 3 },
+  { 39, 3 },
+  { 39, 3 },
+  { 39, 1 },
+  { 40, 4 },
+  { 40, 1 },
+  { 41, 3 },
+  { 41, 3 },
+  { 41, 3 },
+  { 41, 3 },
+  { 41, 1 },
+  { 42, 3 },
+  { 42, 3 },
+  { 42, 3 },
+  { 42, 3 },
+  { 42, 1 },
+  { 43, 2 },
+  { 43, 2 },
+  { 43, 1 },
+  { 44, 3 },
+  { 44, 1 },
+  { 45, 1 },
+  { 45, 1 },
+  { 45, 3 },
+  { 47, 3 },
+  { 48, 3 },
+  { 48, 1 },
+  { 46, 1 },
+  { 46, 1 },
+  { 46, 1 },
+  { 46, 1 },
+  { 46, 1 },
+  { 46, 1 },
 };
 
 static void yy_accept(yyParser*);  /* Forward Declaration */
@@ -687,69 +775,136 @@ static void yy_reduce(
   **     break;
   */
       case 0: /* predicate ::= expression */
-#line 48 "PKGrammar.y"
-{
-  printf("PREDICATE\n");
-}
-#line 695 "PKGrammar.c"
+#line 47 "PKGrammar.y"
+{ printf("PREDICATE\n"); }
+#line 781 "PKGrammar.c"
         break;
-      case 1: /* expression ::= expression BOR expression */
-#line 52 "PKGrammar.y"
-{ printf("|\n"); }
-#line 700 "PKGrammar.c"
-        break;
-      case 2: /* expression ::= expression BAND expression */
-#line 53 "PKGrammar.y"
-{ printf("&\n"); }
-#line 705 "PKGrammar.c"
-        break;
-      case 3: /* expression ::= expression BXOR expression */
-#line 54 "PKGrammar.y"
-{ printf("^\n"); }
-#line 710 "PKGrammar.c"
-        break;
-      case 4: /* expression ::= expression LAND expression */
-#line 55 "PKGrammar.y"
+      case 1: /* expression ::= bitwise LAND bitwise */
+#line 49 "PKGrammar.y"
 { printf("&&\n"); }
-#line 715 "PKGrammar.c"
+#line 786 "PKGrammar.c"
         break;
-      case 5: /* expression ::= expression LOR expression */
-#line 56 "PKGrammar.y"
+      case 2: /* expression ::= bitwise LOR bitwise */
+#line 50 "PKGrammar.y"
 { printf("||\n"); }
-#line 720 "PKGrammar.c"
+#line 791 "PKGrammar.c"
         break;
-      case 6: /* expression ::= LPAREN expression RPAREN */
-#line 57 "PKGrammar.y"
-{ printf("(\n"); }
-#line 725 "PKGrammar.c"
+      case 3: /* expression ::= bitwise LNOT bitwise */
+#line 51 "PKGrammar.y"
+{ printf("!\n"); }
+#line 796 "PKGrammar.c"
         break;
-      case 8: /* primary ::= INT */
-#line 60 "PKGrammar.y"
-{ printf("I %d\n", yymsp[0].minor.yy0.value.asInt); }
-#line 730 "PKGrammar.c"
+      case 5: /* bitwise ::= modified BOR modified */
+#line 54 "PKGrammar.y"
+{ printf("|\n"); }
+#line 801 "PKGrammar.c"
         break;
-      case 9: /* primary ::= LONG */
-#line 61 "PKGrammar.y"
-{ printf("L %ld\n", yymsp[0].minor.yy0.value.asLong); }
-#line 735 "PKGrammar.c"
+      case 6: /* bitwise ::= modified BAND modified */
+#line 55 "PKGrammar.y"
+{ printf("&\n"); }
+#line 806 "PKGrammar.c"
         break;
-      case 10: /* primary ::= FLOAT */
+      case 7: /* bitwise ::= modified BXOR modified */
+#line 56 "PKGrammar.y"
+{ printf("^\n"); }
+#line 811 "PKGrammar.c"
+        break;
+      case 11: /* equality ::= relational EQ relational */
 #line 62 "PKGrammar.y"
-{ printf("F %f\n", yymsp[0].minor.yy0.value.asFloat); }
-#line 740 "PKGrammar.c"
+{ printf("==\n"); }
+#line 816 "PKGrammar.c"
         break;
-      case 11: /* primary ::= DOUBLE */
+      case 12: /* equality ::= relational NE relational */
 #line 63 "PKGrammar.y"
-{ printf("D %f\n", yymsp[0].minor.yy0.value.asDouble); }
-#line 745 "PKGrammar.c"
+{ printf("!=\n"); }
+#line 821 "PKGrammar.c"
         break;
-      case 12: /* primary ::= IDENT */
+      case 13: /* equality ::= relational MATCH relational */
 #line 64 "PKGrammar.y"
-{ printf("? %s\n", yymsp[0].minor.yy0.value.asString); }
-#line 750 "PKGrammar.c"
+{ printf("=~\n"); }
+#line 826 "PKGrammar.c"
+        break;
+      case 14: /* equality ::= relational IN relational */
+#line 65 "PKGrammar.y"
+{ printf("in\n"); }
+#line 831 "PKGrammar.c"
+        break;
+      case 16: /* relational ::= unary GT unary */
+#line 68 "PKGrammar.y"
+{ printf(">\n"); }
+#line 836 "PKGrammar.c"
+        break;
+      case 17: /* relational ::= unary GE unary */
+#line 69 "PKGrammar.y"
+{ printf(">=\n"); }
+#line 841 "PKGrammar.c"
+        break;
+      case 18: /* relational ::= unary LT unary */
+#line 70 "PKGrammar.y"
+{ printf("<\n"); }
+#line 846 "PKGrammar.c"
+        break;
+      case 19: /* relational ::= unary LE unary */
+#line 71 "PKGrammar.y"
+{ printf("<=\n"); }
+#line 851 "PKGrammar.c"
+        break;
+      case 24: /* dereference ::= primary DOT IDENT */
+#line 78 "PKGrammar.y"
+{ printf(". %s\n", yymsp[0].minor.yy0.value.asString); }
+#line 856 "PKGrammar.c"
+        break;
+      case 28: /* primary ::= LPAREN expression RPAREN */
+#line 83 "PKGrammar.y"
+{ printf("()\n"); }
+#line 861 "PKGrammar.c"
+        break;
+      case 32: /* literal ::= BOOL */
+#line 90 "PKGrammar.y"
+{ printf("B %d\n", yymsp[0].minor.yy0.value.asBool); }
+#line 866 "PKGrammar.c"
+        break;
+      case 33: /* literal ::= INT */
+#line 91 "PKGrammar.y"
+{ printf("I %d\n", yymsp[0].minor.yy0.value.asInt); }
+#line 871 "PKGrammar.c"
+        break;
+      case 34: /* literal ::= LONG */
+#line 92 "PKGrammar.y"
+{ printf("L %ld\n", yymsp[0].minor.yy0.value.asLong); }
+#line 876 "PKGrammar.c"
+        break;
+      case 35: /* literal ::= FLOAT */
+#line 93 "PKGrammar.y"
+{ printf("F %f\n", yymsp[0].minor.yy0.value.asFloat); }
+#line 881 "PKGrammar.c"
+        break;
+      case 36: /* literal ::= DOUBLE */
+#line 94 "PKGrammar.y"
+{ printf("D %f\n", yymsp[0].minor.yy0.value.asDouble); }
+#line 886 "PKGrammar.c"
+        break;
+      case 37: /* literal ::= IDENT */
+#line 95 "PKGrammar.y"
+{ printf("~ %s\n", yymsp[0].minor.yy0.value.asString); }
+#line 891 "PKGrammar.c"
         break;
       default:
-      /* (7) expression ::= primary */ yytestcase(yyruleno==7);
+      /* (4) expression ::= bitwise */ yytestcase(yyruleno==4);
+      /* (8) bitwise ::= modified */ yytestcase(yyruleno==8);
+      /* (9) modified ::= equality LBRACK IDENT RBRACK */ yytestcase(yyruleno==9);
+      /* (10) modified ::= equality */ yytestcase(yyruleno==10);
+      /* (15) equality ::= relational */ yytestcase(yyruleno==15);
+      /* (20) relational ::= unary */ yytestcase(yyruleno==20);
+      /* (21) unary ::= BNOT dereference */ yytestcase(yyruleno==21);
+      /* (22) unary ::= LNOT dereference */ yytestcase(yyruleno==22);
+      /* (23) unary ::= dereference */ yytestcase(yyruleno==23);
+      /* (25) dereference ::= primary */ yytestcase(yyruleno==25);
+      /* (26) primary ::= literal */ yytestcase(yyruleno==26);
+      /* (27) primary ::= collection */ yytestcase(yyruleno==27);
+      /* (29) collection ::= LBRACE parameters RBRACE */ yytestcase(yyruleno==29);
+      /* (30) parameters ::= parameters COMMA expression */ yytestcase(yyruleno==30);
+      /* (31) parameters ::= expression */ yytestcase(yyruleno==31);
         break;
   };
   yygoto = yyRuleInfo[yyruleno].lhs;
@@ -798,7 +953,7 @@ static void yy_parse_failed(
 #line 18 "PKGrammar.y"
 
   fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
-#line 802 "PKGrammar.c"
+#line 957 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
@@ -816,8 +971,8 @@ static void yy_syntax_error(
 #line 22 "PKGrammar.y"
 
   context = context;
-  fprintf(stderr, "WHAT THE FUCK?!\n");
-#line 821 "PKGrammar.c"
+  fprintf(stderr, "Syntax error: %d\n", TOKEN.token);
+#line 976 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
@@ -839,7 +994,7 @@ static void yy_accept(
 #line 14 "PKGrammar.y"
 
   fprintf(stderr, "OK!\n");
-#line 843 "PKGrammar.c"
+#line 998 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 

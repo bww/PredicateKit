@@ -95,9 +95,12 @@ WS          [ \t]
 "+"   { return T_ADD; }
 "-"   { return T_SUB; }
 
-"?"   { return T_QUESTION; }
+"."   { return T_DOT; }
 ","   { return T_COMMA; }
-";"   { return T_SEMI; }
+
+"in"          { return T_IN; }
+"true"        { yylval->asBool = 1; return T_BOOL; }
+"false"       { yylval->asBool = 0; return T_BOOL; }
 
 \n            { pk_col = 0; ++pk_line; }
 {WS}+         { pk_col += strlen(yytext); }
@@ -118,4 +121,10 @@ WS          [ \t]
 }
 
 %%
+
+/*
+","   { return T_COMMA; }
+";"   { return T_SEMI; }
+"?"   { return T_QUESTION; }
+*/
 

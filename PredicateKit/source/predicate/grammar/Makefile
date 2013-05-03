@@ -3,7 +3,7 @@ all: parser lexer
 parser: lemon PKGrammar.c
 
 PKGrammar.c: PKGrammar.y
-	./lemon -q PKGrammar.y
+	./lemon PKGrammar.y
 
 lemon: lemon.c
 

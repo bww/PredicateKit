@@ -2,6 +2,7 @@
 #import <stdint.h>
 
 typedef union {
+  uint8_t       asBool;
   uint8_t       asByte;
   int32_t       asInt;
   int64_t       asLong;

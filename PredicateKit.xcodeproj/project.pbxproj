@@ -24,6 +24,8 @@
 		D351BC24173334D30051C1B3 /* PKLexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC21173334D30051C1B3 /* PKLexer.c */; };
 		D351BC31173352270051C1B3 /* PKExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC2F173352270051C1B3 /* PKExpression.h */; };
 		D351BC32173352270051C1B3 /* PKExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC30173352270051C1B3 /* PKExpression.m */; };
+		D351BC3517335C920051C1B3 /* PKCompoundExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC3317335C920051C1B3 /* PKCompoundExpression.h */; };
+		D351BC3617335C920051C1B3 /* PKCompoundExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC3417335C920051C1B3 /* PKCompoundExpression.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PKLexer.c; sourceTree = "<group>"; };
 		D351BC2F173352270051C1B3 /* PKExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKExpression.h; sourceTree = "<group>"; };
 		D351BC30173352270051C1B3 /* PKExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpression.m; sourceTree = "<group>"; };
+		D351BC3317335C920051C1B3 /* PKCompoundExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCompoundExpression.h; sourceTree = "<group>"; };
+		D351BC3417335C920051C1B3 /* PKCompoundExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCompoundExpression.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +196,8 @@
 				D351BC121733346C0051C1B3 /* PKPredicate.m */,
 				D351BC2F173352270051C1B3 /* PKExpression.h */,
 				D351BC30173352270051C1B3 /* PKExpression.m */,
+				D351BC3317335C920051C1B3 /* PKCompoundExpression.h */,
+				D351BC3417335C920051C1B3 /* PKCompoundExpression.m */,
 			);
 			name = predicate;
 			path = source/predicate;
@@ -231,6 +237,7 @@
 				D351BC191733346C0051C1B3 /* PKTypes.h in Headers */,
 				D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */,
 				D351BC31173352270051C1B3 /* PKExpression.h in Headers */,
+				D351BC3517335C920051C1B3 /* PKCompoundExpression.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +352,7 @@
 				D351BC22173334D30051C1B3 /* PKGrammar.c in Sources */,
 				D351BC24173334D30051C1B3 /* PKLexer.c in Sources */,
 				D351BC32173352270051C1B3 /* PKExpression.m in Sources */,
+				D351BC3617335C920051C1B3 /* PKCompoundExpression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

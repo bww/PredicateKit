@@ -26,7 +26,9 @@
   
   source = [[NSString alloc] initWithContentsOfFile:@"PredicateKitTests/resources/tests/001.wgpl" encoding:NSUTF8StringEncoding error:&error];
   STAssertNotNil(source, @"Could not load source");
-  STAssertTrue([[PKParser parser] parse:source error:&error], @"Could not parse predicate: %@", [error localizedDescription]);
+  NSArray *lines = [source componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+  STAssertNotNil(lines, @"Could not parse source lines");
+  for(NSString *line in lines) STAssertTrue([[PKParser parser] parse:line error:&error], @"Could not parse predicate: %@", [error localizedDescription]);
   [source release];
   
 }
