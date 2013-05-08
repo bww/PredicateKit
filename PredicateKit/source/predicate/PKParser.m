@@ -20,6 +20,8 @@ int  yylex(void *token, yyscan_t lexer);
 void yylex_destroy(yyscan_t lexer);
 
 char *yyget_text(yyscan_t scanner);
+int yyget_lineno(yyscan_t scanner);
+void yyset_extra( YY_EXTRA_TYPE info, yyscan_t scanner);
 
 YY_BUFFER_STATE yy_scan_string(const char *source, void *lexer);
 void yy_delete_buffer(YY_BUFFER_STATE buffer, void *lexer);
@@ -80,13 +82,19 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
     goto error;
   }
   
+  // setup our context
+  PKContext context;
+  bzero(&context, sizeof(PKContext));
+  
   // scan our input source
   yylex_init(&lexer);
+  yyset_extra(&context, lexer);
   yy_scan_string([source UTF8String], lexer);
   
   // parser our input source
   YYSTYPE value;
   while((z = yylex(&value, lexer)) > 0){
+    NSLog(@"LINE: %d:%d", context.line, context.column);
     __PKParser(parser, z, PKTokenMake(z, value), NULL);
   }
   

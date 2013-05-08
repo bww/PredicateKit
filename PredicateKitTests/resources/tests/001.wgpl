@@ -18,7 +18,7 @@ a == 1[cd]
 a & ~(b | c)
 !a
 !(a || b == c)
-a in { a, b, c, 1, 2, 3 }
-a.b
-a.b.c
-a.b.c.d.e.f.gee
+/* a in { a, b, c, 1, 2, 3 } */
+//a.b
+//a.b.c
+//a.b.c.d.e.f.gee

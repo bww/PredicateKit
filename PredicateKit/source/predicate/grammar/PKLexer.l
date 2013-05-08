@@ -4,12 +4,20 @@
 #include "PKGrammar.h"
 #include "PKLexer.h"
 
-int pk_line = 1, pk_col = 1;
+static inline void pk_context_increment(PKContext *context, const char *text) {
+  context->column += strlen(text);
+}
+
+static inline void pk_context_newline(PKContext *context) {
+  context->column = 0;
+  context->line++;
+}
 
 %}
 
 %option noyywrap
 %option reentrant
+%option extra-type="PKContext *"
 %option yylineno
 %option bison-bridge
 
@@ -58,79 +66,75 @@ DOUBLE      {NUMBER}\.{NUMBER}{EXPONENT}?(d|D)
 /* STRING: anything between double quote except newlines; just considers \" and \\ characters */
 STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\"
 
-/* COMMENT: any c style comment */
-COMMENT     ("/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*"*"+"/")|("//".*)
-
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
 
+/* Single-line comments state */
+%x S_COMMENT
 /* Multi-line comments state */
 %x M_COMMENT
 
 %%
 
-"/*"            { BEGIN(M_COMMENT); }
-<M_COMMENT>"*/" { BEGIN(INITIAL); }
-<M_COMMENT>.    { /* ignore comments */ }
+"//"            { BEGIN(S_COMMENT); pk_context_increment(yyextra, yytext); }
+<S_COMMENT>\n   { BEGIN(INITIAL); pk_context_newline(yyextra); }
+"/*"            { BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
+<M_COMMENT>"*/" { BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
+<M_COMMENT>\n   { BEGIN(INITIAL); pk_context_newline(yyextra); }
+<M_COMMENT>.    { pk_context_increment(yyextra, yytext); }
 
-"&&"            { return T_LAND; }
-"||"            { return T_LOR; }
-"=="            { return T_EQ; }
-"!="            { return T_NE; }
-"=~"            { return T_MATCH; }
-">="            { return T_GE; }
-"<="            { return T_LE; }
-">"             { return T_GT; }
-"<"             { return T_LT; }
-"!"             { return T_LNOT; }
+"&&"            { pk_context_increment(yyextra, yytext); return T_LAND; }
+"||"            { pk_context_increment(yyextra, yytext); return T_LOR; }
+"=="            { pk_context_increment(yyextra, yytext); return T_EQ; }
+"!="            { pk_context_increment(yyextra, yytext); return T_NE; }
+"=~"            { pk_context_increment(yyextra, yytext); return T_MATCH; }
+">="            { pk_context_increment(yyextra, yytext); return T_GE; }
+"<="            { pk_context_increment(yyextra, yytext); return T_LE; }
+">"             { pk_context_increment(yyextra, yytext); return T_GT; }
+"<"             { pk_context_increment(yyextra, yytext); return T_LT; }
+"!"             { pk_context_increment(yyextra, yytext); return T_LNOT; }
 
-"("             { return T_LPAREN; }
-")"             { return T_RPAREN; }
-"{"             { return T_LBRACE; }
-"}"             { return T_RBRACE; }
-"["             { return T_LBRACK; }
-"]"             { return T_RBRACK; }
+"("             { pk_context_increment(yyextra, yytext); return T_LPAREN; }
+")"             { pk_context_increment(yyextra, yytext); return T_RPAREN; }
+"{"             { pk_context_increment(yyextra, yytext); return T_LBRACE; }
+"}"             { pk_context_increment(yyextra, yytext); return T_RBRACE; }
+"["             { pk_context_increment(yyextra, yytext); return T_LBRACK; }
+"]"             { pk_context_increment(yyextra, yytext); return T_RBRACK; }
 
-"&"             { return T_BAND; }
-"|"             { return T_BOR; }
-"^"             { return T_BXOR; }
-"~"             { return T_BNOT; }
+"&"             { pk_context_increment(yyextra, yytext); return T_BAND; }
+"|"             { pk_context_increment(yyextra, yytext); return T_BOR; }
+"^"             { pk_context_increment(yyextra, yytext); return T_BXOR; }
+"~"             { pk_context_increment(yyextra, yytext); return T_BNOT; }
 
-"%"             { return T_MOD; }
-"/"             { return T_DIV; }
-"*"             { return T_MUL; }
-"+"             { return T_ADD; }
-"-"             { return T_SUB; }
+"%"             { pk_context_increment(yyextra, yytext); return T_MOD; }
+"/"             { pk_context_increment(yyextra, yytext); return T_DIV; }
+"*"             { pk_context_increment(yyextra, yytext); return T_MUL; }
+"+"             { pk_context_increment(yyextra, yytext); return T_ADD; }
+"-"             { pk_context_increment(yyextra, yytext); return T_SUB; }
 
-"."             { return T_DOT; }
-","             { return T_COMMA; }
+"."             { pk_context_increment(yyextra, yytext); return T_DOT; }
+","             { pk_context_increment(yyextra, yytext); return T_COMMA; }
 
-"in"            { return T_IN; }
-"true"          { yylval->asBool = 1; return T_BOOL; }
-"false"         { yylval->asBool = 0; return T_BOOL; }
+"in"            { pk_context_increment(yyextra, yytext); return T_IN; }
+"true"          { pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
+"false"         { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
 
-\n              { pk_col = 0; ++pk_line; }
-{WS}+           { pk_col += strlen(yytext); }
+\n              { pk_context_newline(yyextra); }
+{WS}+           { pk_context_increment(yyextra, yytext); }
 
-{LONG}          { yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
-{HEX_LONG}      { yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
-{INTEGER}       { yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
-{HEX_INTEGER}   { yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
-{FLOAT}         { yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
-{DOUBLE}        { yylval->asFloat = atof(yytext); return T_DOUBLE; }
-{STRING}        { yylval->asString = strdup(yytext); return T_QUOTED_STRING; }
-{IDENT}         { yylval->asString = strdup(yytext); return T_IDENT; }
+{LONG}          { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
+{HEX_LONG}      { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
+{INTEGER}       { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
+{HEX_INTEGER}   { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
+{FLOAT}         { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
+{DOUBLE}        { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
+{STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_QUOTED_STRING; }
+{IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
 
 . {
-  pk_col += strlen(yytext);
-  printf("error: unrecognized character at %d:%d '%s'\n", pk_line, pk_col, yytext);
+  pk_context_increment(yyextra, yytext);
+  printf("error: unrecognized character at %d:%d '%s'\n", yyextra->line, yyextra->column, yytext);
 }
 
 %%
-
-/*
-","   { return T_COMMA; }
-";"   { return T_SEMI; }
-"?"   { return T_QUESTION; }
-*/
 
