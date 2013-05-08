@@ -5,12 +5,18 @@
 #include "PKLexer.h"
 
 static inline void pk_context_increment(PKContext *context, const char *text) {
-  context->column += strlen(text);
+  if(context != NULL && text != NULL){
+    context->location += strlen(text);
+    context->column += strlen(text);
+  }
 }
 
 static inline void pk_context_newline(PKContext *context) {
-  context->column = 0;
-  context->line++;
+  if(context != NULL){
+    context->location += 1;
+    context->column = 0;
+    context->line++;
+  }
 }
 
 %}

@@ -82,9 +82,9 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
     goto error;
   }
   
-  // setup our context
-  PKContext context;
-  bzero(&context, sizeof(PKContext));
+  // setup our context, which is not optional
+  PKContext context = PKContextMakeZero();
+  unsigned int location = 0;
   
   // scan our input source
   yylex_init(&lexer);
@@ -94,8 +94,10 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   // parser our input source
   YYSTYPE value;
   while((z = yylex(&value, lexer)) > 0){
-    NSLog(@"LINE: %d:%d", context.line, context.column);
-    __PKParser(parser, z, PKTokenMake(z, value), NULL);
+    unsigned int end = context.location;
+    unsigned int start = end - strlen(yyget_text(lexer));
+    __PKParser(parser, z, PKTokenMake(z, value, PKRangeMake(start, end - start)), NULL);
+    location = end;
   }
   
   // make sure we didn't finish with an error

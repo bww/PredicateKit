@@ -28,7 +28,7 @@
 
 %syntax_error {
   context = context;
-  fprintf(stderr, "Syntax error: %d\n", TOKEN.token);
+  fprintf(stderr, "Syntax error at: %d+%d\n", TOKEN.range.location, TOKEN.range.length);
 }
 
 %stack_overflow {

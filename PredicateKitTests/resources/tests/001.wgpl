@@ -11,7 +11,7 @@ a >= b
 (a == b) && (b != c)
 (a == b) <= (b != c)
 true || false
-a == 1[cd]
+a == 1 [cd]
 (a == 1)[cd]
 (a == 1 || false)[cd]
 ~a

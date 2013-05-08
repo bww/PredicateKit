@@ -1000,7 +1000,7 @@ static void yy_syntax_error(
 #line 29 "PKGrammar.y"
 
   context = context;
-  fprintf(stderr, "Syntax error: %d\n", TOKEN.token);
+  fprintf(stderr, "Syntax error at: %d+%d\n", TOKEN.range.location, TOKEN.range.length);
 #line 1005 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
