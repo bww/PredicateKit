@@ -82,36 +82,66 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
     goto error;
   }
   
-  // setup our context, which is not optional
-  PKContext context = PKContextMakeZero();
-  unsigned int location = 0;
+  // setup our context objects, which are not optional
+  PKParserContext parserContext = PKParserContextMakeZero();
+  PKScannerContext scannerContext = PKScannerContextMakeZero();
+  unsigned int location = 0, tcount = 0;
+  PKToken currentToken = PKTokenMakeZero();
   
   // scan our input source
   yylex_init(&lexer);
-  yyset_extra(&context, lexer);
+  yyset_extra(&scannerContext, lexer);
   yy_scan_string([source UTF8String], lexer);
   
   // parser our input source
   YYSTYPE value;
   while((z = yylex(&value, lexer)) > 0){
-    unsigned int end = context.location;
+    
+    // determine the start and end offsets of our token
+    unsigned int end = scannerContext.location;
     unsigned int start = end - strlen(yyget_text(lexer));
-    __PKParser(parser, z, PKTokenMake(z, value, PKRangeMake(start, end - start)), NULL);
+    
+    // update our current token
+    currentToken = PKTokenMake(z, value, PKRangeMake(start, end - start));
+    // parse the token
+    __PKParser(parser, z, currentToken, &parserContext);
+    
+    // check for an error from the parser
+    if(parserContext.state == kPKParserStateError){
+      if(error) *error = (parserContext.error != nil) ? parserContext.error : NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
+      goto error;
+    }
+    
+    // update the current location and token count
     location = end;
+    tcount++;
+    
   }
   
   // make sure we didn't finish with an error
   if(z < 0){
-    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse source");
+    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
+    goto error;
+  }
+  
+  // make sure we processed some tokens
+  if(tcount < 1){
+    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Predicate source contains no expression");
     goto error;
   }
   
   // end of input (we pass the last token again, which should be ignored)
-  __PKParser(parser, 0, PKTokenMakeZero(), &predicate);
+  __PKParser(parser, 0, PKTokenMakeZero(), &parserContext);
+  
+  // check for an error from the parser on the last token
+  if(parserContext.state == kPKParserStateError){
+    if(error) *error = (parserContext.error != nil) ? parserContext.error : NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
+    goto error;
+  }
   
   // make sure we wound up with a predicate
-  if(predicate == nil){
-    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate");
+  if(parserContext.state != kPKParserStateFinished || (predicate = parserContext.predicate) == nil){
+    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"No predicate was produced");
     goto error;
   }
   

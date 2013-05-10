@@ -78,9 +78,9 @@ typedef union {
 #ifndef YYSTACKDEPTH
 #define YYSTACKDEPTH 100
 #endif
-#define __PKParserARG_SDECL  PKPredicate **context ;
-#define __PKParserARG_PDECL , PKPredicate **context 
-#define __PKParserARG_FETCH  PKPredicate **context  = yypParser->context 
+#define __PKParserARG_SDECL  PKParserContext *context ;
+#define __PKParserARG_PDECL , PKParserContext *context 
+#define __PKParserARG_FETCH  PKParserContext *context  = yypParser->context 
 #define __PKParserARG_STORE yypParser->context  = context 
 #define YYNSTATE 62
 #define YYNRULE 38
@@ -628,7 +628,7 @@ static void yyStackOverflow(yyParser *yypParser, YYMINORTYPE *yypMinor){
    while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
    /* Here code is inserted which will execute if the parser
    ** stack every overflows */
-#line 34 "PKGrammar.y"
+#line 39 "PKGrammar.y"
 
   context = context;
   fprintf(stderr,"Giving up.  Parser stack overflow\n");
@@ -782,21 +782,24 @@ static void yy_reduce(
   **     break;
   */
       case 0: /* predicate ::= expression */
-#line 54 "PKGrammar.y"
+#line 59 "PKGrammar.y"
 {
-  if(context != NULL) *context = (PKPredicate *)yymsp[0].minor.yy53.node;
+  if(context != NULL && context->state != kPKParserStateError){
+    context->predicate = (PKPredicate *)yymsp[0].minor.yy53.node;
+    context->state = kPKParserStateFinished;
+  }
 }
-#line 790 "PKGrammar.c"
+#line 793 "PKGrammar.c"
         break;
       case 1: /* expression ::= bitwise LAND bitwise */
-#line 58 "PKGrammar.y"
+#line 66 "PKGrammar.y"
 { yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 795 "PKGrammar.c"
+#line 798 "PKGrammar.c"
         break;
       case 2: /* expression ::= bitwise LOR bitwise */
-#line 59 "PKGrammar.y"
+#line 67 "PKGrammar.y"
 { yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 800 "PKGrammar.c"
+#line 803 "PKGrammar.c"
         break;
       case 3: /* expression ::= bitwise */
       case 7: /* bitwise ::= modified */ yytestcase(yyruleno==7);
@@ -806,127 +809,127 @@ static void yy_reduce(
       case 22: /* unary ::= dereference */ yytestcase(yyruleno==22);
       case 24: /* dereference ::= primary */ yytestcase(yyruleno==24);
       case 25: /* primary ::= literal */ yytestcase(yyruleno==25);
-#line 60 "PKGrammar.y"
+#line 68 "PKGrammar.y"
 { yygotominor.yy53.node = yymsp[0].minor.yy53.node; }
-#line 812 "PKGrammar.c"
+#line 815 "PKGrammar.c"
         break;
       case 4: /* bitwise ::= modified BOR modified */
-#line 62 "PKGrammar.y"
+#line 70 "PKGrammar.y"
 { yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 817 "PKGrammar.c"
+#line 820 "PKGrammar.c"
         break;
       case 5: /* bitwise ::= modified BAND modified */
-#line 63 "PKGrammar.y"
+#line 71 "PKGrammar.y"
 { yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 822 "PKGrammar.c"
+#line 825 "PKGrammar.c"
         break;
       case 6: /* bitwise ::= modified BXOR modified */
-#line 64 "PKGrammar.y"
+#line 72 "PKGrammar.y"
 { yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 827 "PKGrammar.c"
+#line 830 "PKGrammar.c"
         break;
       case 10: /* equality ::= relational EQ relational */
-#line 70 "PKGrammar.y"
+#line 78 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 832 "PKGrammar.c"
+#line 835 "PKGrammar.c"
         break;
       case 11: /* equality ::= relational NE relational */
-#line 71 "PKGrammar.y"
+#line 79 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 837 "PKGrammar.c"
+#line 840 "PKGrammar.c"
         break;
       case 12: /* equality ::= relational MATCH relational */
-#line 72 "PKGrammar.y"
+#line 80 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 842 "PKGrammar.c"
+#line 845 "PKGrammar.c"
         break;
       case 13: /* equality ::= relational IN relational */
-#line 73 "PKGrammar.y"
+#line 81 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 847 "PKGrammar.c"
+#line 850 "PKGrammar.c"
         break;
       case 15: /* relational ::= unary GT unary */
-#line 76 "PKGrammar.y"
+#line 84 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 852 "PKGrammar.c"
+#line 855 "PKGrammar.c"
         break;
       case 16: /* relational ::= unary GE unary */
-#line 77 "PKGrammar.y"
+#line 85 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 857 "PKGrammar.c"
+#line 860 "PKGrammar.c"
         break;
       case 17: /* relational ::= unary LT unary */
-#line 78 "PKGrammar.y"
+#line 86 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 862 "PKGrammar.c"
+#line 865 "PKGrammar.c"
         break;
       case 18: /* relational ::= unary LE unary */
-#line 79 "PKGrammar.y"
+#line 87 "PKGrammar.y"
 { yygotominor.yy53.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy53.node, yymsp[0].minor.yy53.node, nil]]; }
-#line 867 "PKGrammar.c"
+#line 870 "PKGrammar.c"
         break;
       case 20: /* unary ::= BNOT dereference */
-#line 82 "PKGrammar.y"
+#line 90 "PKGrammar.y"
 { yygotominor.yy53.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy53.node, nil]]; }
-#line 872 "PKGrammar.c"
+#line 875 "PKGrammar.c"
         break;
       case 21: /* unary ::= LNOT dereference */
-#line 83 "PKGrammar.y"
+#line 91 "PKGrammar.y"
 { yygotominor.yy53.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy53.node, nil]]; }
-#line 877 "PKGrammar.c"
+#line 880 "PKGrammar.c"
         break;
       case 23: /* dereference ::= dereference DOT IDENT */
-#line 86 "PKGrammar.y"
+#line 94 "PKGrammar.y"
 {  }
-#line 882 "PKGrammar.c"
+#line 885 "PKGrammar.c"
         break;
       case 27: /* primary ::= LPAREN expression RPAREN */
-#line 91 "PKGrammar.y"
+#line 99 "PKGrammar.y"
 { yygotominor.yy53.node = yymsp[-1].minor.yy53.node; }
-#line 887 "PKGrammar.c"
+#line 890 "PKGrammar.c"
         break;
       case 31: /* literal ::= BOOL */
-#line 98 "PKGrammar.y"
+#line 106 "PKGrammar.y"
 { yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]]; }
-#line 892 "PKGrammar.c"
+#line 895 "PKGrammar.c"
         break;
       case 32: /* literal ::= INT */
-#line 99 "PKGrammar.y"
+#line 107 "PKGrammar.y"
 { yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]]; }
-#line 897 "PKGrammar.c"
+#line 900 "PKGrammar.c"
         break;
       case 33: /* literal ::= LONG */
-#line 100 "PKGrammar.y"
+#line 108 "PKGrammar.y"
 { yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]]; }
-#line 902 "PKGrammar.c"
+#line 905 "PKGrammar.c"
         break;
       case 34: /* literal ::= FLOAT */
-#line 101 "PKGrammar.y"
+#line 109 "PKGrammar.y"
 { yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]]; }
-#line 907 "PKGrammar.c"
+#line 910 "PKGrammar.c"
         break;
       case 35: /* literal ::= DOUBLE */
-#line 102 "PKGrammar.y"
+#line 110 "PKGrammar.y"
 { yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]]; }
-#line 912 "PKGrammar.c"
+#line 915 "PKGrammar.c"
         break;
       case 36: /* literal ::= IDENT */
-#line 104 "PKGrammar.y"
+#line 112 "PKGrammar.y"
 {
   yygotominor.yy53.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
   free((void *)yymsp[0].minor.yy0.value.asString);
   yymsp[0].minor.yy0.value.asString = NULL;
 }
-#line 921 "PKGrammar.c"
+#line 924 "PKGrammar.c"
         break;
       case 37: /* literal ::= QUOTED_STRING */
-#line 110 "PKGrammar.y"
+#line 118 "PKGrammar.y"
 {
   yygotominor.yy53.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
   free((void *)yymsp[0].minor.yy0.value.asString);
   yymsp[0].minor.yy0.value.asString = NULL;
 }
-#line 930 "PKGrammar.c"
+#line 933 "PKGrammar.c"
         break;
       default:
       /* (8) modified ::= equality LBRACK IDENT RBRACK */ yytestcase(yyruleno==8);
@@ -981,8 +984,11 @@ static void yy_parse_failed(
   ** parser fails */
 #line 25 "PKGrammar.y"
 
-  fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
-#line 986 "PKGrammar.c"
+  if(context != NULL && context->state != kPKParserStateError){
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"ERROR IN THE PARSER!");
+    context->state = kPKParserStateError;
+  }
+#line 992 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
@@ -997,11 +1003,13 @@ static void yy_syntax_error(
 ){
   __PKParserARG_FETCH;
 #define TOKEN (yyminor.yy0)
-#line 29 "PKGrammar.y"
+#line 32 "PKGrammar.y"
 
-  context = context;
-  fprintf(stderr, "Syntax error at: %d+%d\n", TOKEN.range.location, TOKEN.range.length);
-#line 1005 "PKGrammar.c"
+  if(context != NULL && context->state != kPKParserStateError){
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"ERROR IN THE PARSER!");
+    context->state = kPKParserStateError;
+  }
+#line 1013 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
@@ -1023,7 +1031,7 @@ static void yy_accept(
 #line 21 "PKGrammar.y"
 
   // ...
-#line 1027 "PKGrammar.c"
+#line 1035 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 

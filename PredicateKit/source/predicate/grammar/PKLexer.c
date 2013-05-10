@@ -592,14 +592,14 @@ static yyconst flex_int32_t yy_rule_can_match_eol[49] =
 #include "PKGrammar.h"
 #include "PKLexer.h"
 
-static inline void pk_context_increment(PKContext *context, const char *text) {
+static inline void pk_context_increment(PKScannerContext *context, const char *text) {
   if(context != NULL && text != NULL){
     context->location += strlen(text);
     context->column += strlen(text);
   }
 }
 
-static inline void pk_context_newline(PKContext *context) {
+static inline void pk_context_newline(PKScannerContext *context) {
   if(context != NULL){
     context->location += 1;
     context->column = 0;
@@ -641,7 +641,7 @@ static inline void pk_context_newline(PKContext *context) {
 #include <unistd.h>
 #endif
 
-#define YY_EXTRA_TYPE PKContext *
+#define YY_EXTRA_TYPE PKScannerContext *
 
 /* Holds the entire state of the reentrant scanner. */
 struct yyguts_t

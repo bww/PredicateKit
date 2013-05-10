@@ -4,14 +4,14 @@
 #include "PKGrammar.h"
 #include "PKLexer.h"
 
-static inline void pk_context_increment(PKContext *context, const char *text) {
+static inline void pk_context_increment(PKScannerContext *context, const char *text) {
   if(context != NULL && text != NULL){
     context->location += strlen(text);
     context->column += strlen(text);
   }
 }
 
-static inline void pk_context_newline(PKContext *context) {
+static inline void pk_context_newline(PKScannerContext *context) {
   if(context != NULL){
     context->location += 1;
     context->column = 0;
@@ -23,7 +23,7 @@ static inline void pk_context_newline(PKContext *context) {
 
 %option noyywrap
 %option reentrant
-%option extra-type="PKContext *"
+%option extra-type="PKScannerContext *"
 %option yylineno
 %option bison-bridge
 

@@ -16,19 +16,24 @@
 
 %token_type     { PKToken }
 %default_type   { PKToken }
-%extra_argument { PKPredicate **context }
+%extra_argument { PKParserContext *context }
 
 %parse_accept {
   // ...
 }
 
 %parse_failure {
-  fprintf(stderr,"Giving up.  Parser is hopelessly lost...\n");
+  if(context != NULL && context->state != kPKParserStateError){
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"ERROR IN THE PARSER!");
+    context->state = kPKParserStateError;
+  }
 }
 
 %syntax_error {
-  context = context;
-  fprintf(stderr, "Syntax error at: %d+%d\n", TOKEN.range.location, TOKEN.range.length);
+  if(context != NULL && context->state != kPKParserStateError){
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"ERROR IN THE PARSER!");
+    context->state = kPKParserStateError;
+  }
 }
 
 %stack_overflow {
@@ -52,7 +57,10 @@
 %right EXP.
 
 predicate ::= expression(A). {
-  if(context != NULL) *context = (PKPredicate *)A.node;
+  if(context != NULL && context->state != kPKParserStateError){
+    context->predicate = (PKPredicate *)A.node;
+    context->state = kPKParserStateFinished;
+  }
 }
 
 expression(A) ::= bitwise(B) LAND bitwise(C). { A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]]; }

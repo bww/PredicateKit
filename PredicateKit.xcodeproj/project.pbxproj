@@ -73,7 +73,7 @@
 		D351BC121733346C0051C1B3 /* PKPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPredicate.m; sourceTree = "<group>"; };
 		D351BC1F173334D30051C1B3 /* PKGrammar.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKGrammar.c; sourceTree = "<group>"; };
 		D351BC20173334D30051C1B3 /* PKGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKGrammar.h; sourceTree = "<group>"; };
-		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PKLexer.c; sourceTree = "<group>"; };
+		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKLexer.c; sourceTree = "<group>"; };
 		D351BC2F173352270051C1B3 /* PKExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKExpression.h; sourceTree = "<group>"; };
 		D351BC30173352270051C1B3 /* PKExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpression.m; sourceTree = "<group>"; };
 		D351BC3317335C920051C1B3 /* PKCompoundExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCompoundExpression.h; sourceTree = "<group>"; };

@@ -1,5 +1,8 @@
 
 #import <stdint.h>
+#import "PKPredicate.h"
+
+/* Values */
 
 typedef union {
   uint8_t       asBool;
@@ -10,6 +13,8 @@ typedef union {
   double        asDouble;
   const char  * asString;
 } PKValue;
+
+/* Range */
 
 typedef struct PKRange {
   unsigned int location;
@@ -26,25 +31,29 @@ static inline PKRange PKRangeMakeZero() {
   return zero;
 }
 
-typedef struct PKContext {
-  unsigned int  location;
-  unsigned int  line;
-  unsigned int  column;
-} PKContext;
+/* Scanner Context */
+
+typedef struct PKScannerContext {
+  unsigned int    location;
+  unsigned int    line;
+  unsigned int    column;
+} PKScannerContext;
 
 #if !defined(YY_EXTRA_TYPE)
-#define YY_EXTRA_TYPE PKContext *
+#define YY_EXTRA_TYPE PKScannerContext *
 #endif
 
-static inline PKContext PKContextMake(unsigned int location, unsigned int line, unsigned int column) {
-  return (PKContext){ location, line, column };
+static inline PKScannerContext PKScannerContextMake(unsigned int location, unsigned int line, unsigned int column) {
+  return (PKScannerContext){ location, line, column };
 }
 
-static inline PKContext PKContextMakeZero() {
-  PKContext zero;
-  bzero(&zero, sizeof(PKContext));
+static inline PKScannerContext PKScannerContextMakeZero() {
+  PKScannerContext zero;
+  bzero(&zero, sizeof(PKScannerContext));
   return zero;
 }
+
+/* Scanner Token */
 
 typedef struct PKToken {
   unsigned int  token;
@@ -62,4 +71,35 @@ static inline PKToken PKTokenMakeZero() {
   bzero(&value, sizeof(PKValue));
   return (PKToken){ 0, value, 0, 0, NULL };
 }
+
+/* Status */
+
+typedef enum {
+  kPKParserStateOk,
+  kPKParserStateFinished,
+  kPKParserStateError
+} PKParserState;
+
+/* Parser State */
+
+typedef struct PKParserContext {
+  PKParserState   state;
+  PKPredicate   * predicate;
+  NSError       * error;
+} PKParserContext;
+
+static inline PKParserContext PKParserContextMakeError(NSError *error) {
+  return (PKParserContext){ kPKParserStateError, nil, error };
+}
+
+static inline PKParserContext PKParserContextMakePredicate(PKPredicate *predicate) {
+  return (PKParserContext){ kPKParserStateFinished, predicate, nil };
+}
+
+static inline PKParserContext PKParserContextMakeZero() {
+  PKParserContext zero;
+  bzero(&zero, sizeof(PKParserContext));
+  return zero;
+}
+
 
