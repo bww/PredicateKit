@@ -38,7 +38,7 @@
 
 %stack_overflow {
   context = context;
-  fprintf(stderr,"Giving up.  Parser stack overflow\n");
+  fprintf(stderr,"Giving up. Parser stack overflow\n");
 }
 
 %nonassoc LPAREN RPAREN LBRACE RBRACE LBRACK RBRACK.

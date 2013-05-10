@@ -31,6 +31,25 @@ static inline PKRange PKRangeMakeZero() {
   return zero;
 }
 
+/* Token */
+
+typedef struct PKToken {
+  unsigned int  token;
+  PKValue       value;
+  PKRange       range;
+  void        * node;
+} PKToken;
+
+static inline PKToken PKTokenMake(unsigned int token, PKValue value, PKRange range) {
+  return (PKToken){ token, value, range, NULL };
+}
+
+static inline PKToken PKTokenMakeZero() {
+  PKValue value;
+  bzero(&value, sizeof(PKValue));
+  return (PKToken){ 0, value, 0, 0, NULL };
+}
+
 /* Scanner Context */
 
 typedef struct PKScannerContext {
@@ -53,26 +72,7 @@ static inline PKScannerContext PKScannerContextMakeZero() {
   return zero;
 }
 
-/* Scanner Token */
-
-typedef struct PKToken {
-  unsigned int  token;
-  PKValue       value;
-  PKRange       range;
-  void        * node;
-} PKToken;
-
-static inline PKToken PKTokenMake(unsigned int token, PKValue value, PKRange range) {
-  return (PKToken){ token, value, range, NULL };
-}
-
-static inline PKToken PKTokenMakeZero() {
-  PKValue value;
-  bzero(&value, sizeof(PKValue));
-  return (PKToken){ 0, value, 0, 0, NULL };
-}
-
-/* Status */
+/* Parser State */
 
 typedef enum {
   kPKParserStateOk,
@@ -80,7 +80,7 @@ typedef enum {
   kPKParserStateError
 } PKParserState;
 
-/* Parser State */
+/* Parser Context */
 
 typedef struct PKParserContext {
   PKParserState   state;
