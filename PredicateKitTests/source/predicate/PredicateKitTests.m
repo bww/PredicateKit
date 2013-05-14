@@ -28,6 +28,7 @@
   STAssertNotNil(source, @"Could not load source");
   NSArray *lines = [source componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
   STAssertNotNil(lines, @"Could not parse source lines");
+  
   for(NSString *line in lines){
     NSLog(@"VV> %@", line);
     PKPredicate *predicate;
@@ -36,6 +37,7 @@
     id result;
     STAssertNotNil((result = [predicate evaluateWithObject:nil error:&error]), @"Error: %@", [error localizedDescription]);
   }
+  
   [source release];
   
 }
