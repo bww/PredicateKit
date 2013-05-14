@@ -6,6 +6,8 @@
 // Developed in New York City
 // 
 
+@class PKExpression;
+
 /**
  * A predicate parser.
  */
@@ -13,7 +15,7 @@
 
 +(PKParser *)parser;
 
--(BOOL)parse:(NSString *)source error:(NSError **)error;
+-(PKExpression *)parse:(NSString *)source error:(NSError **)error;
 
 @end
 

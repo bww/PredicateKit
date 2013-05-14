@@ -22,18 +22,22 @@
 		D351BC22173334D30051C1B3 /* PKGrammar.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC1F173334D30051C1B3 /* PKGrammar.c */; };
 		D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC20173334D30051C1B3 /* PKGrammar.h */; };
 		D351BC24173334D30051C1B3 /* PKLexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC21173334D30051C1B3 /* PKLexer.c */; };
-		D351BC31173352270051C1B3 /* PKExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC2F173352270051C1B3 /* PKExpression.h */; };
-		D351BC32173352270051C1B3 /* PKExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC30173352270051C1B3 /* PKExpression.m */; };
-		D351BC3517335C920051C1B3 /* PKCompoundExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC3317335C920051C1B3 /* PKCompoundExpression.h */; };
-		D351BC3617335C920051C1B3 /* PKCompoundExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC3417335C920051C1B3 /* PKCompoundExpression.m */; };
-		D351BC3B17337E990051C1B3 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC3717337E990051C1B3 /* PKComparisonExpression.h */; };
-		D351BC3C17337E990051C1B3 /* PKComparisonExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC3817337E990051C1B3 /* PKComparisonExpression.m */; };
-		D351BC3D17337E990051C1B3 /* PKLiteralExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC3917337E990051C1B3 /* PKLiteralExpression.h */; };
-		D351BC3E17337E990051C1B3 /* PKLiteralExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC3A17337E990051C1B3 /* PKLiteralExpression.m */; };
-		D351BC41173381C40051C1B3 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC3F173381C40051C1B3 /* PKBitwiseExpression.h */; };
-		D351BC42173381C40051C1B3 /* PKBitwiseExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC40173381C40051C1B3 /* PKBitwiseExpression.m */; };
-		D351BC45173385240051C1B3 /* PKIdentifierExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC43173385240051C1B3 /* PKIdentifierExpression.h */; };
-		D351BC46173385240051C1B3 /* PKIdentifierExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC44173385240051C1B3 /* PKIdentifierExpression.m */; };
+		D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */; };
+		D3A7DE851741C4F500DE8AE1 /* PKBitwiseExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */; };
+		D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */; };
+		D3A7DE871741C4F500DE8AE1 /* PKComparisonExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE7B1741C4F500DE8AE1 /* PKComparisonExpression.m */; };
+		D3A7DE881741C4F500DE8AE1 /* PKCompoundExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7C1741C4F500DE8AE1 /* PKCompoundExpression.h */; };
+		D3A7DE891741C4F500DE8AE1 /* PKCompoundExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE7D1741C4F500DE8AE1 /* PKCompoundExpression.m */; };
+		D3A7DE8A1741C4F500DE8AE1 /* PKExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7E1741C4F500DE8AE1 /* PKExpression.h */; };
+		D3A7DE8B1741C4F500DE8AE1 /* PKExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE7F1741C4F500DE8AE1 /* PKExpression.m */; };
+		D3A7DE8C1741C4F500DE8AE1 /* PKIdentifierExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE801741C4F500DE8AE1 /* PKIdentifierExpression.h */; };
+		D3A7DE8D1741C4F500DE8AE1 /* PKIdentifierExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE811741C4F500DE8AE1 /* PKIdentifierExpression.m */; };
+		D3A7DE8E1741C4F500DE8AE1 /* PKLiteralExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE821741C4F500DE8AE1 /* PKLiteralExpression.h */; };
+		D3A7DE8F1741C4F500DE8AE1 /* PKLiteralExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE831741C4F500DE8AE1 /* PKLiteralExpression.m */; };
+		D3A7DE921741CB4D00DE8AE1 /* PKEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */; };
+		D3A7DE931741CB4D00DE8AE1 /* PKEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE911741CB4D00DE8AE1 /* PKEvaluator.m */; };
+		D3A7DE971741CD2000DE8AE1 /* PKRuntimeEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE951741CD2000DE8AE1 /* PKRuntimeEvaluator.h */; };
+		D3A7DE981741CD2000DE8AE1 /* PKRuntimeEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,18 +78,22 @@
 		D351BC1F173334D30051C1B3 /* PKGrammar.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKGrammar.c; sourceTree = "<group>"; };
 		D351BC20173334D30051C1B3 /* PKGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKGrammar.h; sourceTree = "<group>"; };
 		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKLexer.c; sourceTree = "<group>"; };
-		D351BC2F173352270051C1B3 /* PKExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKExpression.h; sourceTree = "<group>"; };
-		D351BC30173352270051C1B3 /* PKExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpression.m; sourceTree = "<group>"; };
-		D351BC3317335C920051C1B3 /* PKCompoundExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCompoundExpression.h; sourceTree = "<group>"; };
-		D351BC3417335C920051C1B3 /* PKCompoundExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCompoundExpression.m; sourceTree = "<group>"; };
-		D351BC3717337E990051C1B3 /* PKComparisonExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKComparisonExpression.h; sourceTree = "<group>"; };
-		D351BC3817337E990051C1B3 /* PKComparisonExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKComparisonExpression.m; sourceTree = "<group>"; };
-		D351BC3917337E990051C1B3 /* PKLiteralExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLiteralExpression.h; sourceTree = "<group>"; };
-		D351BC3A17337E990051C1B3 /* PKLiteralExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLiteralExpression.m; sourceTree = "<group>"; };
-		D351BC3F173381C40051C1B3 /* PKBitwiseExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKBitwiseExpression.h; sourceTree = "<group>"; };
-		D351BC40173381C40051C1B3 /* PKBitwiseExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKBitwiseExpression.m; sourceTree = "<group>"; };
-		D351BC43173385240051C1B3 /* PKIdentifierExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKIdentifierExpression.h; sourceTree = "<group>"; };
-		D351BC44173385240051C1B3 /* PKIdentifierExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKIdentifierExpression.m; sourceTree = "<group>"; };
+		D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKBitwiseExpression.h; sourceTree = "<group>"; };
+		D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKBitwiseExpression.m; sourceTree = "<group>"; };
+		D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKComparisonExpression.h; sourceTree = "<group>"; };
+		D3A7DE7B1741C4F500DE8AE1 /* PKComparisonExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKComparisonExpression.m; sourceTree = "<group>"; };
+		D3A7DE7C1741C4F500DE8AE1 /* PKCompoundExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCompoundExpression.h; sourceTree = "<group>"; };
+		D3A7DE7D1741C4F500DE8AE1 /* PKCompoundExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCompoundExpression.m; sourceTree = "<group>"; };
+		D3A7DE7E1741C4F500DE8AE1 /* PKExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKExpression.h; sourceTree = "<group>"; };
+		D3A7DE7F1741C4F500DE8AE1 /* PKExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpression.m; sourceTree = "<group>"; };
+		D3A7DE801741C4F500DE8AE1 /* PKIdentifierExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKIdentifierExpression.h; sourceTree = "<group>"; };
+		D3A7DE811741C4F500DE8AE1 /* PKIdentifierExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKIdentifierExpression.m; sourceTree = "<group>"; };
+		D3A7DE821741C4F500DE8AE1 /* PKLiteralExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLiteralExpression.h; sourceTree = "<group>"; };
+		D3A7DE831741C4F500DE8AE1 /* PKLiteralExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLiteralExpression.m; sourceTree = "<group>"; };
+		D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKEvaluator.h; sourceTree = "<group>"; };
+		D3A7DE911741CB4D00DE8AE1 /* PKEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKEvaluator.m; sourceTree = "<group>"; };
+		D3A7DE951741CD2000DE8AE1 /* PKRuntimeEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRuntimeEvaluator.h; sourceTree = "<group>"; };
+		D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRuntimeEvaluator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,24 +212,16 @@
 		D351BC051733346C0051C1B3 /* predicate */ = {
 			isa = PBXGroup;
 			children = (
+				D3A7DE941741CD2000DE8AE1 /* evaluator */,
+				D3A7DE771741C4F500DE8AE1 /* intermediate */,
 				D351BC061733346C0051C1B3 /* grammar */,
 				D351BC0E1733346C0051C1B3 /* PKError.h */,
 				D351BC0F1733346C0051C1B3 /* PKParser.h */,
 				D351BC101733346C0051C1B3 /* PKParser.m */,
 				D351BC111733346C0051C1B3 /* PKPredicate.h */,
 				D351BC121733346C0051C1B3 /* PKPredicate.m */,
-				D351BC2F173352270051C1B3 /* PKExpression.h */,
-				D351BC30173352270051C1B3 /* PKExpression.m */,
-				D351BC3317335C920051C1B3 /* PKCompoundExpression.h */,
-				D351BC3417335C920051C1B3 /* PKCompoundExpression.m */,
-				D351BC3717337E990051C1B3 /* PKComparisonExpression.h */,
-				D351BC3817337E990051C1B3 /* PKComparisonExpression.m */,
-				D351BC3F173381C40051C1B3 /* PKBitwiseExpression.h */,
-				D351BC40173381C40051C1B3 /* PKBitwiseExpression.m */,
-				D351BC43173385240051C1B3 /* PKIdentifierExpression.h */,
-				D351BC44173385240051C1B3 /* PKIdentifierExpression.m */,
-				D351BC3917337E990051C1B3 /* PKLiteralExpression.h */,
-				D351BC3A17337E990051C1B3 /* PKLiteralExpression.m */,
+				D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */,
+				D3A7DE911741CB4D00DE8AE1 /* PKEvaluator.m */,
 			);
 			name = predicate;
 			path = source/predicate;
@@ -247,6 +247,34 @@
 			path = resources/tests;
 			sourceTree = "<group>";
 		};
+		D3A7DE771741C4F500DE8AE1 /* intermediate */ = {
+			isa = PBXGroup;
+			children = (
+				D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */,
+				D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */,
+				D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */,
+				D3A7DE7B1741C4F500DE8AE1 /* PKComparisonExpression.m */,
+				D3A7DE7C1741C4F500DE8AE1 /* PKCompoundExpression.h */,
+				D3A7DE7D1741C4F500DE8AE1 /* PKCompoundExpression.m */,
+				D3A7DE7E1741C4F500DE8AE1 /* PKExpression.h */,
+				D3A7DE7F1741C4F500DE8AE1 /* PKExpression.m */,
+				D3A7DE801741C4F500DE8AE1 /* PKIdentifierExpression.h */,
+				D3A7DE811741C4F500DE8AE1 /* PKIdentifierExpression.m */,
+				D3A7DE821741C4F500DE8AE1 /* PKLiteralExpression.h */,
+				D3A7DE831741C4F500DE8AE1 /* PKLiteralExpression.m */,
+			);
+			path = intermediate;
+			sourceTree = "<group>";
+		};
+		D3A7DE941741CD2000DE8AE1 /* evaluator */ = {
+			isa = PBXGroup;
+			children = (
+				D3A7DE951741CD2000DE8AE1 /* PKRuntimeEvaluator.h */,
+				D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */,
+			);
+			path = evaluator;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -260,12 +288,14 @@
 				D351BC171733346C0051C1B3 /* PKLexer.h in Headers */,
 				D351BC191733346C0051C1B3 /* PKTypes.h in Headers */,
 				D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */,
-				D351BC31173352270051C1B3 /* PKExpression.h in Headers */,
-				D351BC3517335C920051C1B3 /* PKCompoundExpression.h in Headers */,
-				D351BC3B17337E990051C1B3 /* PKComparisonExpression.h in Headers */,
-				D351BC3D17337E990051C1B3 /* PKLiteralExpression.h in Headers */,
-				D351BC41173381C40051C1B3 /* PKBitwiseExpression.h in Headers */,
-				D351BC45173385240051C1B3 /* PKIdentifierExpression.h in Headers */,
+				D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */,
+				D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */,
+				D3A7DE881741C4F500DE8AE1 /* PKCompoundExpression.h in Headers */,
+				D3A7DE8A1741C4F500DE8AE1 /* PKExpression.h in Headers */,
+				D3A7DE8C1741C4F500DE8AE1 /* PKIdentifierExpression.h in Headers */,
+				D3A7DE8E1741C4F500DE8AE1 /* PKLiteralExpression.h in Headers */,
+				D3A7DE921741CB4D00DE8AE1 /* PKEvaluator.h in Headers */,
+				D3A7DE971741CD2000DE8AE1 /* PKRuntimeEvaluator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,12 +409,14 @@
 				D351BC1E1733346C0051C1B3 /* PKPredicate.m in Sources */,
 				D351BC22173334D30051C1B3 /* PKGrammar.c in Sources */,
 				D351BC24173334D30051C1B3 /* PKLexer.c in Sources */,
-				D351BC32173352270051C1B3 /* PKExpression.m in Sources */,
-				D351BC3617335C920051C1B3 /* PKCompoundExpression.m in Sources */,
-				D351BC3C17337E990051C1B3 /* PKComparisonExpression.m in Sources */,
-				D351BC3E17337E990051C1B3 /* PKLiteralExpression.m in Sources */,
-				D351BC42173381C40051C1B3 /* PKBitwiseExpression.m in Sources */,
-				D351BC46173385240051C1B3 /* PKIdentifierExpression.m in Sources */,
+				D3A7DE851741C4F500DE8AE1 /* PKBitwiseExpression.m in Sources */,
+				D3A7DE871741C4F500DE8AE1 /* PKComparisonExpression.m in Sources */,
+				D3A7DE891741C4F500DE8AE1 /* PKCompoundExpression.m in Sources */,
+				D3A7DE8B1741C4F500DE8AE1 /* PKExpression.m in Sources */,
+				D3A7DE8D1741C4F500DE8AE1 /* PKIdentifierExpression.m in Sources */,
+				D3A7DE8F1741C4F500DE8AE1 /* PKLiteralExpression.m in Sources */,
+				D3A7DE931741CB4D00DE8AE1 /* PKEvaluator.m in Sources */,
+				D3A7DE981741CD2000DE8AE1 /* PKRuntimeEvaluator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

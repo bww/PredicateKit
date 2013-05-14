@@ -6,7 +6,7 @@
 // Developed in New York City
 // 
 
-#import <PredicateKit/PKParser.h>
+#import <PredicateKit/PKPredicate.h>
 
 #import "PredicateKitTests.h"
 
@@ -30,10 +30,15 @@
   STAssertNotNil(lines, @"Could not parse source lines");
   for(NSString *line in lines){
     NSLog(@"VV> %@", line);
-    STAssertTrue([[PKParser parser] parse:line error:&error], @"Could not parse predicate: %@", [error localizedDescription]);
+    PKPredicate *predicate;
+    STAssertNotNil((predicate = [PKPredicate predicateWithSource:line error:&error]), @"Error: %@", [error localizedDescription]);
+    NSLog(@"<PP %@", predicate);
+    id result;
+    STAssertNotNil((result = [predicate evaluateWithObject:nil error:&error]), @"Error: %@", [error localizedDescription]);
   }
   [source release];
   
 }
 
 @end
+

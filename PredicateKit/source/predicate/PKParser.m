@@ -11,6 +11,7 @@
 #import "PKTypes.h"
 #import "PKGrammar.h"
 #import "PKPredicate.h"
+#import "PKExpression.h"
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef void * yyscan_t;
@@ -59,16 +60,13 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
 /**
  * Parse a predicate
  */
--(BOOL)parse:(NSString *)source error:(NSError **)error {
-  BOOL status = FALSE;
+-(PKExpression *)parse:(NSString *)source error:(NSError **)error {
+  PKExpression *expression = nil;
+  int z;
   
   YY_BUFFER_STATE buffer = NULL;
   yyscan_t lexer = NULL;
   void *parser = NULL;
-  
-  PKPredicate *predicate = nil;
-  NSError *inner = nil;
-  int z;
   
   // make sure our input is valid
   if(source == nil || [source length] < 1){
@@ -107,7 +105,7 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
     __PKParser(parser, z, currentToken, &parserContext);
     
     // check for an error from the parser
-    if(parserContext.state == kPKParserStateError){
+    if(parserContext.state == kPKStateError){
       if(error) *error = (parserContext.error != nil) ? parserContext.error : NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
       goto error;
     }
@@ -120,7 +118,7 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   
   // make sure we didn't finish with an error
   if(z < 0){
-    if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
+    if(error) *error = (scannerContext.error != nil) ? scannerContext.error : NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
     goto error;
   }
   
@@ -134,32 +132,23 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   __PKParser(parser, 0, PKTokenMakeZero(), &parserContext);
   
   // check for an error from the parser on the last token
-  if(parserContext.state == kPKParserStateError){
+  if(parserContext.state == kPKStateError){
     if(error) *error = (parserContext.error != nil) ? parserContext.error : NSERROR(PKPredicateErrorDomain, PKStatusError, @"Could not parse predicate source");
     goto error;
   }
   
   // make sure we wound up with a predicate
-  if(parserContext.state != kPKParserStateFinished || (predicate = parserContext.predicate) == nil){
+  if(parserContext.state != kPKStateFinished || (expression = parserContext.expression) == nil){
     if(error) *error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"No predicate was produced");
     goto error;
   }
   
-  // validate the predicate
-  if(![predicate validate:&inner]){
-    if(error) *error = NSERROR_WITH_CAUSE(PKPredicateErrorDomain, PKStatusError, inner, @"Predicate is invalid");
-    goto error;
-  }
-  
-  NSLog(@"<PP %@", predicate);
-  
-  status = TRUE;
 error:
   if(buffer) yy_delete_buffer(buffer, lexer);
   if(lexer) yylex_destroy(lexer);
   if(parser) __PKParserFree(parser, free);
   
-  return status;
+  return expression;
 }
 
 @end

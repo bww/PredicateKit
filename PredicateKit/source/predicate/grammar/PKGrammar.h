@@ -29,8 +29,9 @@
 #define T_DOT                            29
 #define T_COMMA                          30
 #define T_BOOL                           31
-#define T_INT                            32
-#define T_LONG                           33
-#define T_FLOAT                          34
-#define T_DOUBLE                         35
-#define T_QUOTED_STRING                  36
+#define T_NULL                           32
+#define T_INT                            33
+#define T_LONG                           34
+#define T_FLOAT                          35
+#define T_DOUBLE                         36
+#define T_QUOTED_STRING                  37

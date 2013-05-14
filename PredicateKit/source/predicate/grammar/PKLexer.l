@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "PKGrammar.h"
 #include "PKLexer.h"
+#include "PKTypes.h"
 
 static inline void pk_context_increment(PKScannerContext *context, const char *text) {
   if(context != NULL && text != NULL){
@@ -124,6 +125,7 @@ WS          [ \t]
 "in"            { pk_context_increment(yyextra, yytext); return T_IN; }
 "true"          { pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
 "false"         { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
+"null"          { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_NULL; }
 
 \n              { pk_context_newline(yyextra); }
 {WS}+           { pk_context_increment(yyextra, yytext); }
@@ -139,7 +141,9 @@ WS          [ \t]
 
 . {
   pk_context_increment(yyextra, yytext);
-  printf("error: unrecognized character at %d:%d '%s'\n", yyextra->line, yyextra->column, yytext);
+  yyextra->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Unrecognized character '%s'.", yytext);
+  yyextra->state = kPKStateError;
+  return -1;
 }
 
 %%

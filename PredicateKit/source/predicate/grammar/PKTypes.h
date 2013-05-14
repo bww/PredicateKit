@@ -25,11 +25,13 @@ static inline PKRange PKRangeMake(unsigned int location, unsigned int length) {
   return (PKRange){ location, length };
 }
 
-static inline PKRange PKRangeMakeZero() {
-  PKRange zero;
-  bzero(&zero, sizeof(PKRange));
-  return zero;
-}
+/* State */
+
+typedef enum {
+  kPKStateOk,
+  kPKStateFinished,
+  kPKStateError
+} PKState;
 
 /* Token */
 
@@ -53,6 +55,8 @@ static inline PKToken PKTokenMakeZero() {
 /* Scanner Context */
 
 typedef struct PKScannerContext {
+  PKState         state;
+  NSError       * error;
   unsigned int    location;
   unsigned int    line;
   unsigned int    column;
@@ -62,39 +66,19 @@ typedef struct PKScannerContext {
 #define YY_EXTRA_TYPE PKScannerContext *
 #endif
 
-static inline PKScannerContext PKScannerContextMake(unsigned int location, unsigned int line, unsigned int column) {
-  return (PKScannerContext){ location, line, column };
-}
-
 static inline PKScannerContext PKScannerContextMakeZero() {
   PKScannerContext zero;
   bzero(&zero, sizeof(PKScannerContext));
   return zero;
 }
 
-/* Parser State */
-
-typedef enum {
-  kPKParserStateOk,
-  kPKParserStateFinished,
-  kPKParserStateError
-} PKParserState;
-
 /* Parser Context */
 
 typedef struct PKParserContext {
-  PKParserState   state;
-  PKPredicate   * predicate;
+  PKState         state;
+  PKExpression  * expression;
   NSError       * error;
 } PKParserContext;
-
-static inline PKParserContext PKParserContextMakeError(NSError *error) {
-  return (PKParserContext){ kPKParserStateError, nil, error };
-}
-
-static inline PKParserContext PKParserContextMakePredicate(PKPredicate *predicate) {
-  return (PKParserContext){ kPKParserStateFinished, predicate, nil };
-}
 
 static inline PKParserContext PKParserContextMakeZero() {
   PKParserContext zero;

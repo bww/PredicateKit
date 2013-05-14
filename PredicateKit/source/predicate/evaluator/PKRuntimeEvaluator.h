@@ -6,12 +6,12 @@
 // Developed in New York City
 // 
 
-#import "PKPredicate.h"
+#import "PKEvaluator.h"
 
 /**
- * An expression.
+ * A predicate evaluator.
  */
-@interface PKExpression : PKPredicate
+@interface PKRuntimeEvaluator : PKEvaluator
 
 @end
 
