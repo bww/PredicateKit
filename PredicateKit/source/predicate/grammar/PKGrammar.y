@@ -54,6 +54,8 @@
 %left MUL DIV MOD.
 %right EXP.
 
+/* Predicate */
+
 predicate ::= expression(A). {
   if(context != NULL && context->state != kPKStateError){
     context->expression = A.node;
@@ -61,21 +63,33 @@ predicate ::= expression(A). {
   }
 }
 
-expression(A) ::= bitwise(B) LAND bitwise(C). {
-  if(context != NULL && context->state != kPKStateError){
-    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
-  }
-}
-expression(A) ::= bitwise(B) LOR bitwise(C). {
-  if(context != NULL && context->state != kPKStateError){
-    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
-  }
-}
-expression(A) ::= bitwise(B). {
+/* Expression */
+
+expression(A) ::= logical(B). {
   if(context != NULL && context->state != kPKStateError){
     A.node = B.node;
   }
 }
+
+/* Logical */
+
+logical(A) ::= bitwise(B) LAND bitwise(C). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+  }
+}
+logical(A) ::= bitwise(B) LOR bitwise(C). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+  }
+}
+logical(A) ::= bitwise(B). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = B.node;
+  }
+}
+
+/* Bitwise */
 
 bitwise(A) ::= modified(B) BOR modified(C). {
   if(context != NULL && context->state != kPKStateError){
@@ -98,6 +112,8 @@ bitwise(A) ::= modified(B). {
   }
 }
 
+/* Modified expressions */
+
 modified ::= equality LBRACK IDENT RBRACK. {
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
@@ -109,6 +125,8 @@ modified(A) ::= equality(B). {
     A.node = B.node;
   }
 }
+
+/* Equality */
 
 equality(A) ::= relational(B) EQ relational(C). {
   if(context != NULL && context->state != kPKStateError){
@@ -136,6 +154,8 @@ equality(A) ::= relational(B). {
   }
 }
 
+/* Relational */
+
 relational(A) ::= unary(B) GT unary(C). {
   if(context != NULL && context->state != kPKStateError){
     A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
@@ -162,6 +182,8 @@ relational(A) ::= unary(B). {
   }
 }
 
+/* Unary */
+
 unary(A) ::= BNOT dereference(B). {
   if(context != NULL && context->state != kPKStateError){
     A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:B.node, nil]];
@@ -178,6 +200,8 @@ unary(A) ::= dereference(B). {
   }
 }
 
+/* Dereference */
+
 dereference ::= dereference DOT IDENT. {
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
@@ -189,6 +213,8 @@ dereference(A) ::= primary(B). {
     A.node = B.node;
   }
 }
+
+/* Primary expressions */
 
 primary(A) ::= literal(B). {
   if(context != NULL && context->state != kPKStateError){
@@ -202,12 +228,16 @@ primary(A) ::= LPAREN expression(B) RPAREN. {
   }
 }
 
+/* Collections */
+
 collection ::= LBRACE parameters RBRACE. {
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
     context->state = kPKStateError;
   }
 }
+
+/* Parameters */
 
 parameters ::= parameters COMMA expression. {
   if(context != NULL && context->state != kPKStateError){
@@ -221,6 +251,8 @@ parameters ::= expression. {
     context->state = kPKStateError;
   }
 }
+
+/* Literals */
 
 literal(A) ::= BOOL(B). {
   if(context != NULL && context->state != kPKStateError){
