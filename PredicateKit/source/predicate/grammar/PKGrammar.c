@@ -788,7 +788,7 @@ static void yy_reduce(
   **     break;
   */
       case 0: /* predicate ::= expression */
-#line 57 "PKGrammar.y"
+#line 59 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     context->expression = yymsp[0].minor.yy9.node;
@@ -806,7 +806,7 @@ static void yy_reduce(
       case 23: /* unary ::= dereference */ yytestcase(yyruleno==23);
       case 25: /* dereference ::= primary */ yytestcase(yyruleno==25);
       case 26: /* primary ::= literal */ yytestcase(yyruleno==26);
-#line 66 "PKGrammar.y"
+#line 68 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = yymsp[0].minor.yy9.node;
@@ -815,7 +815,7 @@ static void yy_reduce(
 #line 816 "PKGrammar.c"
         break;
       case 2: /* logical ::= bitwise LAND bitwise */
-#line 74 "PKGrammar.y"
+#line 76 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -824,7 +824,7 @@ static void yy_reduce(
 #line 825 "PKGrammar.c"
         break;
       case 3: /* logical ::= bitwise LOR bitwise */
-#line 79 "PKGrammar.y"
+#line 81 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -833,7 +833,7 @@ static void yy_reduce(
 #line 834 "PKGrammar.c"
         break;
       case 5: /* bitwise ::= modified BOR modified */
-#line 92 "PKGrammar.y"
+#line 94 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -842,7 +842,7 @@ static void yy_reduce(
 #line 843 "PKGrammar.c"
         break;
       case 6: /* bitwise ::= modified BAND modified */
-#line 97 "PKGrammar.y"
+#line 99 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -851,7 +851,7 @@ static void yy_reduce(
 #line 852 "PKGrammar.c"
         break;
       case 7: /* bitwise ::= modified BXOR modified */
-#line 102 "PKGrammar.y"
+#line 104 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -864,7 +864,7 @@ static void yy_reduce(
       case 29: /* collection ::= LBRACE parameters RBRACE */ yytestcase(yyruleno==29);
       case 30: /* parameters ::= parameters COMMA expression */ yytestcase(yyruleno==30);
       case 31: /* parameters ::= expression */ yytestcase(yyruleno==31);
-#line 115 "PKGrammar.y"
+#line 117 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
@@ -874,7 +874,7 @@ static void yy_reduce(
 #line 875 "PKGrammar.c"
         break;
       case 11: /* equality ::= relational EQ relational */
-#line 129 "PKGrammar.y"
+#line 131 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -883,7 +883,7 @@ static void yy_reduce(
 #line 884 "PKGrammar.c"
         break;
       case 12: /* equality ::= relational NE relational */
-#line 134 "PKGrammar.y"
+#line 136 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -892,7 +892,7 @@ static void yy_reduce(
 #line 893 "PKGrammar.c"
         break;
       case 13: /* equality ::= relational MATCH relational */
-#line 139 "PKGrammar.y"
+#line 141 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -901,7 +901,7 @@ static void yy_reduce(
 #line 902 "PKGrammar.c"
         break;
       case 14: /* equality ::= relational IN relational */
-#line 144 "PKGrammar.y"
+#line 146 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -910,7 +910,7 @@ static void yy_reduce(
 #line 911 "PKGrammar.c"
         break;
       case 16: /* relational ::= unary GT unary */
-#line 157 "PKGrammar.y"
+#line 159 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -919,7 +919,7 @@ static void yy_reduce(
 #line 920 "PKGrammar.c"
         break;
       case 17: /* relational ::= unary GE unary */
-#line 162 "PKGrammar.y"
+#line 164 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -928,7 +928,7 @@ static void yy_reduce(
 #line 929 "PKGrammar.c"
         break;
       case 18: /* relational ::= unary LT unary */
-#line 167 "PKGrammar.y"
+#line 169 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -937,7 +937,7 @@ static void yy_reduce(
 #line 938 "PKGrammar.c"
         break;
       case 19: /* relational ::= unary LE unary */
-#line 172 "PKGrammar.y"
+#line 174 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy9.node, yymsp[0].minor.yy9.node, nil]];
@@ -946,7 +946,7 @@ static void yy_reduce(
 #line 947 "PKGrammar.c"
         break;
       case 21: /* unary ::= BNOT dereference */
-#line 185 "PKGrammar.y"
+#line 187 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy9.node, nil]];
@@ -955,7 +955,7 @@ static void yy_reduce(
 #line 956 "PKGrammar.c"
         break;
       case 22: /* unary ::= LNOT dereference */
-#line 190 "PKGrammar.y"
+#line 192 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy9.node, nil]];
@@ -964,7 +964,7 @@ static void yy_reduce(
 #line 965 "PKGrammar.c"
         break;
       case 28: /* primary ::= LPAREN expression RPAREN */
-#line 223 "PKGrammar.y"
+#line 225 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = yymsp[-1].minor.yy9.node;
@@ -973,7 +973,7 @@ static void yy_reduce(
 #line 974 "PKGrammar.c"
         break;
       case 32: /* literal ::= BOOL */
-#line 255 "PKGrammar.y"
+#line 257 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]];
@@ -982,7 +982,7 @@ static void yy_reduce(
 #line 983 "PKGrammar.c"
         break;
       case 33: /* literal ::= NULL */
-#line 260 "PKGrammar.y"
+#line 262 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNull null]];
@@ -991,7 +991,7 @@ static void yy_reduce(
 #line 992 "PKGrammar.c"
         break;
       case 34: /* literal ::= INT */
-#line 265 "PKGrammar.y"
+#line 267 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]];
@@ -1000,7 +1000,7 @@ static void yy_reduce(
 #line 1001 "PKGrammar.c"
         break;
       case 35: /* literal ::= LONG */
-#line 270 "PKGrammar.y"
+#line 272 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]];
@@ -1009,7 +1009,7 @@ static void yy_reduce(
 #line 1010 "PKGrammar.c"
         break;
       case 36: /* literal ::= FLOAT */
-#line 275 "PKGrammar.y"
+#line 277 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]];
@@ -1018,7 +1018,7 @@ static void yy_reduce(
 #line 1019 "PKGrammar.c"
         break;
       case 37: /* literal ::= DOUBLE */
-#line 280 "PKGrammar.y"
+#line 282 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]];
@@ -1027,7 +1027,7 @@ static void yy_reduce(
 #line 1028 "PKGrammar.c"
         break;
       case 38: /* literal ::= IDENT */
-#line 285 "PKGrammar.y"
+#line 287 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
@@ -1037,7 +1037,7 @@ static void yy_reduce(
 #line 1038 "PKGrammar.c"
         break;
       case 39: /* literal ::= QUOTED_STRING */
-#line 291 "PKGrammar.y"
+#line 293 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy9.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];

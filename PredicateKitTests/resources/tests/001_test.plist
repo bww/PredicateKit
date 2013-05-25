@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+  
+	<dict>
+		<key>expression</key>
+		<string>/foobar/</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>"hi"</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	
+	<dict>
+		<key>expression</key>
+		<string>1 == 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 == 2</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 != 1</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 != 2</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 &lt; 1</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 &lt; 2</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 &lt;= 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>0 &lt;= 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>2 &lt;= 1</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 &gt; 1</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>2 &gt; 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 &gt;= 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>2 &gt;= 1</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>0 &gt;= 1</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	
+	<dict>
+		<key>expression</key>
+		<string>&quot;a&quot; == &quot;a&quot;</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>&quot;a&quot; == &quot;b&quot;</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>&quot;a&quot; != &quot;a&quot;</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>&quot;a&quot; != &quot;b&quot;</string>
+		<key>result</key>
+		<true/>
+	</dict>
+</array>
+</plist>

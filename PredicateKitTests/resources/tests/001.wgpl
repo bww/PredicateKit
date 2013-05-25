@@ -1,29 +1,67 @@
-a && b
-a || b
-a == b
-a != b
-a < b
-a <= b
-a > b
-a >= b
-?
-(a && b)
-(a && b) || (b && c)
-(a == b) && (b != c)
-(a == b) <= (b != c)
-true
-false
-true || false
-null
-null || 3
-a == 1 [cd]
-(a == 1)[cd]
-(a == 1 || false)[cd]
-~a
-a & ~(b | c)
-!a
-!(a || b == c)
-/* a in { a, b, c, 1, 2, 3 } */
-//a.b
-//a.b.c
-//a.b.c.d.e.f.gee
+/*
+  Expression grammar tests.
+  
+  Test evaluated as pairs of expressions delimited by semicolons. The first
+  expression is the expression to be evaluated. The second expression should
+  be a constant which is the expected result of the first expression.
+  
+  For example, to test that the expression (1 < 2) is false, we might use:
+  1 < 2; true;
+  
+*/
+a && b;
+
+2 == 2;
+2 == 3;
+2 != 2;
+2 != 3;
+2 < 2;
+2 < 3;
+2 <= 2;
+2 <= 3;
+2 > 2;
+3 > 2;
+2 >= 3;
+2 >= 2;
+
+"a" == "a";
+"a" == "b";
+"a" != "a";
+"a" != "b";
+"a" < "a";
+"a" < "b";
+"a" =< "a";
+"a" =< "b";
+"a" > "a";
+"a" > "b";
+"a" >= "a";
+"a" >= "b";
+
+a || b;
+a == b;
+a != b;
+a < b;
+a <= b;
+a > b;
+a >= b;
+?;
+(a && b);
+(a && b) || (b && c);
+(a == b) && (b != c);
+(a == b) <= (b != c);
+true;
+false;
+true || false;
+null;
+null || 3;
+a == 1 [cd];
+(a == 1)[cd];
+(a == 1 || false)[cd];
+~a;
+a & ~(b | c);
+!a;
+!(a || b == c);
+/* a in { a, b, c, 1, 2, 3 } */;
+//a.b;
+//a.b.c;
+//a.b.c.d.e.f.gee;

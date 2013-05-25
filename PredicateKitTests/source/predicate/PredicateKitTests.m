@@ -22,23 +22,27 @@
 
 -(void)testExample {
   NSError *error = nil;
-  NSString *source;
   
-  source = [[NSString alloc] initWithContentsOfFile:@"PredicateKitTests/resources/tests/001.wgpl" encoding:NSUTF8StringEncoding error:&error];
-  STAssertNotNil(source, @"Could not load source");
-  NSArray *lines = [source componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-  STAssertNotNil(lines, @"Could not parse source lines");
+  NSArray *tests = [[NSArray alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"001_test.plist" ofType:nil]];
+  STAssertNotNil(tests, @"Tests must not be nil");
   
-  for(NSString *line in lines){
-    NSLog(@"VV> %@", line);
-    PKPredicate *predicate;
-    STAssertNotNil((predicate = [PKPredicate predicateWithSource:line error:&error]), @"Error: %@", [error localizedDescription]);
-    NSLog(@"<PP %@", predicate);
+  for(NSDictionary *test in tests){
+    
+    NSString *expression = [test objectForKey:@"expression"];
+    STAssertNotNil(expression, @"Test expression must not be nil");
+    id require = [test objectForKey:@"result"];
+    STAssertNotNil(require, @"Test result must not be nil");
+    
+    PKPredicate *predicate = [PKPredicate predicateWithSource:expression error:&error];
+    STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
+    if(predicate == nil) continue;
+    
     id result;
-    STAssertNotNil((result = [predicate evaluateWithObject:nil error:&error]), @"Error: %@", [error localizedDescription]);
+    STAssertNotNil((result = [predicate evaluateWithObject:nil error:&error]), @"Runtime error: %@", [error localizedDescription]);
+    STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: %@", predicate);
+    NSLog(@"P: %@ ==> %@", predicate, result);
+    
   }
-  
-  [source release];
   
 }
 

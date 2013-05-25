@@ -22,6 +22,7 @@
 		D351BC22173334D30051C1B3 /* PKGrammar.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC1F173334D30051C1B3 /* PKGrammar.c */; };
 		D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC20173334D30051C1B3 /* PKGrammar.h */; };
 		D351BC24173334D30051C1B3 /* PKLexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC21173334D30051C1B3 /* PKLexer.c */; };
+		D396D49E17505915000DF425 /* 001_test.plist in Resources */ = {isa = PBXBuildFile; fileRef = D396D49D17505915000DF425 /* 001_test.plist */; };
 		D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */; };
 		D3A7DE851741C4F500DE8AE1 /* PKBitwiseExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */; };
 		D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */; };
@@ -78,6 +79,7 @@
 		D351BC1F173334D30051C1B3 /* PKGrammar.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKGrammar.c; sourceTree = "<group>"; };
 		D351BC20173334D30051C1B3 /* PKGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKGrammar.h; sourceTree = "<group>"; };
 		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKLexer.c; sourceTree = "<group>"; };
+		D396D49D17505915000DF425 /* 001_test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 001_test.plist; sourceTree = "<group>"; };
 		D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKBitwiseExpression.h; sourceTree = "<group>"; };
 		D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKBitwiseExpression.m; sourceTree = "<group>"; };
 		D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKComparisonExpression.h; sourceTree = "<group>"; };
@@ -177,7 +179,7 @@
 		D351BBC717332F3E0051C1B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D351BC26173345EF0051C1B3 /* tests */,
+				D396D49A17505904000DF425 /* tests */,
 				D351BBC817332F3E0051C1B3 /* PredicateKitTests-Info.plist */,
 			);
 			name = "Supporting Files";
@@ -239,9 +241,10 @@
 			path = grammar;
 			sourceTree = "<group>";
 		};
-		D351BC26173345EF0051C1B3 /* tests */ = {
+		D396D49A17505904000DF425 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				D396D49D17505915000DF425 /* 001_test.plist */,
 			);
 			name = tests;
 			path = resources/tests;
@@ -379,6 +382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D396D49E17505915000DF425 /* 001_test.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
