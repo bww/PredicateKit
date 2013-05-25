@@ -20,7 +20,7 @@ static inline void pk_context_newline(PKScannerContext *context) {
   }
 }
 
-char * pk_string_copy_literal(const char *string);
+char * pk_string_copy_literal(const char *string, const char delim);
 
 %}
 
@@ -76,7 +76,7 @@ DOUBLE      {NUMBER}\.{NUMBER}{EXPONENT}?(d|D)
 STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\"
 
 /* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters */
-REGEX       \/([^\/\\\n]|\\['"?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\/
+REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
@@ -141,8 +141,8 @@ WS          [ \t]
 {HEX_INTEGER}   { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
 {FLOAT}         { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 {DOUBLE}        { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
-{STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext); return T_QUOTED_STRING; }
-{REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext); fprintf(stderr, "REGEX: %s\n", yytext); return T_QUOTED_STRING; }
+{STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
+{REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_QUOTED_STRING; }
 {IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
 
 . {
@@ -157,10 +157,9 @@ WS          [ \t]
 /**
  * Copy a string literal by unescaping
  */
-char * pk_string_copy_literal(const char *string) {
+char * pk_string_copy_literal(const char *string, const char delim) {
   size_t length = strlen(string);
   const char escape = '\\';
-  const char delim  = '"';
   const char *sp;
   BOOL status = FALSE;
   int esc = 0;
@@ -201,7 +200,7 @@ char * pk_string_copy_literal(const char *string) {
         char digits[5];
         strncpy(digits, ep + 1, 4); digits[4] = 0;
         uint32_t val = strtol(digits, NULL, 16);
-        fprintf(stderr, "THIS WILL NOT WORK RIGHT!\n");
+        fprintf(stderr, "Unicode escape sequences are not correctly supported!\n");
         abort();
         i += 4; /* j += 4; */
       }else{
@@ -215,6 +214,7 @@ char * pk_string_copy_literal(const char *string) {
     }
   }
   
+  ep[j] = 0;
   status = TRUE;
 error:
   if(ep && !status){

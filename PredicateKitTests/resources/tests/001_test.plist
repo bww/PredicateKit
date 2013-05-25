@@ -5,15 +5,15 @@
   
 	<dict>
 		<key>expression</key>
-		<string>/foobar/</string>
+		<string>/foobar \/ another "ok" yeah/</string>
 		<key>result</key>
-		<true/>
+		<string>foobar / another "ok" yeah</string>
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>"hi"</string>
+		<string>"hi \"quoted\" ok"</string>
 		<key>result</key>
-		<true/>
+		<string>hi "quoted" ok</string>
 	</dict>
 	
 	<dict>
