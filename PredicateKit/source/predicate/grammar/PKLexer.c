@@ -622,6 +622,8 @@ static yyconst flex_int32_t yy_rule_can_match_eol[51] =
 #line 2 "PKLexer.l"
 
 #include <stdio.h>
+#include <iconv.h>
+
 #include "PKGrammar.h"
 #include "PKLexer.h"
 #include "PKTypes.h"
@@ -664,7 +666,7 @@ char * pk_string_copy_literal(const char *string, const char delim);
 
 /* Multi-line comments state */
 
-#line 668 "PKLexer.c"
+#line 670 "PKLexer.c"
 
 #define INITIAL 0
 #define S_COMMENT 1
@@ -897,10 +899,10 @@ YY_DECL
 	register int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
-#line 89 "PKLexer.l"
+#line 91 "PKLexer.l"
 
 
-#line 904 "PKLexer.c"
+#line 906 "PKLexer.c"
 
     yylval = yylval_param;
 
@@ -999,250 +1001,250 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 91 "PKLexer.l"
+#line 93 "PKLexer.l"
 { BEGIN(S_COMMENT); pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 92 "PKLexer.l"
+#line 94 "PKLexer.l"
 { BEGIN(INITIAL); pk_context_newline(yyextra); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 93 "PKLexer.l"
+#line 95 "PKLexer.l"
 { BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 94 "PKLexer.l"
+#line 96 "PKLexer.l"
 { BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 95 "PKLexer.l"
+#line 97 "PKLexer.l"
 { BEGIN(INITIAL); pk_context_newline(yyextra); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 96 "PKLexer.l"
+#line 98 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 98 "PKLexer.l"
+#line 100 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LAND; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 99 "PKLexer.l"
+#line 101 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LOR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 100 "PKLexer.l"
+#line 102 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_EQ; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 101 "PKLexer.l"
+#line 103 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_NE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 102 "PKLexer.l"
+#line 104 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_MATCH; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 103 "PKLexer.l"
+#line 105 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_GE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 104 "PKLexer.l"
+#line 106 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 105 "PKLexer.l"
+#line 107 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_GT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 106 "PKLexer.l"
+#line 108 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 107 "PKLexer.l"
+#line 109 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LNOT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 109 "PKLexer.l"
+#line 111 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LPAREN; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 110 "PKLexer.l"
+#line 112 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_RPAREN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 111 "PKLexer.l"
+#line 113 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LBRACE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 112 "PKLexer.l"
+#line 114 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_RBRACE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 113 "PKLexer.l"
+#line 115 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_LBRACK; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 114 "PKLexer.l"
+#line 116 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_RBRACK; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 116 "PKLexer.l"
+#line 118 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_BAND; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 117 "PKLexer.l"
+#line 119 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_BOR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 118 "PKLexer.l"
+#line 120 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_BXOR; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 119 "PKLexer.l"
+#line 121 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_BNOT; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 121 "PKLexer.l"
+#line 123 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_MOD; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 122 "PKLexer.l"
+#line 124 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_DIV; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 123 "PKLexer.l"
+#line 125 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_MUL; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 124 "PKLexer.l"
+#line 126 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_ADD; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 125 "PKLexer.l"
+#line 127 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_SUB; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "PKLexer.l"
+#line 129 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_DOT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 128 "PKLexer.l"
+#line 130 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_COMMA; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 130 "PKLexer.l"
+#line 132 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); return T_IN; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 131 "PKLexer.l"
+#line 133 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 132 "PKLexer.l"
+#line 134 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 133 "PKLexer.l"
+#line 135 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_NULL; }
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 135 "PKLexer.l"
+#line 137 "PKLexer.l"
 { pk_context_newline(yyextra); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 136 "PKLexer.l"
+#line 138 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 138 "PKLexer.l"
+#line 140 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 139 "PKLexer.l"
+#line 141 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 140 "PKLexer.l"
+#line 142 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 141 "PKLexer.l"
+#line 143 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 142 "PKLexer.l"
+#line 144 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 143 "PKLexer.l"
+#line 145 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 144 "PKLexer.l"
+#line 146 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 145 "PKLexer.l"
+#line 147 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_QUOTED_STRING; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 146 "PKLexer.l"
+#line 148 "PKLexer.l"
 { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 148 "PKLexer.l"
+#line 150 "PKLexer.l"
 {
   pk_context_increment(yyextra, yytext);
   yyextra->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Unrecognized character '%s'.", yytext);
@@ -1252,10 +1254,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 155 "PKLexer.l"
+#line 157 "PKLexer.l"
 ECHO;
 	YY_BREAK
-#line 1259 "PKLexer.c"
+#line 1261 "PKLexer.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(S_COMMENT):
 case YY_STATE_EOF(M_COMMENT):
@@ -2434,7 +2436,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 155 "PKLexer.l"
+#line 157 "PKLexer.l"
 
 
 
@@ -2449,11 +2451,13 @@ char * pk_string_copy_literal(const char *string, const char delim) {
   int esc = 0;
   
   if(length < 2) return NULL;
-  sp = string + 1; length -= 2;
   
   // the unescaped string cannot be larger (in bytes) than the escaped string, so we can
   // just allocate the same number of bytes as the escaped string.
   char *ep = malloc(length);
+  
+  // skip past the leading delimiter and adjust the length accordingly
+  sp = string + 1; length -= 2;
   
   size_t j = 0;
   for(size_t i = 0; i < length; i++){
@@ -2482,11 +2486,36 @@ char * pk_string_copy_literal(const char *string, const char delim) {
       }else if(c == 'u'){
         if(length - i < 5) goto error; // require 'u' + 4 hex digits
         char digits[5];
-        strncpy(digits, ep + 1, 4); digits[4] = 0;
+        strncpy(digits, sp + i + 1, 4); digits[4] = 0;
         uint32_t val = strtol(digits, NULL, 16);
-        fprintf(stderr, "Unicode escape sequences are not correctly supported!\n");
-        abort();
-        i += 4; /* j += 4; */
+        
+        char *ip = (char *)&val;
+        char *op = ep + j;
+        size_t ivbytes = 4;
+        size_t inbytes = ivbytes, outbytes = ivbytes;
+        
+        iconv_t iv;
+        if(htonl(47) == 47){
+          iv = iconv_open("UTF-8", "UTF-32BE");
+        }else{
+          iv = iconv_open("UTF-8", "UTF-32LE");
+        }
+        
+        assert(iv >= 0);
+        
+        size_t cv = iconv(iv, &ip, &inbytes, &op, &outbytes);
+        if(cv == (size_t)-1){
+          fprintf(stderr, "Could not convert \\u%4X: %s\n", val, strerror(errno));
+          abort();
+        }
+        
+        iconv_close(iv);
+        
+        ivbytes = ivbytes - outbytes;
+        digits[ivbytes] = 0;
+        //fprintf(stderr, "DIGITS [%d]: %s\n", ivbytes, digits);
+        
+        i += 4; j += ivbytes;
       }else{
         ep[j++] = c;
       }
@@ -2500,6 +2529,7 @@ char * pk_string_copy_literal(const char *string, const char delim) {
   
   ep[j] = 0;
   status = TRUE;
+  fprintf(stderr, "CONVERTED: %s\n", ep);
 error:
   if(ep && !status){
     free(ep); ep = NULL;

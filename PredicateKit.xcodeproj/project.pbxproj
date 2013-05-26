@@ -23,6 +23,7 @@
 		D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC20173334D30051C1B3 /* PKGrammar.h */; };
 		D351BC24173334D30051C1B3 /* PKLexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC21173334D30051C1B3 /* PKLexer.c */; };
 		D396D49E17505915000DF425 /* 001_test.plist in Resources */ = {isa = PBXBuildFile; fileRef = D396D49D17505915000DF425 /* 001_test.plist */; };
+		D396D4A51752C56B000DF425 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D396D4A41752C56B000DF425 /* libiconv.dylib */; };
 		D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */; };
 		D3A7DE851741C4F500DE8AE1 /* PKBitwiseExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */; };
 		D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */; };
@@ -80,6 +81,7 @@
 		D351BC20173334D30051C1B3 /* PKGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKGrammar.h; sourceTree = "<group>"; };
 		D351BC21173334D30051C1B3 /* PKLexer.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PKLexer.c; sourceTree = "<group>"; };
 		D396D49D17505915000DF425 /* 001_test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 001_test.plist; sourceTree = "<group>"; };
+		D396D4A41752C56B000DF425 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKBitwiseExpression.h; sourceTree = "<group>"; };
 		D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKBitwiseExpression.m; sourceTree = "<group>"; };
 		D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKComparisonExpression.h; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				D351BBBD17332F3E0051C1B3 /* SenTestingKit.framework in Frameworks */,
 				D351BBC017332F3E0051C1B3 /* Foundation.framework in Frameworks */,
 				D351BBC517332F3E0051C1B3 /* PredicateKit.framework in Frameworks */,
+				D396D4A51752C56B000DF425 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +148,7 @@
 			children = (
 				D351BBAD17332F3D0051C1B3 /* Foundation.framework */,
 				D351BBBC17332F3E0051C1B3 /* SenTestingKit.framework */,
+				D396D4A41752C56B000DF425 /* libiconv.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -217,6 +221,7 @@
 				D3A7DE941741CD2000DE8AE1 /* evaluator */,
 				D3A7DE771741C4F500DE8AE1 /* intermediate */,
 				D351BC061733346C0051C1B3 /* grammar */,
+				D396D49F175136A7000DF425 /* util */,
 				D351BC0E1733346C0051C1B3 /* PKError.h */,
 				D351BC0F1733346C0051C1B3 /* PKParser.h */,
 				D351BC101733346C0051C1B3 /* PKParser.m */,
@@ -248,6 +253,13 @@
 			);
 			name = tests;
 			path = resources/tests;
+			sourceTree = "<group>";
+		};
+		D396D49F175136A7000DF425 /* util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		D3A7DE771741C4F500DE8AE1 /* intermediate */ = {

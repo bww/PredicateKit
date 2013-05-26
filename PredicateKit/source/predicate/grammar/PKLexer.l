@@ -1,6 +1,8 @@
 %{
 
 #include <stdio.h>
+#include <iconv.h>
+
 #include "PKGrammar.h"
 #include "PKLexer.h"
 #include "PKTypes.h"
@@ -165,11 +167,13 @@ char * pk_string_copy_literal(const char *string, const char delim) {
   int esc = 0;
   
   if(length < 2) return NULL;
-  sp = string + 1; length -= 2;
   
   // the unescaped string cannot be larger (in bytes) than the escaped string, so we can
   // just allocate the same number of bytes as the escaped string.
   char *ep = malloc(length);
+  
+  // skip past the leading delimiter and adjust the length accordingly
+  sp = string + 1; length -= 2;
   
   size_t j = 0;
   for(size_t i = 0; i < length; i++){
@@ -198,11 +202,35 @@ char * pk_string_copy_literal(const char *string, const char delim) {
       }else if(c == 'u'){
         if(length - i < 5) goto error; // require 'u' + 4 hex digits
         char digits[5];
-        strncpy(digits, ep + 1, 4); digits[4] = 0;
+        strncpy(digits, sp + i + 1, 4); digits[4] = 0;
         uint32_t val = strtol(digits, NULL, 16);
-        fprintf(stderr, "Unicode escape sequences are not correctly supported!\n");
-        abort();
-        i += 4; /* j += 4; */
+        
+        char *ip = (char *)&val;
+        char *op = ep + j;
+        size_t ivbytes = 4;
+        size_t inbytes = ivbytes, outbytes = ivbytes;
+        
+        iconv_t iv;
+        if(htonl(47) == 47){
+          iv = iconv_open("UTF-8", "UTF-32BE");
+        }else{
+          iv = iconv_open("UTF-8", "UTF-32LE");
+        }
+        
+        assert(iv >= 0);
+        
+        size_t cv = iconv(iv, &ip, &inbytes, &op, &outbytes);
+        if(cv == (size_t)-1){
+          fprintf(stderr, "Could not convert \\u%4X: %s\n", val, strerror(errno));
+          abort();
+        }
+        
+        iconv_close(iv);
+        
+        ivbytes = ivbytes - outbytes;
+        digits[ivbytes] = 0;
+        
+        i += 4; j += ivbytes;
       }else{
         ep[j++] = c;
       }
