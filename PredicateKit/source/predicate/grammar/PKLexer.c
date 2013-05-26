@@ -2513,7 +2513,6 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         
         ivbytes = ivbytes - outbytes;
         digits[ivbytes] = 0;
-        //fprintf(stderr, "DIGITS [%d]: %s\n", ivbytes, digits);
         
         i += 4; j += ivbytes;
       }else{
@@ -2529,7 +2528,6 @@ char * pk_string_copy_literal(const char *string, const char delim) {
   
   ep[j] = 0;
   status = TRUE;
-  fprintf(stderr, "CONVERTED: %s\n", ep);
 error:
   if(ep && !status){
     free(ep); ep = NULL;
