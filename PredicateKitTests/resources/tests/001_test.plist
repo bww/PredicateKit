@@ -21,6 +21,12 @@
 		<key>result</key>
 		<string>hi "quoted" &#8226;&#8226;&#8226; ok</string>
 	</dict>
+	<dict>
+		<key>expression</key>
+		<string>"hi \"quoted\" \U00002022\U00002022\U00002022 ok"</string>
+		<key>result</key>
+		<string>hi "quoted" &#8226;&#8226;&#8226; ok</string>
+	</dict>
 	
 	<dict>
 		<key>expression</key>

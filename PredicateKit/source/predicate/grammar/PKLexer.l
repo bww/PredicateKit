@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <iconv.h>
+#include <machine/endian.h>
 
 #include "PKGrammar.h"
 #include "PKLexer.h"
@@ -75,10 +76,10 @@ FLOAT       {NUMBER}\.{NUMBER}{EXPONENT}?
 DOUBLE      {NUMBER}\.{NUMBER}{EXPONENT}?(d|D)
 
 /* STRING: anything between double quote except newlines; just considers \" and \\ characters */
-STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\"
+STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|{UCN})*\"
 
 /* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters */
-REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|\\[0-7]{1,3}|\\[Xx][0-9a-fA-F]+|{UCN})*\/
+REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
@@ -199,10 +200,12 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         ep[j++] = 0x09;
       }else if(c == 'v'){
         ep[j++] = 0x0b;
-      }else if(c == 'u'){
-        if(length - i < 5) goto error; // require 'u' + 4 hex digits
-        char digits[5];
-        strncpy(digits, sp + i + 1, 4); digits[4] = 0;
+      }else if(c == 'u' || c == 'U'){
+        size_t dcount = (c == 'u') ? 4 : 8;
+        if(length - i < (dcount + 1)) goto error; // require 'u' + 4 hex digits or 'U' + 8 hex digits
+        
+        char digits[dcount + 1];
+        strncpy(digits, sp + i + 1, dcount); digits[dcount] = 0;
         uint32_t val = strtol(digits, NULL, 16);
         
         char *ip = (char *)&val;
@@ -211,17 +214,20 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         size_t inbytes = ivbytes, outbytes = ivbytes;
         
         iconv_t iv;
-        if(htonl(47) == 47){
+#       if (BYTE_ORDER == BIG_ENDIAN)
           iv = iconv_open("UTF-8", "UTF-32BE");
-        }else{
+#       else
           iv = iconv_open("UTF-8", "UTF-32LE");
-        }
-        
+#       endif
         assert(iv >= 0);
         
         size_t cv = iconv(iv, &ip, &inbytes, &op, &outbytes);
         if(cv == (size_t)-1){
-          fprintf(stderr, "Could not convert \\u%4X: %s\n", val, strerror(errno));
+          if(c == 'u'){
+            fprintf(stderr, "Could not convert \\u%4X: %s\n", val, strerror(errno));
+          }else{
+            fprintf(stderr, "Could not convert \\U%8X: %s\n", val, strerror(errno));
+          }
           abort();
         }
         
@@ -230,7 +236,7 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         ivbytes = ivbytes - outbytes;
         digits[ivbytes] = 0;
         
-        i += 4; j += ivbytes;
+        i += dcount; j += ivbytes;
       }else{
         ep[j++] = c;
       }
