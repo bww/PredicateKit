@@ -395,7 +395,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
  * Evaluate an identifier expression
  */
 -(id)evaluateIdentifierExpression:(PKIdentifierExpression *)expression object:(id)object error:(NSError **)error {
-  return [NSNumber numberWithBool:FALSE];
+  id value;
+  
+  if(object == nil){
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Runtime context object is nil; cannot evaluate variable '%@'", expression.identifier));
+  }
+  
+  @try {
+    value = [object valueForKey:expression.identifier];
+  }@catch(NSException *exception){
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"No such property '%@' of %@", expression.identifier, [object class]));
+  }
+  
+  return (value != nil) ? value : [NSNull null];
 }
 
 /**

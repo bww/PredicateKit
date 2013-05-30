@@ -4,6 +4,18 @@
 <array>
 	<dict>
 		<key>expression</key>
+		<string>a</string>
+		<key>result</key>
+		<string>value A</string>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>a == a</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>&quot;a&quot; in { &quot;a&quot;, &quot;b&quot;, 3 }</string>
 		<key>result</key>
 		<true/>

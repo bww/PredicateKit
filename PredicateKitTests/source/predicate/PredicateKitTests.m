@@ -10,6 +10,8 @@
 
 #import "PredicateKitTests.h"
 
+extern char **environ;
+
 @implementation PredicateKitTests
 
 -(void)setUp {
@@ -24,6 +26,21 @@
   
   NSArray *tests = [[NSArray alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"001_test.plist" ofType:nil]];
   STAssertNotNil(tests, @"Tests must not be nil");
+  
+  NSMutableDictionary *context = [NSMutableDictionary dictionary];
+  [context setObject:@"value A" forKey:@"a"];
+  [context setObject:@"value B" forKey:@"b"];
+  [context setObject:@"value C" forKey:@"c"];
+  
+  for(char **env = environ; *env; env++){
+    char *pair = strdup(*env);
+    char *value;
+    if((value = strchr(pair, '=')) != NULL){
+      *value = 0; value++;
+      [context setObject:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:pair]];
+    }
+    if(pair) free(pair);
+  }
   
   for(NSDictionary *test in tests){
     NSError *error = nil;
@@ -40,7 +57,7 @@
     else STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
     if(predicate == nil) continue;
     
-    id result = [predicate evaluateWithObject:nil error:&error];;
+    id result = [predicate evaluateWithObject:context error:&error];
     if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
     else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@'%@", predicate, (error != nil) ? [NSString stringWithFormat:@": %@", [error localizedDescription]] : @"");
     NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
