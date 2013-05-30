@@ -340,11 +340,11 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   
   switch(expression.type){
     case kPKBitwiseAnd:
-      return [NSNumber numberWithLong:([left longValue] & [right longValue])];
+      return [NSNumber numberWithLongLong:([left longLongValue] & [right longLongValue])];
     case kPKBitwiseOr:
-      return [NSNumber numberWithLong:([left longValue] | [right longValue])];
+      return [NSNumber numberWithLongLong:([left longLongValue] | [right longLongValue])];
     case kPKBitwiseExclusiveOr:
-      return [NSNumber numberWithLong:([left longValue] ^ [right longValue])];
+      return [NSNumber numberWithLongLong:([left longLongValue] ^ [right longLongValue])];
     default:
       return UNSUPPORTED_EXPRESSION(expression, error);
   }
@@ -366,7 +366,7 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   
   switch(expression.type){
     case kPKBitwiseNot:
-      return [NSNumber numberWithLong:~[right longValue]];
+      return [NSNumber numberWithLongLong:~[right longLongValue]];
     default:
       return UNSUPPORTED_EXPRESSION(expression, error);
   }
