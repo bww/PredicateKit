@@ -119,7 +119,6 @@ bitwise(A) ::= modified(B). {
 modified ::= equality LBRACK MODIFIER(C) RBRACK. {
   if(context != NULL && context->state != kPKStateError){
     PKExpressionModifier *modifier = [PKExpressionModifier expressionModifierWithFlags:C.value.asString];
-    NSLog(@"MODIFIER FLAGS: %d", modifier.modifier);
     if(C.value.asString) free((void *)C.value.asString);
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
     context->state = kPKStateError;
