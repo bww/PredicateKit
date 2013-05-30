@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34066E21756FA57006EEC69 /* PKPatternExpression.h */; };
 		D34066E51756FA57006EEC69 /* PKPatternExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D34066E31756FA57006EEC69 /* PKPatternExpression.m */; };
+		D34067181757A4D5006EEC69 /* PKExpressionModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067161757A4D5006EEC69 /* PKExpressionModifier.h */; };
+		D34067191757A4D5006EEC69 /* PKExpressionModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D34067171757A4D5006EEC69 /* PKExpressionModifier.m */; };
+		D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */; };
+		D340671D1757A8C3006EEC69 /* PKModifiedExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */; };
 		D351BBAE17332F3D0051C1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAD17332F3D0051C1B3 /* Foundation.framework */; };
 		D351BBBD17332F3E0051C1B3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBBC17332F3E0051C1B3 /* SenTestingKit.framework */; };
 		D351BBC017332F3E0051C1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAD17332F3D0051C1B3 /* Foundation.framework */; };
@@ -64,6 +68,10 @@
 /* Begin PBXFileReference section */
 		D34066E21756FA57006EEC69 /* PKPatternExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPatternExpression.h; sourceTree = "<group>"; };
 		D34066E31756FA57006EEC69 /* PKPatternExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPatternExpression.m; sourceTree = "<group>"; };
+		D34067161757A4D5006EEC69 /* PKExpressionModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKExpressionModifier.h; sourceTree = "<group>"; };
+		D34067171757A4D5006EEC69 /* PKExpressionModifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpressionModifier.m; sourceTree = "<group>"; };
+		D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKModifiedExpression.h; sourceTree = "<group>"; };
+		D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKModifiedExpression.m; sourceTree = "<group>"; };
 		D351BBAA17332F3D0051C1B3 /* PredicateKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = PredicateKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D351BBAD17332F3D0051C1B3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D351BBB117332F3D0051C1B3 /* PredicateKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PredicateKit-Info.plist"; path = "resources/PredicateKit-Info.plist"; sourceTree = "<group>"; };
@@ -283,6 +291,10 @@
 				D3A7DE831741C4F500DE8AE1 /* PKLiteralExpression.m */,
 				D34066E21756FA57006EEC69 /* PKPatternExpression.h */,
 				D34066E31756FA57006EEC69 /* PKPatternExpression.m */,
+				D34067161757A4D5006EEC69 /* PKExpressionModifier.h */,
+				D34067171757A4D5006EEC69 /* PKExpressionModifier.m */,
+				D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */,
+				D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */,
 			);
 			path = intermediate;
 			sourceTree = "<group>";
@@ -318,6 +330,8 @@
 				D3A7DE971741CD2000DE8AE1 /* PKRuntimeEvaluator.h in Headers */,
 				D3E0D4151755A16E00084524 /* PKLogicalExpression.h in Headers */,
 				D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */,
+				D34067181757A4D5006EEC69 /* PKExpressionModifier.h in Headers */,
+				D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +455,8 @@
 				D3A7DE981741CD2000DE8AE1 /* PKRuntimeEvaluator.m in Sources */,
 				D3E0D4161755A16E00084524 /* PKLogicalExpression.m in Sources */,
 				D34066E51756FA57006EEC69 /* PKPatternExpression.m in Sources */,
+				D34067191757A4D5006EEC69 /* PKExpressionModifier.m in Sources */,
+				D340671D1757A8C3006EEC69 /* PKModifiedExpression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

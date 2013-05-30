@@ -4,7 +4,13 @@
 <array>
 	<dict>
 		<key>expression</key>
-		<string>&quot;aabc&quot; =~ /a+/</string>
+		<string>&quot;aabc&quot; =~ /a+/[c]</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>25 =~ /a+/</string>
 		<key>result</key>
 		<true/>
 	</dict>

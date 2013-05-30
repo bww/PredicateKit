@@ -9,7 +9,7 @@
 #import "PKComparisonExpression.h"
 
 static NSString * const kPKComparisonTypeNames[] = {
-  @"== (equal to)", @"!= (not equal to)", @"< (less than)", @"<= (less than or equal to)", @"> (greater than)", @">= (greater than or equal to)", @"=~ (matches expression)", @"'in' (in collection)", NULL
+  @"== (equal to)", @"!= (not equal to)", @"< (less than)", @"<= (less than or equal to)", @"> (greater than)", @">= (greater than or equal to)", @"=~ (matches)", @"'in' (intersects collection)", NULL
 };
 
 NSString * PKComparisonTypeGetName(PKComparisonType type) {

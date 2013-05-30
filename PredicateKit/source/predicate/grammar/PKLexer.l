@@ -78,7 +78,10 @@ DOUBLE      {NUMBER}\.{NUMBER}{EXPONENT}?(d|D)
 /* STRING: anything between double quote except newlines; just considers \" and \\ characters */
 STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|{UCN})*\"
 
-/* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters */
+/* MODIFIERS: modifier flags */
+MODIFIER    [cdg]+
+
+/* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters with optional trailing modifiers */
 REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
@@ -133,7 +136,7 @@ WS          [ \t]
 "in"            { pk_context_increment(yyextra, yytext); return T_IN; }
 "true"          { pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
 "false"         { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
-"null"          { pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_NULL; }
+"null"          { pk_context_increment(yyextra, yytext); bzero(yylval, sizeof(PKValue)); return T_NULL; }
 
 \n              { pk_context_newline(yyextra); }
 {WS}+           { pk_context_increment(yyextra, yytext); }
@@ -144,6 +147,7 @@ WS          [ \t]
 {HEX_INTEGER}   { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
 {FLOAT}         { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 {DOUBLE}        { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
+{MODIFIER}      { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_MODIFIER; }
 {STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
 {REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
 {IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
