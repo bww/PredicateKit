@@ -26,7 +26,8 @@ typedef unsigned int PKModifier;
 
 -(id)initWithFlags:(const char *)flags;
 
-@property (readonly) PKModifier modifier;
+@property (readonly) PKModifier                 modifier;
+@property (readonly) NSRegularExpressionOptions regularExpressionOptions;
 
 @end
 

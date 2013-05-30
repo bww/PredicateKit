@@ -30,17 +30,20 @@
     
     NSString *expression = [test objectForKey:@"expression"];
     STAssertNotNil(expression, @"Test expression must not be nil");
+    BOOL expectCompilationFailure = [[test objectForKey:@"error:compile"] boolValue];
+    BOOL expectEvaluationFailure = [[test objectForKey:@"error:runtime"] boolValue];
     id require = [test objectForKey:@"result"];
-    STAssertNotNil(require, @"Test result must not be nil");
+    if(!expectCompilationFailure && !expectEvaluationFailure) STAssertNotNil(require, @"Test result must not be nil");
     
     PKPredicate *predicate = [PKPredicate predicateWithSource:expression error:&error];
-    STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
+    if(expectCompilationFailure) STAssertNil(predicate, @"Compliation did not fail as expected: %@", expression);
+    else STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
     if(predicate == nil) continue;
     
-    id result;
-    STAssertNotNil((result = [predicate evaluateWithObject:nil error:&error]), @"Runtime error: %@", [error localizedDescription]);
-    STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: %@", predicate);
-    NSLog(@"P: %@ ==> %@", predicate, result);
+    id result = [predicate evaluateWithObject:nil error:&error];;
+    if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: %@", predicate);
+    else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: %@: %@", predicate, [error localizedDescription]);
+    NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     
   }
   

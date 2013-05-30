@@ -11,6 +11,7 @@
 #include "PKLiteralExpression.h"
 #include "PKPatternExpression.h"
 #include "PKExpressionModifier.h"
+#include "PKModifiedExpression.h"
 }
 
 %name "__PKParser"
@@ -116,12 +117,10 @@ bitwise(A) ::= modified(B). {
 
 /* Modified expressions */
 
-modified ::= equality LBRACK MODIFIER(C) RBRACK. {
+modified(A) ::= equality(B) LBRACK MODIFIER(C) RBRACK. {
   if(context != NULL && context->state != kPKStateError){
-    PKExpressionModifier *modifier = [PKExpressionModifier expressionModifierWithFlags:C.value.asString];
+    A.node = [PKModifiedExpression modifiedExpressionWithExpression:B.node modifier:[PKExpressionModifier expressionModifierWithFlags:C.value.asString]];
     if(C.value.asString) free((void *)C.value.asString);
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
   }
 }
 modified(A) ::= equality(B). {

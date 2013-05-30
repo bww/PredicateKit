@@ -32,7 +32,7 @@
 }
 
 -(NSString *)description {
-  return [_expression desceription];
+  return [_expression description];
 }
 
 @end

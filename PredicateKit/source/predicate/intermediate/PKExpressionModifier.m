@@ -39,6 +39,12 @@
   return self;
 }
 
+-(NSRegularExpressionOptions)regularExpressionOptions {
+  NSRegularExpressionOptions options = 0;
+  if((_modifier & kPKModifierCaseInsensitive) == kPKModifierCaseInsensitive) options |= NSRegularExpressionCaseInsensitive;
+  return options;
+}
+
 -(NSString *)description {
   return @"MOD";
 }
