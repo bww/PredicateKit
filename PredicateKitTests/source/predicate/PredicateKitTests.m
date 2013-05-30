@@ -21,12 +21,12 @@
 }
 
 -(void)testExample {
-  NSError *error = nil;
   
   NSArray *tests = [[NSArray alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"001_test.plist" ofType:nil]];
   STAssertNotNil(tests, @"Tests must not be nil");
   
   for(NSDictionary *test in tests){
+    NSError *error = nil;
     
     NSString *expression = [test objectForKey:@"expression"];
     STAssertNotNil(expression, @"Test expression must not be nil");
@@ -36,13 +36,13 @@
     if(!expectCompilationFailure && !expectEvaluationFailure) STAssertNotNil(require, @"Test result must not be nil");
     
     PKPredicate *predicate = [PKPredicate predicateWithSource:expression error:&error];
-    if(expectCompilationFailure) STAssertNil(predicate, @"Compliation did not fail as expected: %@", expression);
+    if(expectCompilationFailure) STAssertNil(predicate, @"Compliation did not fail as expected: '%@'", expression);
     else STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
     if(predicate == nil) continue;
     
     id result = [predicate evaluateWithObject:nil error:&error];;
-    if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: %@", predicate);
-    else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: %@: %@", predicate, [error localizedDescription]);
+    if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
+    else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@': %@", predicate, [error localizedDescription]);
     NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     
   }

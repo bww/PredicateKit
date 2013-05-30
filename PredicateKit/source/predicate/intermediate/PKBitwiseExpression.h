@@ -15,6 +15,8 @@ typedef enum {
   kPKBitwiseNot
 } PKBitwiseType;
 
+NSString * PKBitwiseTypeGetName(PKBitwiseType type);
+
 /**
  * A bitwise expression.
  */

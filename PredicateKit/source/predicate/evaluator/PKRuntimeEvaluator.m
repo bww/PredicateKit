@@ -262,7 +262,68 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
  * Evaluate a bitwise expression
  */
 -(id)evaluateBitwiseExpression:(PKBitwiseExpression *)expression object:(id)object error:(NSError **)error {
-  return [NSNumber numberWithBool:FALSE];
+  switch(expression.type){
+    case kPKBitwiseAnd:
+    case kPKBitwiseOr:
+    case kPKBitwiseExclusiveOr:
+      return [self evaluateBitwiseInfixExpression:expression object:object error:error];
+    case kPKBitwiseNot:
+      return [self evaluateBitwiseUnaryExpression:expression object:object error:error];
+    default:
+      return UNSUPPORTED_EXPRESSION(expression, error);
+  }
+}
+
+/**
+ * Evaluate a bitwise expression
+ */
+-(id)evaluateBitwiseInfixExpression:(PKBitwiseExpression *)expression object:(id)object error:(NSError **)error {
+  id left, right;
+  
+  if([expression.operands count] != 2)
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
+  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return nil;
+  if((right = [self evaluateExpression:[expression.operands objectAtIndex:1] object:object error:error]) == nil)
+    return nil;
+  if(![left isKindOfClass:[NSNumber class]])
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+  if(![right isKindOfClass:[NSNumber class]])
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+  
+  switch(expression.type){
+    case kPKBitwiseAnd:
+      return [NSNumber numberWithLong:([left longValue] & [right longValue])];
+    case kPKBitwiseOr:
+      return [NSNumber numberWithLong:([left longValue] | [right longValue])];
+    case kPKBitwiseExclusiveOr:
+      return [NSNumber numberWithLong:([left longValue] ^ [right longValue])];
+    default:
+      return UNSUPPORTED_EXPRESSION(expression, error);
+  }
+  
+}
+
+/**
+ * Evaluate a bitwise expression
+ */
+-(id)evaluateBitwiseUnaryExpression:(PKBitwiseExpression *)expression object:(id)object error:(NSError **)error {
+  id right;
+  
+  if([expression.operands count] != 1)
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
+  if((right = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return nil;
+  if(![right isKindOfClass:[NSNumber class]])
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+  
+  switch(expression.type){
+    case kPKBitwiseNot:
+      return [NSNumber numberWithLong:~[right longValue]];
+    default:
+      return UNSUPPORTED_EXPRESSION(expression, error);
+  }
+  
 }
 
 /**

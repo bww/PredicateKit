@@ -188,5 +188,29 @@
 		<key>result</key>
 		<false/>
 	</dict>
+	<dict>
+		<key>expression</key>
+		<string>1 | 2</string>
+		<key>result</key>
+		<integer>3</integer>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>3 &amp; 2</string>
+		<key>result</key>
+		<integer>2</integer>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>3 &amp; ~2</string>
+		<key>result</key>
+		<integer>1</integer>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>3 ^ 2</string>
+		<key>result</key>
+		<integer>1</integer>
+	</dict>
 </array>
 </plist>

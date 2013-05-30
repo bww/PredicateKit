@@ -8,6 +8,14 @@
 
 #import "PKBitwiseExpression.h"
 
+static NSString * const kPKBitwiseTypeNames[] = {
+  @"& (bitwise AND)", @"| (bitwise OR)", @"^ (bitwise XOR)", @"~ (bitwise NOT)", NULL
+};
+
+NSString * PKBitwiseTypeGetName(PKBitwiseType type) {
+  return (type >= kPKBitwiseAnd && type <= kPKBitwiseNot) ? kPKBitwiseTypeNames[type] : nil;
+}
+
 @implementation PKBitwiseExpression
 
 @synthesize type = _type;
