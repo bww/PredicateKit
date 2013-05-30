@@ -19,12 +19,14 @@ typedef enum {
   kPKComparisonIn
 } PKComparisonType;
 
+NSString * PKComparisonTypeGetName(PKComparisonType type);
+
 /**
  * A comparison expression.
  */
 @interface PKComparisonExpression : PKExpression
 
-+(PKComparisonExpression *)comparisonExpressionWithType:(PKComparisonType)type operands:(NSArray *)operands;
++(id)comparisonExpressionWithType:(PKComparisonType)type operands:(NSArray *)operands;
 
 -(id)initWithType:(PKComparisonType)type operands:(NSArray *)operands;
 

@@ -6,14 +6,22 @@
 // Developed in New York City
 // 
 
-#import "PKCompoundExpression.h"
+#import "PKLogicalExpression.h"
 
-@implementation PKCompoundExpression
+static NSString * const kPKLogicalTypeNames[] = {
+  @"&& (logical AND)", @"|| (logical OR)", @"! (logical NOT)", NULL
+};
+
+NSString * PKLogicalTypeGetName(PKLogicalType type) {
+  return (type >= kPKLogicalAnd && type <= kPKLogicalNot) ? kPKLogicalTypeNames[type] : nil;
+}
+
+@implementation PKLogicalExpression
 
 @synthesize type = _type;
 @synthesize expressions = _expressions;
 
-+(PKCompoundExpression *)compoundExpressionWithType:(PKCompoundType)type expressions:(NSArray *)expressions {
++(PKLogicalExpression *)compoundExpressionWithType:(PKLogicalType)type expressions:(NSArray *)expressions {
   return [[[self alloc] initWithType:type expressions:expressions] autorelease];
 }
 
@@ -22,16 +30,12 @@
   [super dealloc];
 }
 
--(id)initWithType:(PKCompoundType)type expressions:(NSArray *)expressions {
+-(id)initWithType:(PKLogicalType)type expressions:(NSArray *)expressions {
   if((self = [super init]) != nil){
     _type = type;
     _expressions = [expressions retain];
   }
   return self;
-}
-
--(id)evaluateWithObject:(id)object {
-  return nil;
 }
 
 -(NSString *)description {
@@ -44,9 +48,9 @@
     if([_expressions count] > 1) [string appendString:[[_expressions objectAtIndex:i++] description]];
     for( ; i < [_expressions count]; i++){
       switch(_type){
-        case kPKCompoundAnd:  [string appendString:@" && "];  break;
-        case kPKCompoundOr:   [string appendString:@" || "];  break;
-        case kPKCompoundNot:  [string appendString:@"!"];    break;
+        case kPKLogicalAnd: [string appendString:@" && "];  break;
+        case kPKLogicalOr:  [string appendString:@" || "];  break;
+        case kPKLogicalNot: [string appendString:@"!"];     break;
       }
       [string appendString:[[_expressions objectAtIndex:i] description]];
     }

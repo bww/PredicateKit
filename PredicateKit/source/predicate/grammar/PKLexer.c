@@ -1241,7 +1241,7 @@ YY_RULE_SETUP
 case 47:
 YY_RULE_SETUP
 #line 148 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_QUOTED_STRING; }
+{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
@@ -2502,13 +2502,16 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         size_t ivbytes = 4;
         size_t inbytes = ivbytes, outbytes = ivbytes;
         
+#       if !defined(BYTE_ORDER)
+#         error BYTE_ORDER is not defined
+#       endif
+        
         iconv_t iv;
 #       if (BYTE_ORDER == BIG_ENDIAN)
           iv = iconv_open("UTF-8", "UTF-32BE");
 #       else
           iv = iconv_open("UTF-8", "UTF-32LE");
 #       endif
-        
         assert(iv >= 0);
         
         size_t cv = iconv(iv, &ip, &inbytes, &op, &outbytes);

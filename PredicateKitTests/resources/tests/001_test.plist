@@ -2,37 +2,47 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-  
 	<dict>
 		<key>expression</key>
-		<string>/foobar \/ another "ok" yeah/</string>
+		<string>&quot;aabc&quot; =~ /a+/</string>
 		<key>result</key>
-		<string>foobar / another "ok" yeah</string>
+		<true/>
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>"hi \"quoted\" ok"</string>
+		<string>&quot;hi \&quot;quoted\&quot; ok&quot;</string>
 		<key>result</key>
-		<string>hi "quoted" ok</string>
+		<string>hi &quot;quoted&quot; ok</string>
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>"hi \"quoted\" \u2022\u2022\u2022 ok"</string>
+		<string>&quot;hi \&quot;quoted\&quot; \u2022\u2022\u2022 ok&quot;</string>
 		<key>result</key>
-		<string>hi "quoted" &#8226;&#8226;&#8226; ok</string>
+		<string>hi &quot;quoted&quot; ••• ok</string>
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>"hi \"quoted\" \U00002022\U00002022\U00002022 ok"</string>
+		<string>&quot;hi \&quot;quoted\&quot; \U00002022\U00002022\U00002022 ok&quot;</string>
 		<key>result</key>
-		<string>hi "quoted" &#8226;&#8226;&#8226; ok</string>
+		<string>hi &quot;quoted&quot; ••• ok</string>
 	</dict>
-	
 	<dict>
 		<key>expression</key>
 		<string>1 == 1</string>
 		<key>result</key>
 		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>true</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>false</string>
+		<key>result</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>expression</key>
@@ -112,7 +122,6 @@
 		<key>result</key>
 		<false/>
 	</dict>
-	
 	<dict>
 		<key>expression</key>
 		<string>&quot;a&quot; == &quot;a&quot;</string>
@@ -136,6 +145,42 @@
 		<string>&quot;a&quot; != &quot;b&quot;</string>
 		<key>result</key>
 		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>true &amp;&amp; true</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>true &amp;&amp; false</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>true || false</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>false || false</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>!false</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>!true</string>
+		<key>result</key>
+		<false/>
 	</dict>
 </array>
 </plist>

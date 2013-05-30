@@ -8,6 +8,14 @@
 
 #import "PKComparisonExpression.h"
 
+static NSString * const kPKComparisonTypeNames[] = {
+  @"== (equal to)", @"!= (not equal to)", @"< (less than)", @"<= (less than or equal to)", @"> (greater than)", @">= (greater than or equal to)", @"=~ (matches expression)", @"'in' (in collection)", NULL
+};
+
+NSString * PKComparisonTypeGetName(PKComparisonType type) {
+  return (type >= kPKComparisonEqualTo && type <= kPKComparisonIn) ? kPKComparisonTypeNames[type] : nil;
+}
+
 @implementation PKComparisonExpression
 
 @synthesize type = _type;
@@ -28,10 +36,6 @@
     _operands = [operands retain];
   }
   return self;
-}
-
--(id)evaluateWithObject:(id)object {
-  return nil;
 }
 
 -(NSString *)description {

@@ -145,7 +145,7 @@ WS          [ \t]
 {FLOAT}         { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 {DOUBLE}        { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
 {STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
-{REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_QUOTED_STRING; }
+{REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
 {IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
 
 . {
@@ -212,6 +212,10 @@ char * pk_string_copy_literal(const char *string, const char delim) {
         char *op = ep + j;
         size_t ivbytes = 4;
         size_t inbytes = ivbytes, outbytes = ivbytes;
+        
+#       if !defined(BYTE_ORDER)
+#         error BYTE_ORDER is not defined
+#       endif
         
         iconv_t iv;
 #       if (BYTE_ORDER == BIG_ENDIAN)

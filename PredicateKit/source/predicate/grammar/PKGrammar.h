@@ -35,3 +35,4 @@
 #define T_FLOAT                          35
 #define T_DOUBLE                         36
 #define T_QUOTED_STRING                  37
+#define T_REGEX                          38

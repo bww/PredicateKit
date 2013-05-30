@@ -4,11 +4,12 @@
 #include "PKTypes.h"
 #include "PKGrammar.h"
 #include "PKExpression.h"
-#include "PKCompoundExpression.h"
+#include "PKLogicalExpression.h"
 #include "PKBitwiseExpression.h"
 #include "PKComparisonExpression.h"
 #include "PKIdentifierExpression.h"
 #include "PKLiteralExpression.h"
+#include "PKPatternExpression.h"
 }
 
 %name "__PKParser"
@@ -75,12 +76,12 @@ expression(A) ::= logical(B). {
 
 logical(A) ::= bitwise(B) LAND bitwise(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 logical(A) ::= bitwise(B) LOR bitwise(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 logical(A) ::= bitwise(B). {
@@ -191,7 +192,7 @@ unary(A) ::= BNOT dereference(B). {
 }
 unary(A) ::= LNOT dereference(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKCompoundExpression compoundExpressionWithType:kPKCompoundNot expressions:[NSArray arrayWithObjects:B.node, nil]];
+    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalNot expressions:[NSArray arrayWithObjects:B.node, nil]];
   }
 }
 unary(A) ::= dereference(B). {
@@ -293,6 +294,12 @@ literal(A) ::= IDENT(B). {
 literal(A) ::= QUOTED_STRING(B). {
   if(context != NULL && context->state != kPKStateError){
     A.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:B.value.asString]];
+    free((void *)B.value.asString); B.value.asString = NULL;
+  }
+}
+literal(A) ::= REGEX(B). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = [PKPatternExpression patternExpressionWithPattern:[NSString stringWithUTF8String:B.value.asString]];
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
