@@ -4,13 +4,45 @@
 <array>
 	<dict>
 		<key>expression</key>
-		<string>{ &quot;a&quot;, &quot;b&quot;, 3 }</string>
+		<string>&quot;a&quot; in { &quot;a&quot;, &quot;b&quot;, 3 }</string>
 		<key>result</key>
-		<array>
-			<string>a</string>
-			<string>b</string>
-			<integer>3</integer>
-		</array>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>3 in { &quot;a&quot;, &quot;b&quot;, 3 }</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>{ 1, 2, 3 } in { &quot;a&quot;, &quot;b&quot;, { 1, 2, 3 } }</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>{ { 1, 2, 3 } } in { &quot;a&quot;, &quot;b&quot;, { 1, 2, 3 } }</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>{ &quot;a&quot;, &quot;b&quot; } in { &quot;a&quot;, &quot;b&quot;, 3 }</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>{ &quot;a&quot;, &quot;b&quot;, &quot;z&quot; } in { &quot;a&quot;, &quot;b&quot;, 3 }</string>
+		<key>result</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>{ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; } in { &quot;a&quot;, &quot;b&quot; }</string>
+		<key>result</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>expression</key>

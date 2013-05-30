@@ -42,7 +42,7 @@
     
     id result = [predicate evaluateWithObject:nil error:&error];;
     if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
-    else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@': %@", predicate, [error localizedDescription]);
+    else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@'%@", predicate, (error != nil) ? [NSString stringWithFormat:@": %@", [error localizedDescription]] : @"");
     NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     
   }

@@ -185,8 +185,8 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
       return [self evaluateRelativeComparisonExpression:expression modifier:modifier object:object error:error];
     case kPKComparisonMatches:
       return [self evaluateMatchingComparisonExpression:expression modifier:modifier object:object error:error];
-    //case kPKComparisonIn:
-    //  return [self evaluateCollectionComparisonExpression:expression modifier:modifier object:object error];
+    case kPKComparisonIn:
+      return [self evaluateCollectionComparisonExpression:expression modifier:modifier object:object error:error];
     default:
       return UNSUPPORTED_EXPRESSION(expression, error);
   }
@@ -259,6 +259,50 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
       return UNSUPPORTED_EXPRESSION(expression, error);
   }
   
+}
+
+/**
+ * Evaluate a collection expression
+ */
+-(id)evaluateCollectionComparisonExpression:(PKComparisonExpression *)expression modifier:(PKExpressionModifier *)modifier object:(id)object error:(NSError **)error {
+  PKCollectionExpression *collection = nil;
+  id left, right;
+  
+  if([expression.operands count] != 2)
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
+  if((collection = [expression.operands objectAtIndex:1]) == nil || ![collection isKindOfClass:[PKCollectionExpression class]])
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return nil;
+  if((right = [self evaluateExpression:[expression.operands objectAtIndex:1] object:object error:error]) == nil)
+    return nil;
+  if(![right isKindOfClass:[NSSet class]] && ![right isKindOfClass:[NSArray class]] && ![right isKindOfClass:[NSDictionary class]])
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+  
+  switch(expression.type){
+    case kPKComparisonIn:
+      return [self evaluateSubsetComparisonExpression:expression modifier:modifier left:left right:right object:object error:error];
+    default:
+      return UNSUPPORTED_EXPRESSION(expression, error);
+  }
+  
+}
+
+/**
+ * Evaluate a collection expression
+ */
+-(id)evaluateSubsetComparisonExpression:(PKComparisonExpression *)expression modifier:(PKExpressionModifier *)modifier left:(id)left right:(id)right object:(id)object error:(NSError **)error {
+  if([left isKindOfClass:[NSSet class]] && [right isKindOfClass:[NSSet class]]){
+    return [NSNumber numberWithBool:[left isSubsetOfSet:right]];
+  }else if([right isKindOfClass:[NSSet class]]){
+    return [NSNumber numberWithBool:[right containsObject:left]];
+  }else if([right isKindOfClass:[NSArray class]]){
+    return [NSNumber numberWithBool:[right containsObject:left]];
+  }else if([right isKindOfClass:[NSDictionary class]]){
+    return [NSNumber numberWithBool:[right objectForKey:left] != nil];
+  }else{
+    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+  }
 }
 
 /**
