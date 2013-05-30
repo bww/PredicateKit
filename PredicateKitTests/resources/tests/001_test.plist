@@ -4,6 +4,16 @@
 <array>
 	<dict>
 		<key>expression</key>
+		<string>{ &quot;a&quot;, &quot;b&quot;, 3 }</string>
+		<key>result</key>
+		<array>
+			<string>a</string>
+			<string>b</string>
+			<integer>3</integer>
+		</array>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>&quot;aabc&quot; =~ /a+/[c]</string>
 		<key>result</key>
 		<true/>

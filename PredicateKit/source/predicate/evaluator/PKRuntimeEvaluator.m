@@ -18,6 +18,7 @@
 #import "PKPatternExpression.h"
 #import "PKExpressionModifier.h"
 #import "PKModifiedExpression.h"
+#import "PKCollectionExpression.h"
 
 #define UNSUPPORTED_EXPRESSION(expression, error) __UNSUPPORTED_EXPRESSION(expression, error, __PRETTY_FUNCTION__, __LINE__)
 
@@ -73,6 +74,8 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
     return [self evaluateLiteralExpression:(PKLiteralExpression *)expression object:object error:error];
   }else if(type == [PKModifiedExpression class]){
     return [self evaluateModifiedExpression:(PKModifiedExpression *)expression object:object error:error];
+  }else if(type == [PKSetExpression class]){
+    return [self evaluateSetExpression:(PKSetExpression *)expression object:object error:error];
   }else{
     return UNSUPPORTED_EXPRESSION(expression, error);
   }
@@ -324,6 +327,24 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
       return UNSUPPORTED_EXPRESSION(expression, error);
   }
   
+}
+
+/**
+ * Evaluate a set expression
+ */
+-(id)evaluateSetExpression:(PKSetExpression *)expression object:(id)object error:(NSError **)error {
+  NSMutableSet *set = [NSMutableSet set];
+  
+  for(PKExpression *parameter in [expression.parameters expressions]){
+    id result;
+    if((result = [self evaluateExpression:parameter object:object error:error]) != nil){
+      [set addObject:result];
+    }else{
+      return nil;
+    }
+  }
+  
+  return set;
 }
 
 /**

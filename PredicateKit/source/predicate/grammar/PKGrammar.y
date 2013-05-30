@@ -12,6 +12,8 @@
 #include "PKPatternExpression.h"
 #include "PKExpressionModifier.h"
 #include "PKModifiedExpression.h"
+#include "PKCollectionExpression.h"
+#include "PKParameters.h"
 }
 
 %name "__PKParser"
@@ -224,7 +226,11 @@ primary(A) ::= literal(B). {
     A.node = B.node;
   }
 }
-primary ::= collection.
+primary(A) ::= set(B). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = B.node;
+  }
+}
 primary(A) ::= LPAREN expression(B) RPAREN. {
   if(context != NULL && context->state != kPKStateError){
     A.node = B.node;
@@ -233,25 +239,22 @@ primary(A) ::= LPAREN expression(B) RPAREN. {
 
 /* Collections */
 
-collection ::= LBRACE parameters RBRACE. {
+set(A) ::= LBRACE parameters(B) RBRACE. {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
+    A.node = [PKSetExpression setExpressionWithParameters:B.node];
   }
 }
 
 /* Parameters */
 
-parameters ::= parameters COMMA expression. {
+parameters(A) ::= parameters(B) COMMA expression(C). {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
+    A.node = [(PKMutableParameters *)B.node addExpression:C.node];
   }
 }
-parameters ::= expression. {
+parameters(A) ::= expression(B). {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
+    A.node = [PKMutableParameters mutableParametersWithExpression:B.node];
   }
 }
 

@@ -29,7 +29,11 @@
 }
 
 -(NSString *)description {
-  return [_value description];
+  if([_value isKindOfClass:[NSString class]]){
+    return [NSString stringWithFormat:@"\"%@\"", _value];
+  }else{
+    return [_value description];
+  }
 }
 
 @end
