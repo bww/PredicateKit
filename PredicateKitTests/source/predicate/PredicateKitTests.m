@@ -43,8 +43,11 @@ extern char **environ;
     if(pair) free(pair);
   }
   
+  [[NSPredicate predicateWithFormat:@"2"] evaluateWithObject:self];
+  
   for(NSDictionary *test in tests){
     NSError *error = nil;
+    fputc('\n', stderr);
     
     NSString *expression = [test objectForKey:@"expression"];
     STAssertNotNil(expression, @"Test expression must not be nil");
@@ -68,7 +71,7 @@ extern char **environ;
     NSLog(@"R: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     if(error) [self displayError:error];
     
-  }
+  } fputc('\n', stderr);
   
 }
 

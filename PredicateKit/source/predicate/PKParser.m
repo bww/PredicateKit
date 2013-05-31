@@ -16,20 +16,20 @@
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef void * yyscan_t;
 
-void yylex_init(yyscan_t *lexer);
-int  yylex(void *token, yyscan_t lexer);
-void yylex_destroy(yyscan_t lexer);
+void    yylex_init(yyscan_t *lexer);
+int     yylex(void *token, yyscan_t lexer);
+void    yylex_destroy(yyscan_t lexer);
 
-char *yyget_text(yyscan_t scanner);
-int yyget_lineno(yyscan_t scanner);
-void yyset_extra( YY_EXTRA_TYPE info, yyscan_t scanner);
+char *  yyget_text(yyscan_t scanner);
+int     yyget_lineno(yyscan_t scanner);
+void    yyset_extra( YY_EXTRA_TYPE info, yyscan_t scanner);
 
 YY_BUFFER_STATE yy_scan_string(const char *source, void *lexer);
-void yy_delete_buffer(YY_BUFFER_STATE buffer, void *lexer);
+void    yy_delete_buffer(YY_BUFFER_STATE buffer, void *lexer);
 
-void * __PKParserAlloc(void *(*mallocProc)(size_t));
-void __PKParserFree(void *p, void (*freeProc)(void*));
-void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
+void *  __PKParserAlloc(void *(*mallocProc)(size_t));
+void    __PKParserFree(void *p, void (*freeProc)(void*));
+void    __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
 
 @implementation PKParser
 

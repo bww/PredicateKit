@@ -458,7 +458,12 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
  * Evaluate a literal expression
  */
 -(id)evaluateLiteralExpression:(PKLiteralExpression *)expression object:(id)object error:(NSError **)error {
-  return expression.value;
+  id value;
+  if((value = expression.value) != nil){
+    return value;
+  }else{
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Literal value is nil; cannot evaluate '%@'", expression));
+  }
 }
 
 @end
