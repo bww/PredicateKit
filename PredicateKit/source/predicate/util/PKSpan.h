@@ -41,11 +41,16 @@ typedef NSUInteger PKSpanFormatterOptions;
  */
 @interface PKSpanFormatter : NSObject
 
+-(id)init;
 -(id)initWithUnderlineCharacter:(UniChar)underline options:(PKSpanFormatterOptions)options;
 
 -(NSDictionary *)layoutInfoForSpan:(PKSpan *)span;
+-(NSDictionary *)layoutInfoForSource:(NSString *)source range:(NSRange)range;
 -(NSArray *)calloutLinesForSpan:(PKSpan *)span;
+-(NSArray *)calloutLinesForLayoutInfo:(NSDictionary *)layoutInfo;
+
 -(void)printCalloutForSpan:(PKSpan *)span stream:(FILE *)stream;
+-(void)printCalloutForLayoutInfo:(NSDictionary *)layoutInfo stream:(FILE *)stream;
 
 @property (readonly) UniChar                underlineCharacter;
 @property (readonly) PKSpanFormatterOptions options;

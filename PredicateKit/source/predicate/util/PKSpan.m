@@ -52,14 +52,17 @@
 }
 
 -(NSDictionary *)layoutInfoForSpan:(PKSpan *)span {
+  return [self layoutInfoForSource:span.source range:span.range];
+}
+
+-(NSDictionary *)layoutInfoForSource:(NSString *)source range:(NSRange)range {
   UniChar c;
   
-  NSRange range = span.range;
-  NSInteger length = [span.source length];
+  NSInteger length = [source length];
   NSInteger end = MIN(range.location, length - 1);
   
   CFStringInlineBuffer buffer;
-  CFStringInitInlineBuffer((CFStringRef)span.source, &buffer, CFRangeMake(0, length));
+  CFStringInitInlineBuffer((CFStringRef)source, &buffer, CFRangeMake(0, length));
   
   while(end < length){
     c = CFStringGetCharacterFromInlineBuffer(&buffer, end);
@@ -81,7 +84,7 @@
   BOOL truncated = range.location + range.length > end;
   NSUInteger columnNumber = range.location - start;
   NSUInteger underline = MIN(range.length, end - range.location);
-  NSString *excerpt = [[span.source substringWithRange:NSMakeRange(start, end - start)] retain];
+  NSString *excerpt = [[source substringWithRange:NSMakeRange(start, end - start)] retain];
   
   return [NSDictionary dictionaryWithObjectsAndKeys:
     [NSNumber numberWithInteger:columnNumber], PKSpanLayoutInfoColumnNumberKey,
@@ -95,11 +98,14 @@
 }
 
 -(NSArray *)calloutLinesForSpan:(PKSpan *)span {
+  return [self calloutLinesForLayoutInfo:[self layoutInfoForSpan:span]];
+}
+
+-(NSArray *)calloutLinesForLayoutInfo:(NSDictionary *)layoutInfo {
   NSMutableArray *lines = [NSMutableArray array];
   UniChar space = ' ', pointer = self.underlineCharacter;
   
   // obtain our layout info for the span
-  NSDictionary *layoutInfo = [self layoutInfoForSpan:span];
   NSUInteger ncolumn = [[layoutInfo objectForKey:PKSpanLayoutInfoColumnNumberKey] integerValue];
   NSUInteger nuline = [[layoutInfo objectForKey:PKSpanLayoutInfoUnderlineLengthKey] integerValue];
   NSString *excerpt = [layoutInfo objectForKey:PKSpanLayoutInfoSourceExcerptKey];
@@ -133,8 +139,12 @@
 }
 
 -(void)printCalloutForSpan:(PKSpan *)span stream:(FILE *)stream {
+  [self printCalloutForLayoutInfo:[self layoutInfoForSpan:span] stream:stream];
+}
+
+-(void)printCalloutForLayoutInfo:(NSDictionary *)layoutInfo stream:(FILE *)stream {
   NSArray *lines;
-  if((lines = [self calloutLinesForSpan:span]) != nil){
+  if((lines = [self calloutLinesForLayoutInfo:layoutInfo]) != nil){
     for(NSString *line in lines){
       fputs([line UTF8String], stream);
       fputc('\n', stream);
