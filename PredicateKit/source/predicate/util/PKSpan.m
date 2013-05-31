@@ -84,9 +84,9 @@
   NSString *excerpt = [[span.source substringWithRange:NSMakeRange(start, end - start)] retain];
   
   return [NSDictionary dictionaryWithObjectsAndKeys:
-    [NSNumber numberWithInteger:columnNumber, PKSpanLayoutInfoColumnNumberKey,
-    [NSNumber numberWithInteger:line, PKSpanLayoutInfoLineNumberKey,
-    [NSNumber numberWithInteger:underline, PKSpanLayoutInfoUnderlineLengthKey,
+    [NSNumber numberWithInteger:columnNumber], PKSpanLayoutInfoColumnNumberKey,
+    [NSNumber numberWithInteger:line], PKSpanLayoutInfoLineNumberKey,
+    [NSNumber numberWithInteger:underline], PKSpanLayoutInfoUnderlineLengthKey,
     [NSNumber numberWithBool:truncated], PKSpanLayoutInfoIsTruncatedKey,
     excerpt, PKSpanLayoutInfoSourceExcerptKey,
     nil
@@ -95,67 +95,41 @@
 }
 
 -(NSArray *)calloutLinesForSpan:(PKSpan *)span {
-  UniChar c;
-  
-  NSRange range = span.range;
-  NSInteger length = [span.source length];
-  NSInteger end = MIN(range.location, length - 1);
-  
-  CFStringInlineBuffer buffer;
-  CFStringInitInlineBuffer((CFStringRef)span.source, &buffer, CFRangeMake(0, length));
-  
-  while(end < length){
-    c = CFStringGetCharacterFromInlineBuffer(&buffer, end);
-    if(c != '\n') end++;
-    else break;
-  }
-  
-  NSInteger loc, start = -1, line = 1;
-  for(loc = MAX(0, MIN(length - 1, range.location)); loc >= 0; loc--){
-    c = CFStringGetCharacterFromInlineBuffer(&buffer, loc);
-    if((end - loc) > 0 && c == '\n'){
-      if(start < 0) start = loc + 1;
-      line++; // increment our line count
-    }
-  }
-  
-  start = (start < 0) ? 0 : start;
-  
-  //NSUInteger lineNumber = line;
-  //BOOL truncated = range.location + range.length > end;
-  NSUInteger columnNumber = range.location - start;
-  NSUInteger underline = MIN(range.length, end - range.location);
-  NSString *excerpt = [[span.source substringWithRange:NSMakeRange(start, end - start)] retain];
-  
-  NSMutableArray *calloutLines = [NSMutableArray array];
+  NSMutableArray *lines = [NSMutableArray array];
   UniChar space = ' ', pointer = self.underlineCharacter;
+  
+  // obtain our layout info for the span
+  NSDictionary *layoutInfo = [self layoutInfoForSpan:span];
+  NSUInteger ncolumn = [[layoutInfo objectForKey:PKSpanLayoutInfoColumnNumberKey] integerValue];
+  NSUInteger nuline = [[layoutInfo objectForKey:PKSpanLayoutInfoUnderlineLengthKey] integerValue];
+  NSString *excerpt = [layoutInfo objectForKey:PKSpanLayoutInfoSourceExcerptKey];
   
   // add the source line itself
   if((self.options & kPKSpanFormatterOptionUseANSIHighlighting) == kPKSpanFormatterOptionUseANSIHighlighting){
-    NSMutableString *calloutLine = [NSMutableString string];
-    NSUInteger upper = columnNumber + underline;
-    length = [excerpt length];
-    if(columnNumber > 0) [calloutLine appendString:[excerpt substringWithRange:NSMakeRange(0, columnNumber)]];
-    if(underline > 0){
-      [calloutLine appendString:[NSString stringWithFormat:@"%c[1m", 27]];
-      [calloutLine appendString:[excerpt substringWithRange:NSMakeRange(columnNumber, underline)]];
-      [calloutLine appendString:[NSString stringWithFormat:@"%c[0m", 27]];
+    NSMutableString *line = [NSMutableString string];
+    NSUInteger upper = ncolumn + nuline;
+    NSUInteger length = [excerpt length];
+    if(ncolumn > 0) [line appendString:[excerpt substringWithRange:NSMakeRange(0, ncolumn)]];
+    if(nuline > 0){
+      [line appendString:[NSString stringWithFormat:@"%c[1m", 27]];
+      [line appendString:[excerpt substringWithRange:NSMakeRange(ncolumn, nuline)]];
+      [line appendString:[NSString stringWithFormat:@"%c[0m", 27]];
     }
-    if(length - upper > 0) [calloutLine appendString:[excerpt substringWithRange:NSMakeRange(upper, length - upper)]];
-    [calloutLines addObject:calloutLine];
+    if(length - upper > 0) [line appendString:[excerpt substringWithRange:NSMakeRange(upper, length - upper)]];
+    [lines addObject:line];
   }else{
-    [calloutLines addObject:excerpt];
+    [lines addObject:excerpt];
   }
   
   // create our underline line
-  NSMutableString *underlineLine = [NSMutableString string];
-  for(NSUInteger i = 0; i < columnNumber; i++) CFStringAppendCharacters((CFMutableStringRef)underlineLine, &space, 1);
-  if((self.options & kPKSpanFormatterOptionUseANSIHighlighting) == kPKSpanFormatterOptionUseANSIHighlighting) [underlineLine appendString:[NSString stringWithFormat:@"%c[1m", 27]];
-  for(NSUInteger i = 0; i < MAX(1, underline); i++) CFStringAppendCharacters((CFMutableStringRef)underlineLine, &pointer, 1);
-  if((self.options & kPKSpanFormatterOptionUseANSIHighlighting) == kPKSpanFormatterOptionUseANSIHighlighting) [underlineLine appendString:[NSString stringWithFormat:@"%c[0m", 27]];
-  [calloutLines addObject:underlineLine];
+  NSMutableString *underline = [NSMutableString string];
+  for(NSUInteger i = 0; i < ncolumn; i++) CFStringAppendCharacters((CFMutableStringRef)underline, &space, 1);
+  if((self.options & kPKSpanFormatterOptionUseANSIHighlighting) == kPKSpanFormatterOptionUseANSIHighlighting) [underline appendString:[NSString stringWithFormat:@"%c[1m", 27]];
+  for(NSUInteger i = 0; i < MAX(1, nuline); i++) CFStringAppendCharacters((CFMutableStringRef)underline, &pointer, 1);
+  if((self.options & kPKSpanFormatterOptionUseANSIHighlighting) == kPKSpanFormatterOptionUseANSIHighlighting) [underline appendString:[NSString stringWithFormat:@"%c[0m", 27]];
+  [lines addObject:underline];
   
-  return calloutLines;
+  return lines;
 }
 
 -(void)printCalloutForSpan:(PKSpan *)span stream:(FILE *)stream {
