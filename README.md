@@ -7,7 +7,7 @@
 
 ## Predicate Kit / NSPredicate
 
-Predicate Kit differs from NSPredicate is some important ways:
+Predicate Kit differs from `NSPredicate` is some important ways:
 
  * Despite what its name might imply, PKL can evaluate to any type, not just a boolean as `NSPredicate` requires. The expression `2`, for example, is perfectly valid and will yield the equivalent of `[NSNumber numberWithInt:2]`.
  
@@ -21,9 +21,10 @@ Suppose you want to allow a sophisticated user to enter a query expression which
 You can compile this expression into a predicate and use it to filter a collection of messages in a very expressive way:
 
 	NSArray *messages = /* assume this exists */;
+	NSString *source = /* provided by the user */;
 	NSError *error = nil;
 	
-	PKPredicate *predicate = [PKPredicate predicateWithSource:userProvidedSource error:&error];
+	PKPredicate *predicate = [PKPredicate predicateWithSource:source error:&error];
 	if(predicate == nil) /* handle this error */
 	
 	for(Message *message in messages){
