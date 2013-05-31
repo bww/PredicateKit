@@ -21,9 +21,9 @@
  */
 @interface PKSetExpression : PKCollectionExpression
 
-+(PKSetExpression *)setExpressionWithParameters:(PKParameters *)parameters;
++(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters;
 
--(id)initWithParameters:(PKParameters *)parameters;
+-(id)initWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters;
 
 @property (readonly) PKParameters * parameters;
 

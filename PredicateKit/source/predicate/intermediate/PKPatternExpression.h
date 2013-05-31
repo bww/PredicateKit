@@ -13,9 +13,9 @@
  */
 @interface PKPatternExpression : PKExpression
 
-+(PKPatternExpression *)patternExpressionWithPattern:(NSString *)pattern;
++(PKPatternExpression *)patternExpressionWithSpan:(PKSpan *)span pattern:(NSString *)pattern;
 
--(id)initWithPattern:(NSString *)pattern;
+-(id)initWithSpan:(PKSpan *)span pattern:(NSString *)pattern;
 
 @property (readonly) NSString * pattern;
 

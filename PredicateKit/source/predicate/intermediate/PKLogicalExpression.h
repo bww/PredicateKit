@@ -21,9 +21,9 @@ NSString * PKLogicalTypeGetName(PKLogicalType type);
  */
 @interface PKLogicalExpression : PKExpression
 
-+(PKLogicalExpression *)compoundExpressionWithType:(PKLogicalType)type expressions:(NSArray *)expressions;
++(PKLogicalExpression *)compoundExpressionWithSpan:(PKSpan *)span type:(PKLogicalType)type expressions:(NSArray *)expressions;
 
--(id)initWithType:(PKLogicalType)type expressions:(NSArray *)expressions;
+-(id)initWithSpan:(PKSpan *)span type:(PKLogicalType)type expressions:(NSArray *)expressions;
 
 @property (readonly) PKLogicalType  type;
 @property (readonly) NSArray      * expressions;

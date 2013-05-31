@@ -13,9 +13,9 @@
  */
 @interface PKLiteralExpression : PKExpression
 
-+(PKLiteralExpression *)literalExpressionWithValue:(id)value;
++(PKLiteralExpression *)literalExpressionWithSpan:(PKSpan *)span value:(id)value;
 
--(id)initWithValue:(id)value;
+-(id)initWithSpan:(PKSpan *)span value:(id)value;
 
 @property (readonly) id value;
 

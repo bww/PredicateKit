@@ -13,9 +13,9 @@
  */
 @interface PKIdentifierExpression : PKExpression
 
-+(PKIdentifierExpression *)identifierExpressionWithIdentifier:(NSString *)identifier;
++(PKIdentifierExpression *)identifierExpressionWithSpan:(PKSpan *)span identifier:(NSString *)identifier;
 
--(id)initWithIdentifier:(NSString *)identifier;
+-(id)initWithSpan:(PKSpan *)span identifier:(NSString *)identifier;
 
 @property (readonly) NSString * identifier;
 

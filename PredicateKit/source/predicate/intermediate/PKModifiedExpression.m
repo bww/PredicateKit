@@ -13,8 +13,8 @@
 @synthesize expression = _expression;
 @synthesize modifier = _modifier;
 
-+(PKModifiedExpression *)modifiedExpressionWithExpression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier {
-  return [[[self alloc] initWithExpression:expression modifier:modifier] autorelease];
++(PKModifiedExpression *)modifiedExpressionWithSpan:(PKSpan *)span expression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier {
+  return [[[self alloc] initWithSpan:span expression:expression modifier:modifier] autorelease];
 }
 
 -(void)dealloc {
@@ -23,8 +23,8 @@
   [super dealloc];
 }
 
--(id)initWithExpression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span expression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier {
+  if((self = [super initWithSpan:span]) != nil){
     _expression = [expression retain];
     _modifier = [modifier retain];
   }

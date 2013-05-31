@@ -12,16 +12,16 @@
 
 @synthesize modifier = _modifier;
 
-+(PKExpressionModifier *)expressionModifierWithFlags:(const char *)flags {
-  return [[[self alloc] initWithFlags:flags] autorelease];
++(PKExpressionModifier *)expressionModifierWithSpan:(PKSpan *)span flags:(const char *)flags {
+  return [[[self alloc] initWithSpan:span flags:flags] autorelease];
 }
 
 -(void)dealloc {
   [super dealloc];
 }
 
--(id)initWithFlags:(const char *)flags {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span flags:(const char *)flags {
+  if((self = [super initWithSpan:span]) != nil){
     _modifier = kPKModifierNone;
     
     if(flags != NULL){

@@ -21,8 +21,8 @@ NSString * PKLogicalTypeGetName(PKLogicalType type) {
 @synthesize type = _type;
 @synthesize expressions = _expressions;
 
-+(PKLogicalExpression *)compoundExpressionWithType:(PKLogicalType)type expressions:(NSArray *)expressions {
-  return [[[self alloc] initWithType:type expressions:expressions] autorelease];
++(PKLogicalExpression *)compoundExpressionWithSpan:(PKSpan *)span type:(PKLogicalType)type expressions:(NSArray *)expressions {
+  return [[[self alloc] initWithSpan:span type:type expressions:expressions] autorelease];
 }
 
 -(void)dealloc {
@@ -30,8 +30,8 @@ NSString * PKLogicalTypeGetName(PKLogicalType type) {
   [super dealloc];
 }
 
--(id)initWithType:(PKLogicalType)type expressions:(NSArray *)expressions {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span type:(PKLogicalType)type expressions:(NSArray *)expressions {
+  if((self = [super initWithSpan:span]) != nil){
     _type = type;
     _expressions = [expressions retain];
   }

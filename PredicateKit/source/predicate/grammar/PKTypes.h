@@ -25,6 +25,10 @@ static inline PKRange PKRangeMake(unsigned int location, unsigned int length) {
   return (PKRange){ location, length };
 }
 
+static inline NSRange NSRangeFromPKRange(PKRange range) {
+  return NSMakeRange(range.location, range.length);
+}
+
 /* State */
 
 typedef enum {
@@ -55,6 +59,8 @@ static inline PKToken PKTokenMakeZero() {
 /* Scanner Context */
 
 typedef struct PKScannerContext {
+  NSURL         * document;
+  NSString      * source;
   PKState         state;
   NSError       * error;
   unsigned int    location;
@@ -75,6 +81,8 @@ static inline PKScannerContext PKScannerContextMakeZero() {
 /* Parser Context */
 
 typedef struct PKParserContext {
+  NSURL         * document;
+  NSString      * source;
   PKState         state;
   PKExpression  * expression;
   NSError       * error;

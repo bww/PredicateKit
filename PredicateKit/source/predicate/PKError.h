@@ -14,11 +14,18 @@ typedef enum {
 
 #define PKPredicateException    @"PKPredicateException"
 #define PKPredicateErrorDomain  @"PKPredicateErrorDomain"
+#define PKSourceSpanErrorKey    @"PKSourceSpanErrorKey"
 
 /** Create an NSError the easy way */
 #if !defined(NSERROR)
 #define NSERROR(d, c, m...) \
   [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, nil]]
+#endif
+
+/** Create an NSError the easy way */
+#if !defined(NSERROR_WITH_SPAN)
+#define NSERROR_WITH_SPAN(d, c, s, m...) \
+  [NSError errorWithDomain:(d) code:(c) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:m], NSLocalizedDescriptionKey, (s), PKSourceSpanErrorKey, nil]]
 #endif
 
 /** Create an NSError the easy way */

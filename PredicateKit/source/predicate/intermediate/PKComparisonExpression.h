@@ -26,9 +26,9 @@ NSString * PKComparisonTypeGetName(PKComparisonType type);
  */
 @interface PKComparisonExpression : PKExpression
 
-+(id)comparisonExpressionWithType:(PKComparisonType)type operands:(NSArray *)operands;
++(id)comparisonExpressionWithSpan:(PKSpan *)span type:(PKComparisonType)type operands:(NSArray *)operands;
 
--(id)initWithType:(PKComparisonType)type operands:(NSArray *)operands;
+-(id)initWithSpan:(PKSpan *)span type:(PKComparisonType)type operands:(NSArray *)operands;
 
 @property (readonly) PKComparisonType type;
 @property (readonly) NSArray        * operands;

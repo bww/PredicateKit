@@ -12,8 +12,8 @@
 
 @synthesize identifier = _identifier;
 
-+(PKIdentifierExpression *)identifierExpressionWithIdentifier:(NSString *)identifier {
-  return [[[self alloc] initWithIdentifier:identifier] autorelease];
++(PKIdentifierExpression *)identifierExpressionWithSpan:(PKSpan *)span identifier:(NSString *)identifier {
+  return [[[self alloc] initWithSpan:span identifier:identifier] autorelease];
 }
 
 -(void)dealloc {
@@ -21,8 +21,8 @@
   [super dealloc];
 }
 
--(id)initWithIdentifier:(NSString *)identifier {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span identifier:(NSString *)identifier {
+  if((self = [super initWithSpan:span]) != nil){
     _identifier = [identifier retain];
   }
   return self;

@@ -21,8 +21,8 @@ NSString * PKComparisonTypeGetName(PKComparisonType type) {
 @synthesize type = _type;
 @synthesize operands = _operands;
 
-+(PKComparisonExpression *)comparisonExpressionWithType:(PKComparisonType)type operands:(NSArray *)operands {
-  return [[[self alloc] initWithType:type operands:operands] autorelease];
++(PKComparisonExpression *)comparisonExpressionWithSpan:(PKSpan *)span type:(PKComparisonType)type operands:(NSArray *)operands {
+  return [[[self alloc] initWithSpan:span type:type operands:operands] autorelease];
 }
 
 -(void)dealloc {
@@ -30,8 +30,8 @@ NSString * PKComparisonTypeGetName(PKComparisonType type) {
   [super dealloc];
 }
 
--(id)initWithType:(PKComparisonType)type operands:(NSArray *)operands {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span type:(PKComparisonType)type operands:(NSArray *)operands {
+  if((self = [super initWithSpan:span]) != nil){
     _type = type;
     _operands = [operands retain];
   }

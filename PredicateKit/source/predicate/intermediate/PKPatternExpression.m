@@ -12,8 +12,8 @@
 
 @synthesize pattern = _pattern;
 
-+(PKPatternExpression *)patternExpressionWithPattern:(NSString *)pattern {
-  return [[[self alloc] initWithPattern:pattern] autorelease];
++(PKPatternExpression *)patternExpressionWithSpan:(PKSpan *)span pattern:(NSString *)pattern {
+  return [[[self alloc] initWithSpan:span pattern:pattern] autorelease];
 }
 
 -(void)dealloc {
@@ -21,8 +21,8 @@
   [super dealloc];
 }
 
--(id)initWithPattern:(NSString *)pattern {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span pattern:(NSString *)pattern {
+  if((self = [super initWithSpan:span]) != nil){
     _pattern = [pattern retain];
   }
   return self;

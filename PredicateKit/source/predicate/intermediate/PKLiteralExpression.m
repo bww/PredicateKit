@@ -12,8 +12,8 @@
 
 @synthesize value = _value;
 
-+(PKLiteralExpression *)literalExpressionWithValue:(id)value {
-  return [[[self alloc] initWithValue:value] autorelease];
++(PKLiteralExpression *)literalExpressionWithSpan:(PKSpan *)span value:(id)value {
+  return [[[self alloc] initWithSpan:span value:value] autorelease];
 }
 
 -(void)dealloc {
@@ -21,8 +21,8 @@
   [super dealloc];
 }
 
--(id)initWithValue:(id)value {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span value:(id)value {
+  if((self = [super initWithSpan:span]) != nil){
     _value = [value retain];
   }
   return self;

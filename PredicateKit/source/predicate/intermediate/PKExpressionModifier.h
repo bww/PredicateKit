@@ -22,9 +22,9 @@ typedef unsigned int PKModifier;
  */
 @interface PKExpressionModifier : PKExpression
 
-+(PKExpressionModifier *)expressionModifierWithFlags:(const char *)flags;
++(PKExpressionModifier *)expressionModifierWithSpan:(PKSpan *)span flags:(const char *)flags;
 
--(id)initWithFlags:(const char *)flags;
+-(id)initWithSpan:(PKSpan *)span flags:(const char *)flags;
 
 @property (readonly) PKModifier                 modifier;
 @property (readonly) NSRegularExpressionOptions regularExpressionOptions;

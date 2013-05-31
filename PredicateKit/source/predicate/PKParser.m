@@ -82,7 +82,14 @@ void __PKParser(void *yyp, int yymajor, PKToken yyminor, void *info);
   
   // setup our context objects, which are not optional
   PKParserContext parserContext = PKParserContextMakeZero();
+  parserContext.document = nil;
+  parserContext.source = source;
+  
   PKScannerContext scannerContext = PKScannerContextMakeZero();
+  scannerContext.document = nil;
+  scannerContext.source = source;
+  
+  // setup our state
   unsigned int location = 0, tcount = 0;
   PKToken currentToken = PKTokenMakeZero();
   

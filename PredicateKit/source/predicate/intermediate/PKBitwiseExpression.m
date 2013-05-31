@@ -21,8 +21,8 @@ NSString * PKBitwiseTypeGetName(PKBitwiseType type) {
 @synthesize type = _type;
 @synthesize operands = _operands;
 
-+(PKBitwiseExpression *)bitwiseExpressionWithType:(PKBitwiseType)type operands:(NSArray *)operands {
-  return [[[self alloc] initWithType:type operands:operands] autorelease];
++(PKBitwiseExpression *)bitwiseExpressionWithSpan:(PKSpan *)span type:(PKBitwiseType)type operands:(NSArray *)operands {
+  return [[[self alloc] initWithSpan:span type:type operands:operands] autorelease];
 }
 
 -(void)dealloc {
@@ -30,8 +30,8 @@ NSString * PKBitwiseTypeGetName(PKBitwiseType type) {
   [super dealloc];
 }
 
--(id)initWithType:(PKBitwiseType)type operands:(NSArray *)operands {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span type:(PKBitwiseType)type operands:(NSArray *)operands {
+  if((self = [super initWithSpan:span]) != nil){
     _type = type;
     _operands = [operands retain];
   }

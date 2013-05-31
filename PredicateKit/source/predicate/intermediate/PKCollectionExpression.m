@@ -16,8 +16,8 @@
 
 @synthesize parameters = _parameters;
 
-+(PKSetExpression *)setExpressionWithParameters:(PKParameters *)parameters {
-  return [[[self alloc] initWithParameters:parameters] autorelease];
++(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters {
+  return [[[self alloc] initWithSpan:span parameters:parameters] autorelease];
 }
 
 -(void)dealloc {
@@ -25,8 +25,8 @@
   [super dealloc];
 }
 
--(id)initWithParameters:(PKParameters *)parameters {
-  if((self = [super init]) != nil){
+-(id)initWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters {
+  if((self = [super initWithSpan:span]) != nil){
     _parameters = [parameters retain];
   }
   return self;

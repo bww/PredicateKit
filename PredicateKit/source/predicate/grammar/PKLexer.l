@@ -7,6 +7,7 @@
 #include "PKGrammar.h"
 #include "PKLexer.h"
 #include "PKTypes.h"
+#include "PKSpan.h"
 
 static inline void pk_context_increment(PKScannerContext *context, const char *text) {
   if(context != NULL && text != NULL){
@@ -154,7 +155,8 @@ WS          [ \t]
 
 . {
   pk_context_increment(yyextra, yytext);
-  yyextra->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Unrecognized character '%s'.", yytext);
+  PKSpan *where = [PKSpan spanWithDocument:yyextra->document source:yyextra->source range:NSMakeRange(yyextra->location, 1)];
+  yyextra->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, where, @"Unrecognized character '%s'.", yytext);
   yyextra->state = kPKStateError;
   return -1;
 }

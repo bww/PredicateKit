@@ -14,9 +14,9 @@
  */
 @interface PKModifiedExpression : PKExpression
 
-+(PKModifiedExpression *)modifiedExpressionWithExpression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier;
++(PKModifiedExpression *)modifiedExpressionWithSpan:(PKSpan *)span expression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier;
 
--(id)initWithExpression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier;
+-(id)initWithSpan:(PKSpan *)span expression:(PKExpression *)expression modifier:(PKExpressionModifier *)modifier;
 
 @property (readonly) PKExpression         * expression;
 @property (readonly) PKExpressionModifier * modifier;

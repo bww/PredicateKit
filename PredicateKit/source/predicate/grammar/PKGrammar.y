@@ -80,12 +80,14 @@ expression(A) ::= logical(B). {
 
 logical(A) ::= bitwise(B) LAND bitwise(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalAnd expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 logical(A) ::= bitwise(B) LOR bitwise(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalOr expressions:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 logical(A) ::= bitwise(B). {
@@ -98,17 +100,20 @@ logical(A) ::= bitwise(B). {
 
 bitwise(A) ::= modified(B) BOR modified(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 bitwise(A) ::= modified(B) BAND modified(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseAnd operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseAnd operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 bitwise(A) ::= modified(B) BXOR modified(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 bitwise(A) ::= modified(B). {
@@ -119,9 +124,13 @@ bitwise(A) ::= modified(B). {
 
 /* Modified expressions */
 
-modified(A) ::= equality(B) LBRACK MODIFIER(C) RBRACK. {
+modified(A) ::= equality(B) LBRACK(C) MODIFIER(D) RBRACK(E). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKModifiedExpression modifiedExpressionWithExpression:B.node modifier:[PKExpressionModifier expressionModifierWithFlags:C.value.asString]];
+    PKSpan *span;
+    span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(C.range.location, (E.range.location + E.range.length) - C.range.location)];
+    PKExpressionModifier *modifier = [PKExpressionModifier expressionModifierWithSpan:span flags:D.value.asString];
+    span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (E.range.location + E.range.length) - B.range.location)];
+    A.node = [PKModifiedExpression modifiedExpressionWithSpan:span expression:B.node modifier:modifier];
     if(C.value.asString) free((void *)C.value.asString);
   }
 }
@@ -135,22 +144,26 @@ modified(A) ::= equality(B). {
 
 equality(A) ::= relational(B) EQ relational(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 equality(A) ::= relational(B) NE relational(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 equality(A) ::= relational(B) MATCH relational(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonMatches operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonMatches operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 equality(A) ::= relational(B) IN relational(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonIn operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonIn operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 equality(A) ::= relational(B). {
@@ -163,22 +176,26 @@ equality(A) ::= relational(B). {
 
 relational(A) ::= unary(B) GT unary(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 relational(A) ::= unary(B) GE unary(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 relational(A) ::= unary(B) LT unary(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThan operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 relational(A) ::= unary(B) LE unary(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKComparisonExpression comparisonExpressionWithType:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:B.node, C.node, nil]];
   }
 }
 relational(A) ::= unary(B). {
@@ -189,14 +206,16 @@ relational(A) ::= unary(B). {
 
 /* Unary */
 
-unary(A) ::= BNOT dereference(B). {
+unary(A) ::= BNOT(B) dereference(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKBitwiseExpression bitwiseExpressionWithType:kPKBitwiseNot operands:[NSArray arrayWithObjects:B.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseNot operands:[NSArray arrayWithObjects:C.node, nil]];
   }
 }
-unary(A) ::= LNOT dereference(B). {
+unary(A) ::= LNOT(B) dereference(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLogicalExpression compoundExpressionWithType:kPKLogicalNot expressions:[NSArray arrayWithObjects:B.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (C.range.location + C.range.length) - B.range.location)];
+    A.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalNot expressions:[NSArray arrayWithObjects:C.node, nil]];
   }
 }
 unary(A) ::= dereference(B). {
@@ -239,9 +258,10 @@ primary(A) ::= LPAREN expression(B) RPAREN. {
 
 /* Collections */
 
-set(A) ::= LBRACE parameters(B) RBRACE. {
+set(A) ::= LBRACE(B) parameters(C) RBRACE(D). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKSetExpression setExpressionWithParameters:B.node];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(B.range.location, (D.range.location + D.range.length) - B.range.location)];
+    A.node = [PKSetExpression setExpressionWithSpan:span parameters:C.node];
   }
 }
 
@@ -262,49 +282,58 @@ parameters(A) ::= expression(B). {
 
 literal(A) ::= BOOL(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithBool:B.value.asBool]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithBool:B.value.asBool]];
   }
 }
-literal(A) ::= NULL. {
+literal(A) ::= NULL(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNull null]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNull null]];
   }
 }
 literal(A) ::= INT(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithInt:B.value.asInt]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithInt:B.value.asInt]];
   }
 }
 literal(A) ::= LONG(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithLongLong:B.value.asLong]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithLongLong:B.value.asLong]];
   }
 }
 literal(A) ::= FLOAT(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithFloat:B.value.asFloat]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithFloat:B.value.asFloat]];
   }
 }
 literal(A) ::= DOUBLE(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSNumber numberWithDouble:B.value.asDouble]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:B.value.asDouble]];
   }
 }
 literal(A) ::= IDENT(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKIdentifierExpression identifierExpressionWithIdentifier:[NSString stringWithUTF8String:B.value.asString]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKIdentifierExpression identifierExpressionWithSpan:span identifier:[NSString stringWithUTF8String:B.value.asString]];
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
 literal(A) ::= QUOTED_STRING(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKLiteralExpression literalExpressionWithValue:[NSString stringWithUTF8String:B.value.asString]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSString stringWithUTF8String:B.value.asString]];
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
 literal(A) ::= REGEX(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKPatternExpression patternExpressionWithPattern:[NSString stringWithUTF8String:B.value.asString]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKPatternExpression patternExpressionWithSpan:span pattern:[NSString stringWithUTF8String:B.value.asString]];
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
