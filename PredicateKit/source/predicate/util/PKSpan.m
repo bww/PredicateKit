@@ -39,6 +39,14 @@
 
 @synthesize underlineCharacter = _underlineCharacter;
 
++(PKSpanFormatter *)formatter {
+  return [[[self alloc] init] autorelease];
+}
+
++(PKSpanFormatter *)formatterWithOptions:(PKSpanFormatterOptions)options {
+  return [[[self alloc] initWithUnderlineCharacter:'^' options:options] autorelease];
+}
+
 -(id)init {
   return [self initWithUnderlineCharacter:'^' options:kPKSpanFormatterOptionNone];
 }

@@ -41,6 +41,9 @@ typedef NSUInteger PKSpanFormatterOptions;
  */
 @interface PKSpanFormatter : NSObject
 
++(PKSpanFormatter *)formatter;
++(PKSpanFormatter *)formatterWithOptions:(PKSpanFormatterOptions)options;
+
 -(id)init;
 -(id)initWithUnderlineCharacter:(UniChar)underline options:(PKSpanFormatterOptions)options;
 

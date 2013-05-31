@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		D3349F4017581DFD00B53167 /* PKSpan.h in Headers */ = {isa = PBXBuildFile; fileRef = D3349F3E17581DFD00B53167 /* PKSpan.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3349F4117581DFD00B53167 /* PKSpan.m in Sources */ = {isa = PBXBuildFile; fileRef = D3349F3F17581DFD00B53167 /* PKSpan.m */; };
-		D3349F4817585C2F00B53167 /* PKDereferenceExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3349F4617585C2F00B53167 /* PKDereferenceExpression.h */; };
+		D3349F4817585C2F00B53167 /* PKDereferenceExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3349F4617585C2F00B53167 /* PKDereferenceExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3349F4917585C2F00B53167 /* PKDereferenceExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3349F4717585C2F00B53167 /* PKDereferenceExpression.m */; };
 		D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34066E21756FA57006EEC69 /* PKPatternExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34066E51756FA57006EEC69 /* PKPatternExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D34066E31756FA57006EEC69 /* PKPatternExpression.m */; };
@@ -333,6 +333,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3349F4817585C2F00B53167 /* PKDereferenceExpression.h in Headers */,
 				D351BC171733346C0051C1B3 /* PKLexer.h in Headers */,
 				D351BC191733346C0051C1B3 /* PKTypes.h in Headers */,
 				D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */,
@@ -352,7 +353,6 @@
 				D351BC1A1733346C0051C1B3 /* PKError.h in Headers */,
 				D351BC1B1733346C0051C1B3 /* PKParser.h in Headers */,
 				D351BC1D1733346C0051C1B3 /* PKPredicate.h in Headers */,
-				D3349F4817585C2F00B53167 /* PKDereferenceExpression.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

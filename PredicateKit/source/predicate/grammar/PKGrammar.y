@@ -23,23 +23,24 @@
 %default_type   { PKToken }
 %extra_argument { PKParserContext *context }
 
-%parse_failure {
-  if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Confused by errors; bailing out.");
-    context->state = kPKStateError;
-  }
-}
-
 %syntax_error {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Syntax error.");
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(TOKEN.range)];
+    context->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, span, @"Syntax error");
     context->state = kPKStateError;
   }
 }
 
 %stack_overflow {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Stack overvlow.");
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Stack overflow");
+    context->state = kPKStateError;
+  }
+}
+
+%parse_failure {
+  if(context != NULL && context->state != kPKStateError){
+    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Confused by errors; bailing out");
     context->state = kPKStateError;
   }
 }
