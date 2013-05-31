@@ -119,15 +119,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id left, right;
   
   if([expression.expressions count] != 2)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKLogicalTypeGetName(expression.type)));
-  if((left = [self evaluateExpression:[expression.expressions objectAtIndex:0] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKLogicalTypeGetName(expression.type)));
+  
+  PKExpression *leftExpression = [expression.expressions objectAtIndex:0];
+  PKExpression *rightExpression = [expression.expressions objectAtIndex:1];
+  
+  if((left = [self evaluateExpression:leftExpression object:object error:error]) == nil)
     return nil;
-  if((right = [self evaluateExpression:[expression.expressions objectAtIndex:1] object:object error:error]) == nil)
+  if((right = [self evaluateExpression:rightExpression object:object error:error]) == nil)
     return nil;
   if(![left isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, leftExpression.span, @"Left operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
   if(![right isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKLogicalAnd:
@@ -147,11 +151,11 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id right;
   
   if([expression.expressions count] != 1)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKLogicalTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKLogicalTypeGetName(expression.type)));
   if((right = [self evaluateExpression:[expression.expressions objectAtIndex:0] object:object error:error]) == nil)
     return nil;
   if(![right isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Operand to %@ must evaluate to boolean", PKLogicalTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKLogicalNot:
@@ -200,15 +204,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id left, right;
   
   if([expression.operands count] != 2)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
-  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
+  
+  PKExpression *leftExpression = [expression.operands objectAtIndex:0];
+  PKExpression *rightExpression = [expression.operands objectAtIndex:1];
+  
+  if((left = [self evaluateExpression:leftExpression object:object error:error]) == nil)
     return nil;
   if(![left respondsToSelector:@selector(compare:)])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaulate to an object which implements the selector -compare:", PKComparisonTypeGetName(expression.type)));
-  if((right = [self evaluateExpression:[expression.operands objectAtIndex:1] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, leftExpression.span, @"Left operand to %@ must evaulate to an object which implements the selector -compare:", PKComparisonTypeGetName(expression.type)));
+  if((right = [self evaluateExpression:rightExpression object:object error:error]) == nil)
     return nil;
   if(![right respondsToSelector:@selector(compare:)])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must evaulate to an object which implements the selector -compare:", PKComparisonTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must evaulate to an object which implements the selector -compare:", PKComparisonTypeGetName(expression.type)));
   
   result = [left compare:right];
   
@@ -242,15 +250,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id left;
   
   if([expression.operands count] != 2)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
-  if((pattern = [expression.operands objectAtIndex:1]) == nil || object_getClass(pattern) != [PKPatternExpression class])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a pattern", PKComparisonTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
+  
+  PKExpression *leftExpression = [expression.operands objectAtIndex:0];
+  PKExpression *rightExpression = [expression.operands objectAtIndex:1];
+  
+  if((pattern = (PKPatternExpression *)rightExpression) == nil || object_getClass(pattern) != [PKPatternExpression class])
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must be a pattern", PKComparisonTypeGetName(expression.type)));
   if((regex = [NSRegularExpression regularExpressionWithPattern:pattern.pattern options:options error:&inner]) == nil)
-    return RUNTIME_ERROR(error, NSERROR_WITH_CAUSE(PKPredicateErrorDomain, PKStatusError, inner, @"Pattern operand to %@ is invalid", PKComparisonTypeGetName(expression.type)));
-  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Pattern operand to %@ is invalid", PKComparisonTypeGetName(expression.type)));
+  if((left = [self evaluateExpression:leftExpression object:object error:error]) == nil)
     return nil;
   if(![left isKindOfClass:[NSString class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must be a string", PKComparisonTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, leftExpression.span, @"Left operand to %@ must be a string", PKComparisonTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKComparisonMatches:
@@ -269,15 +281,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id left, right;
   
   if([expression.operands count] != 2)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
-  if((collection = [expression.operands objectAtIndex:1]) == nil || ![collection isKindOfClass:[PKCollectionExpression class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
-  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKComparisonTypeGetName(expression.type)));
+  
+  PKExpression *leftExpression = [expression.operands objectAtIndex:0];
+  PKExpression *rightExpression = [expression.operands objectAtIndex:1];
+  
+  if((collection = (PKCollectionExpression *)rightExpression) == nil || ![collection isKindOfClass:[PKCollectionExpression class]])
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+  if((left = [self evaluateExpression:leftExpression object:object error:error]) == nil)
     return nil;
-  if((right = [self evaluateExpression:[expression.operands objectAtIndex:1] object:object error:error]) == nil)
+  if((right = [self evaluateExpression:rightExpression object:object error:error]) == nil)
     return nil;
   if(![right isKindOfClass:[NSSet class]] && ![right isKindOfClass:[NSArray class]] && ![right isKindOfClass:[NSDictionary class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKComparisonIn:
@@ -301,7 +317,7 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   }else if([right isKindOfClass:[NSDictionary class]]){
     return [NSNumber numberWithBool:[right objectForKey:left] != nil];
   }else{
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, [[expression.operands objectAtIndex:1] span], @"Right operand to %@ must be a collection", PKComparisonTypeGetName(expression.type)));
   }
 }
 
@@ -328,15 +344,19 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id left, right;
   
   if([expression.operands count] != 2)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
-  if((left = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
+  
+  PKExpression *leftExpression = [expression.operands objectAtIndex:0];
+  PKExpression *rightExpression = [expression.operands objectAtIndex:1];
+  
+  if((left = [self evaluateExpression:leftExpression object:object error:error]) == nil)
     return nil;
-  if((right = [self evaluateExpression:[expression.operands objectAtIndex:1] object:object error:error]) == nil)
+  if((right = [self evaluateExpression:rightExpression object:object error:error]) == nil)
     return nil;
   if(![left isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, leftExpression.span, @"Left operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
   if(![right isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Right operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, rightExpression.span, @"Right operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKBitwiseAnd:
@@ -358,11 +378,11 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id right;
   
   if([expression.operands count] != 1)
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"%@ must have exactly two operands", PKBitwiseTypeGetName(expression.type)));
   if((right = [self evaluateExpression:[expression.operands objectAtIndex:0] object:object error:error]) == nil)
     return nil;
   if(![right isKindOfClass:[NSNumber class]])
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Left operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Operand to %@ must evaluate to integer", PKBitwiseTypeGetName(expression.type)));
   
   switch(expression.type){
     case kPKBitwiseNot:
@@ -398,13 +418,13 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   id value;
   
   if(object == nil){
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"Runtime context object is nil; cannot evaluate variable '%@'", expression.identifier));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Runtime context object is nil; cannot evaluate variable '%@'", expression.identifier));
   }
   
   @try {
     value = [object valueForKey:expression.identifier];
   }@catch(NSException *exception){
-    return RUNTIME_ERROR(error, NSERROR(PKPredicateErrorDomain, PKStatusError, @"No such property '%@' of %@", expression.identifier, [object class]));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"No such property '%@' of %@", expression.identifier, [object class]));
   }
   
   return (value != nil) ? value : [NSNull null];
