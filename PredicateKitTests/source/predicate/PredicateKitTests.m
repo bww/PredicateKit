@@ -43,8 +43,6 @@ extern char **environ;
     if(pair) free(pair);
   }
   
-  [[NSPredicate predicateWithFormat:@"2"] evaluateWithObject:self];
-  
   for(NSDictionary *test in tests){
     NSError *error = nil;
     fputc('\n', stderr);

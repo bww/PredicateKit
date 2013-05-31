@@ -14,34 +14,66 @@ Predicate Kit differs from NSPredicate is some important ways:
  * Predicate Kit works hard to provide useful errors when compliation or evalutation of an expression fails. Unlike `NSPredicate`, it provides an `NSError` object instead of throwing exceptions and [crashing your app] [1].
  
 ## For example...
-Suppose you want to allow a sophisticated user to enter a query expression which you will use to filter a set of objects by. And suppose you build this feature and a user enters the following:
+Suppose you want to allow a sophisticated user to enter a query expression which you will use to filter a set of objects by:
 
-	message.sujbect == "Hello" && message.unread == true
+	message.subject =~ /^Prefix/ && message.unread == true
 
-Your `message` object probably doesn't have a property named `sujbect` – that's a typo. If you're using NSPredicate to evaluate that expression, you're going to get something like:
+You can compile this expression into a predicate and use it to filter a collection of messages in a very expressive way:
+
+	NSArray *messages = /* assume this exists */;
+	NSError *error = nil;
+	
+	PKPredicate *predicate = [PKPredicate predicateWithSource:userProvidedSource error:&error];
+	if(predicate == nil) /* handle this error */
+	
+	for(Message *message in messages){
+		id result = [predicate evaluateWithObject:message error:&error];
+		if(result == nil){
+			/* handle this error */
+		}else if([result isKindOfClass:[NSNumber class]] && [result boolValue]){
+			/* this message matches! */
+		}
+	}
+	
+Awesome! All is well.
+
+## Error handling
+
+Now let's assume that instead of the expression above, the user enters this:
+
+	message.sujbect =~ /^Prefix/ && message.unread == true
+	
+Your `message` object doesn't have a property named `sujbect` – that's a typo. If you're using `NSPredicate` to evaluate that expression, you're going to get something like:
 
 	[<SomeClass 0x100397ce0> valueForUndefinedKey:]: this class is not key value coding-compliant for the key sujbect.
 
 … and then your app is going to crash. Lame.
 
-Predicate Kit, on the other hand, works hard to give you useful error information. The same example, evaluated with Predicate Kit, would give you an `NSError` object – instead of throwing an exception – which you could use to display something like:
+Predicate Kit, on the other hand, allows you to handle this not-uncommon case elegantly. We can do the following during evaluation:
+
+	id result = [predicate evaluateWithObject:message error:&error];
+	if(result == nil){
+		
+		// display the error message
+		NSLog(@"error: %@", [error localizedDescription]);
+		
+		// display the offending source excerpt with a '^^^' underline
+		PKSpan *span;
+		if((span = [[error userInfo] objectForKey:PKSourceSpanErrorKey]) != nil){
+		    PKSpanFormatter *formatter = [[PKSpanFormatter alloc] init];
+		    [formatter printCalloutForSpan:span stream:stderr];
+		    [formatter release];
+		}
+		
+		// bail out here
+	}
+
+Which will print the following useful message to standard error:
 
 	error: No such property 'sujbect' of <SomeClass 0x1005a1cc8>
 	message.sujbect == "Hello" && message.unread == true
             ^^^^^^^
 
-## For example…
-
-	name =~ /^Joe/ && (age >= 21 || booze == false)
-
-The above expression evaluated in the context of an NSDictionary object containing the following:
-
-	{
-		name: "Joe Blow",
-		age: 30,
-		booze: true
-	}
-
-Would result in the value `[NSNumber numberWithBool:FALSE]` when compiled and evaluated by Predicate Kit.
+`PKSpanFormatter` will let you easily extract  line, column, excerpt, and other information about the region of the source that produced an error. Using that, you can present useful errors to the user in whichever way makes sense.
 
 [1]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/Exceptions/Exceptions.html
