@@ -34,6 +34,11 @@ char * pk_string_copy_literal(const char *string, const char delim);
 %option yylineno
 %option bison-bridge
 
+/* Single-line comments state */
+%x S_COMMENT
+/* Multi-line comments state */
+%x M_COMMENT
+
 /* Universal Character Name: the naming conventions for UCS defined by International Standard ISO/IEC 10646 */
 UCN         (\\u[0-9a-fA-F]{4}|\\U[0-9a-fA-F]{8})
 
@@ -87,11 +92,6 @@ REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
-
-/* Single-line comments state */
-%x S_COMMENT
-/* Multi-line comments state */
-%x M_COMMENT
 
 %%
 

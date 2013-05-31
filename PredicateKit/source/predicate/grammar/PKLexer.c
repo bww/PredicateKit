@@ -656,6 +656,10 @@ static inline void pk_context_newline(PKScannerContext *context) {
 
 char * pk_string_copy_literal(const char *string, const char delim);
 
+/* Single-line comments state */
+
+/* Multi-line comments state */
+
 /* Universal Character Name: the naming conventions for UCS defined by International Standard ISO/IEC 10646 */
 /* DIGIT: any number from 0 to 9 */
 /* HEX DIGIT */
@@ -674,10 +678,6 @@ char * pk_string_copy_literal(const char *string, const char delim);
 /* MODIFIERS: modifier flags */
 /* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters with optional trailing modifiers */
 /* WHITESPACE: non-newline whitespace (space, tab) */
-/* Single-line comments state */
-
-/* Multi-line comments state */
-
 #line 682 "PKLexer.c"
 
 #define INITIAL 0
