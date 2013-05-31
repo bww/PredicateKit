@@ -22,6 +22,14 @@
 	</dict>
 	<dict>
 		<key>expression</key>
+		<string>&quot;hello&quot;.length</string>
+		<key>result</key>
+		<integer>5</integer>
+		<key>error:compile</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>a == a</string>
 		<key>result</key>
 		<true/>

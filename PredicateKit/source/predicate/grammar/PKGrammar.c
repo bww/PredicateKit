@@ -1120,7 +1120,7 @@ static void yy_reduce(
 #line 1121 "PKGrammar.c"
         break;
       case 41: /* literal ::= QUOTED_STRING */
-#line 349 "PKGrammar.y"
+#line 340 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
@@ -1131,7 +1131,7 @@ static void yy_reduce(
 #line 1132 "PKGrammar.c"
         break;
       case 42: /* literal ::= REGEX */
-#line 356 "PKGrammar.y"
+#line 347 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];

@@ -56,12 +56,16 @@ extern char **environ;
     PKPredicate *predicate = [PKPredicate predicateWithSource:expression error:&error];
     if(expectCompilationFailure) STAssertNil(predicate, @"Compliation did not fail as expected: '%@'", expression);
     else STAssertNotNil(predicate, @"Compilation error: %@", [error localizedDescription]);
-    if(predicate == nil) continue;
+    if(predicate == nil){
+      NSLog(@"C: %@ ==> <failed>", expression);
+      if(error) [self displayError:error];
+      continue;
+    }
     
     id result = [predicate evaluateWithObject:context error:&error];
     if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
     else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@'%@", predicate, (error != nil) ? [NSString stringWithFormat:@": %@", [error localizedDescription]] : @"");
-    NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
+    NSLog(@"R: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     if(error) [self displayError:error];
     
   }
@@ -70,11 +74,12 @@ extern char **environ;
 
 -(void)displayError:(NSError *)error {
   
+  fputs("error: ", stderr);
+  fputs([[error localizedDescription] UTF8String], stderr);
+  fputc('\n', stderr);
+  
   PKSpan *span;
   if((span = [[error userInfo] objectForKey:PKSourceSpanErrorKey]) != nil){
-    fputs("error: ", stderr);
-    fputs([[error localizedDescription] UTF8String], stderr);
-    fputc('\n', stderr);
     PKSpanFormatter *formatter = [[PKSpanFormatter alloc] init];
     [formatter printCalloutForSpan:span stream:stderr];
     [formatter release];

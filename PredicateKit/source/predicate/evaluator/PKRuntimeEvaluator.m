@@ -425,8 +425,8 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   if([expression.identifiers count] < 1)
     return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Dereference must have at least one identifier"));
   
-  for(PKIdentifierExpression *identifier in expression.identifiers){
-    if((result = [self evaluateIdentifierExpression:identifier object:result error:error]) == nil){
+  for(PKExpression *identifier in expression.identifiers){
+    if((result = [self evaluateExpression:identifier object:result error:error]) == nil){
       return nil;
     }
   }
