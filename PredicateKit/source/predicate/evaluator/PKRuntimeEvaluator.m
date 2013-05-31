@@ -417,9 +417,21 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
 /**
  * Evaluate a dereference expression
  */
--(id)evaluateDereferenceExpression:(PKIdentifierExpression *)expression object:(id)object error:(NSError **)error {
-  NSLog(@"DEREF");
-  return UNSUPPORTED_EXPRESSION(expression, error);
+-(id)evaluateDereferenceExpression:(PKDereferenceExpression *)expression object:(id)object error:(NSError **)error {
+  id result = object;
+  
+  if(object == nil)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Runtime context object is nil; cannot evaluate dereference '%@'", expression));
+  if([expression.identifiers count] < 1)
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"Dereference must have at least one identifier"));
+  
+  for(PKIdentifierExpression *identifier in expression.identifiers){
+    if((result = [self evaluateIdentifierExpression:identifier object:result error:error]) == nil){
+      return nil;
+    }
+  }
+  
+  return result;
 }
 
 /**
@@ -435,7 +447,7 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   @try {
     value = [object valueForKey:expression.identifier];
   }@catch(NSException *exception){
-    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"No such property '%@' of %@", expression.identifier, [object class]));
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"No such property '%@' of <%@ %p>", expression.identifier, [object class], object));
   }
   
   return (value != nil) ? value : [NSNull null];

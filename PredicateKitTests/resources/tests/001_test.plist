@@ -10,9 +10,15 @@
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>a. b</string>
+		<string>a.this_does_not_exist</string>
+		<key>error:runtime</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>a.length</string>
 		<key>result</key>
-		<string>value A</string>
+		<integer>7</integer>
 	</dict>
 	<dict>
 		<key>expression</key>
