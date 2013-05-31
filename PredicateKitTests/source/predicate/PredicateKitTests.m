@@ -7,6 +7,7 @@
 // 
 
 #import <PredicateKit/PKPredicate.h>
+#import <PredicateKit/PKSpan.h>
 
 #import "PredicateKitTests.h"
 
@@ -60,8 +61,20 @@ extern char **environ;
     id result = [predicate evaluateWithObject:context error:&error];
     if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
     else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@'%@", predicate, (error != nil) ? [NSString stringWithFormat:@": %@", [error localizedDescription]] : @"");
+    if(error) [self displayError:error];
     NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
     
+  }
+  
+}
+
+-(void)displayError:(NSError *)error {
+  
+  PKSpan *span;
+  if((span = [[error userInfo] objectForKey:PKSourceSpanErrorKey]) != nil){
+    PKSpanFormatter *formatter = [[PKSpanFormatter alloc] init];
+    [formatter printCalloutForSpan:span stream:stderr];
+    [formatter release];
   }
   
 }

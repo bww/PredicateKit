@@ -7,50 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D3349F4017581DFD00B53167 /* PKSpan.h in Headers */ = {isa = PBXBuildFile; fileRef = D3349F3E17581DFD00B53167 /* PKSpan.h */; };
+		D3349F4017581DFD00B53167 /* PKSpan.h in Headers */ = {isa = PBXBuildFile; fileRef = D3349F3E17581DFD00B53167 /* PKSpan.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3349F4117581DFD00B53167 /* PKSpan.m in Sources */ = {isa = PBXBuildFile; fileRef = D3349F3F17581DFD00B53167 /* PKSpan.m */; };
-		D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34066E21756FA57006EEC69 /* PKPatternExpression.h */; };
+		D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34066E21756FA57006EEC69 /* PKPatternExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34066E51756FA57006EEC69 /* PKPatternExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D34066E31756FA57006EEC69 /* PKPatternExpression.m */; };
-		D34067181757A4D5006EEC69 /* PKExpressionModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067161757A4D5006EEC69 /* PKExpressionModifier.h */; };
+		D34067181757A4D5006EEC69 /* PKExpressionModifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067161757A4D5006EEC69 /* PKExpressionModifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34067191757A4D5006EEC69 /* PKExpressionModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D34067171757A4D5006EEC69 /* PKExpressionModifier.m */; };
-		D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */; };
+		D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D340671D1757A8C3006EEC69 /* PKModifiedExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */; };
-		D34067201757BABD006EEC69 /* PKParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671E1757BABD006EEC69 /* PKParameters.h */; };
+		D34067201757BABD006EEC69 /* PKParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671E1757BABD006EEC69 /* PKParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34067211757BABD006EEC69 /* PKParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D340671F1757BABD006EEC69 /* PKParameters.m */; };
-		D34067241757BFBC006EEC69 /* PKCollectionExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067221757BFBC006EEC69 /* PKCollectionExpression.h */; };
+		D34067241757BFBC006EEC69 /* PKCollectionExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067221757BFBC006EEC69 /* PKCollectionExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34067251757BFBC006EEC69 /* PKCollectionExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D34067231757BFBC006EEC69 /* PKCollectionExpression.m */; };
 		D351BBAE17332F3D0051C1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAD17332F3D0051C1B3 /* Foundation.framework */; };
 		D351BBBD17332F3E0051C1B3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBBC17332F3E0051C1B3 /* SenTestingKit.framework */; };
 		D351BBC017332F3E0051C1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAD17332F3D0051C1B3 /* Foundation.framework */; };
 		D351BBC517332F3E0051C1B3 /* PredicateKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAA17332F3D0051C1B3 /* PredicateKit.framework */; };
 		D351BBDC17332FCF0051C1B3 /* PredicateKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BBDB17332FCF0051C1B3 /* PredicateKitTests.m */; };
-		D351BC171733346C0051C1B3 /* PKLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0B1733346C0051C1B3 /* PKLexer.h */; };
-		D351BC191733346C0051C1B3 /* PKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0D1733346C0051C1B3 /* PKTypes.h */; };
+		D351BC171733346C0051C1B3 /* PKLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0B1733346C0051C1B3 /* PKLexer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D351BC191733346C0051C1B3 /* PKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0D1733346C0051C1B3 /* PKTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D351BC1A1733346C0051C1B3 /* PKError.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0E1733346C0051C1B3 /* PKError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D351BC1B1733346C0051C1B3 /* PKParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC0F1733346C0051C1B3 /* PKParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D351BC1C1733346C0051C1B3 /* PKParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC101733346C0051C1B3 /* PKParser.m */; };
 		D351BC1D1733346C0051C1B3 /* PKPredicate.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC111733346C0051C1B3 /* PKPredicate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D351BC1E1733346C0051C1B3 /* PKPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = D351BC121733346C0051C1B3 /* PKPredicate.m */; };
 		D351BC22173334D30051C1B3 /* PKGrammar.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC1F173334D30051C1B3 /* PKGrammar.c */; };
-		D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC20173334D30051C1B3 /* PKGrammar.h */; };
+		D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */ = {isa = PBXBuildFile; fileRef = D351BC20173334D30051C1B3 /* PKGrammar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D351BC24173334D30051C1B3 /* PKLexer.c in Sources */ = {isa = PBXBuildFile; fileRef = D351BC21173334D30051C1B3 /* PKLexer.c */; };
 		D396D49E17505915000DF425 /* 001_test.plist in Resources */ = {isa = PBXBuildFile; fileRef = D396D49D17505915000DF425 /* 001_test.plist */; };
 		D396D4A51752C56B000DF425 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D396D4A41752C56B000DF425 /* libiconv.dylib */; };
-		D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */; };
+		D3A7DE841741C4F500DE8AE1 /* PKBitwiseExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE781741C4F500DE8AE1 /* PKBitwiseExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE851741C4F500DE8AE1 /* PKBitwiseExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE791741C4F500DE8AE1 /* PKBitwiseExpression.m */; };
-		D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */; };
+		D3A7DE861741C4F500DE8AE1 /* PKComparisonExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7A1741C4F500DE8AE1 /* PKComparisonExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE871741C4F500DE8AE1 /* PKComparisonExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE7B1741C4F500DE8AE1 /* PKComparisonExpression.m */; };
-		D3A7DE8A1741C4F500DE8AE1 /* PKExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7E1741C4F500DE8AE1 /* PKExpression.h */; };
+		D3A7DE8A1741C4F500DE8AE1 /* PKExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE7E1741C4F500DE8AE1 /* PKExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE8B1741C4F500DE8AE1 /* PKExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE7F1741C4F500DE8AE1 /* PKExpression.m */; };
-		D3A7DE8C1741C4F500DE8AE1 /* PKIdentifierExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE801741C4F500DE8AE1 /* PKIdentifierExpression.h */; };
+		D3A7DE8C1741C4F500DE8AE1 /* PKIdentifierExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE801741C4F500DE8AE1 /* PKIdentifierExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE8D1741C4F500DE8AE1 /* PKIdentifierExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE811741C4F500DE8AE1 /* PKIdentifierExpression.m */; };
-		D3A7DE8E1741C4F500DE8AE1 /* PKLiteralExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE821741C4F500DE8AE1 /* PKLiteralExpression.h */; };
+		D3A7DE8E1741C4F500DE8AE1 /* PKLiteralExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE821741C4F500DE8AE1 /* PKLiteralExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE8F1741C4F500DE8AE1 /* PKLiteralExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE831741C4F500DE8AE1 /* PKLiteralExpression.m */; };
-		D3A7DE921741CB4D00DE8AE1 /* PKEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */; };
+		D3A7DE921741CB4D00DE8AE1 /* PKEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE931741CB4D00DE8AE1 /* PKEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE911741CB4D00DE8AE1 /* PKEvaluator.m */; };
-		D3A7DE971741CD2000DE8AE1 /* PKRuntimeEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE951741CD2000DE8AE1 /* PKRuntimeEvaluator.h */; };
+		D3A7DE971741CD2000DE8AE1 /* PKRuntimeEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A7DE951741CD2000DE8AE1 /* PKRuntimeEvaluator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3A7DE981741CD2000DE8AE1 /* PKRuntimeEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */; };
-		D3E0D4151755A16E00084524 /* PKLogicalExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E0D4131755A16E00084524 /* PKLogicalExpression.h */; };
+		D3E0D4151755A16E00084524 /* PKLogicalExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E0D4131755A16E00084524 /* PKLogicalExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3E0D4161755A16E00084524 /* PKLogicalExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E0D4141755A16E00084524 /* PKLogicalExpression.m */; };
 /* End PBXBuildFile section */
 
@@ -333,9 +333,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D351BC1A1733346C0051C1B3 /* PKError.h in Headers */,
-				D351BC1B1733346C0051C1B3 /* PKParser.h in Headers */,
-				D351BC1D1733346C0051C1B3 /* PKPredicate.h in Headers */,
 				D351BC171733346C0051C1B3 /* PKLexer.h in Headers */,
 				D351BC191733346C0051C1B3 /* PKTypes.h in Headers */,
 				D351BC23173334D30051C1B3 /* PKGrammar.h in Headers */,
@@ -353,6 +350,9 @@
 				D34067201757BABD006EEC69 /* PKParameters.h in Headers */,
 				D34067241757BFBC006EEC69 /* PKCollectionExpression.h in Headers */,
 				D3349F4017581DFD00B53167 /* PKSpan.h in Headers */,
+				D351BC1A1733346C0051C1B3 /* PKError.h in Headers */,
+				D351BC1B1733346C0051C1B3 /* PKParser.h in Headers */,
+				D351BC1D1733346C0051C1B3 /* PKPredicate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

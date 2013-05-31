@@ -23,3 +23,32 @@
 
 @end
 
+enum {
+  kPKSpanFormatterOptionNone                = 0,
+  kPKSpanFormatterOptionUseANSIHighlighting = 1 << 0
+};
+
+typedef NSUInteger PKSpanFormatterOptions;
+
+#define PKSpanLayoutInfoColumnNumberKey     @"PKSpanLayoutInfoColumnNumber"
+#define PKSpanLayoutInfoLineNumberKey       @"PKSpanLayoutInfoLineNumber"
+#define PKSpanLayoutInfoIsTruncatedKey      @"PKSpanLayoutInfoIsTruncated"
+#define PKSpanLayoutInfoUnderlineLengthKey  @"PKSpanLayoutInfoUnderlineLength"
+#define PKSpanLayoutInfoSourceExcerptKey    @"PKSpanLayoutInfoSourceExcerpt"
+
+/**
+ * A formatter for spans
+ */
+@interface PKSpanFormatter : NSObject
+
+-(id)initWithUnderlineCharacter:(UniChar)underline options:(PKSpanFormatterOptions)options;
+
+-(NSDictionary *)layoutInfoForSpan:(PKSpan *)span;
+-(NSArray *)calloutLinesForSpan:(PKSpan *)span;
+-(void)printCalloutForSpan:(PKSpan *)span stream:(FILE *)stream;
+
+@property (readonly) UniChar                underlineCharacter;
+@property (readonly) PKSpanFormatterOptions options;
+
+@end
+

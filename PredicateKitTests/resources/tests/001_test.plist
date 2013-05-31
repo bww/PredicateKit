@@ -4,6 +4,12 @@
 <array>
 	<dict>
 		<key>expression</key>
+		<string>               12345678 =~ /a+/</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>a</string>
 		<key>result</key>
 		<string>value A</string>
