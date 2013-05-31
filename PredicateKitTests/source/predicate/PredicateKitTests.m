@@ -61,8 +61,8 @@ extern char **environ;
     id result = [predicate evaluateWithObject:context error:&error];
     if(expectEvaluationFailure) STAssertNil(result, @"Predicate evaluation did not fail as expected: '%@'", predicate);
     else STAssertEqualObjects(require, result, @"Predicate did not evaluate to the expected result: '%@'%@", predicate, (error != nil) ? [NSString stringWithFormat:@": %@", [error localizedDescription]] : @"");
-    if(error) [self displayError:error];
     NSLog(@"P: %@ ==> %@", predicate, (result != nil) ? result : @"<failed>");
+    if(error) [self displayError:error];
     
   }
   
@@ -72,6 +72,9 @@ extern char **environ;
   
   PKSpan *span;
   if((span = [[error userInfo] objectForKey:PKSourceSpanErrorKey]) != nil){
+    fputs("error: ", stderr);
+    fputs([[error localizedDescription] UTF8String], stderr);
+    fputc('\n', stderr);
     PKSpanFormatter *formatter = [[PKSpanFormatter alloc] init];
     [formatter printCalloutForSpan:span stream:stderr];
     [formatter release];

@@ -15,8 +15,6 @@
 		D34067191757A4D5006EEC69 /* PKExpressionModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D34067171757A4D5006EEC69 /* PKExpressionModifier.m */; };
 		D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D340671D1757A8C3006EEC69 /* PKModifiedExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */; };
-		D34067201757BABD006EEC69 /* PKParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D340671E1757BABD006EEC69 /* PKParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D34067211757BABD006EEC69 /* PKParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D340671F1757BABD006EEC69 /* PKParameters.m */; };
 		D34067241757BFBC006EEC69 /* PKCollectionExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D34067221757BFBC006EEC69 /* PKCollectionExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34067251757BFBC006EEC69 /* PKCollectionExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D34067231757BFBC006EEC69 /* PKCollectionExpression.m */; };
 		D351BBAE17332F3D0051C1B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D351BBAD17332F3D0051C1B3 /* Foundation.framework */; };
@@ -80,8 +78,6 @@
 		D34067171757A4D5006EEC69 /* PKExpressionModifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKExpressionModifier.m; sourceTree = "<group>"; };
 		D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKModifiedExpression.h; sourceTree = "<group>"; };
 		D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKModifiedExpression.m; sourceTree = "<group>"; };
-		D340671E1757BABD006EEC69 /* PKParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKParameters.h; sourceTree = "<group>"; };
-		D340671F1757BABD006EEC69 /* PKParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKParameters.m; sourceTree = "<group>"; };
 		D34067221757BFBC006EEC69 /* PKCollectionExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCollectionExpression.h; sourceTree = "<group>"; };
 		D34067231757BFBC006EEC69 /* PKCollectionExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCollectionExpression.m; sourceTree = "<group>"; };
 		D351BBAA17332F3D0051C1B3 /* PredicateKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = PredicateKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -309,8 +305,6 @@
 				D34067171757A4D5006EEC69 /* PKExpressionModifier.m */,
 				D340671A1757A8C3006EEC69 /* PKModifiedExpression.h */,
 				D340671B1757A8C3006EEC69 /* PKModifiedExpression.m */,
-				D340671E1757BABD006EEC69 /* PKParameters.h */,
-				D340671F1757BABD006EEC69 /* PKParameters.m */,
 				D34067221757BFBC006EEC69 /* PKCollectionExpression.h */,
 				D34067231757BFBC006EEC69 /* PKCollectionExpression.m */,
 			);
@@ -347,7 +341,6 @@
 				D34066E41756FA57006EEC69 /* PKPatternExpression.h in Headers */,
 				D34067181757A4D5006EEC69 /* PKExpressionModifier.h in Headers */,
 				D340671C1757A8C3006EEC69 /* PKModifiedExpression.h in Headers */,
-				D34067201757BABD006EEC69 /* PKParameters.h in Headers */,
 				D34067241757BFBC006EEC69 /* PKCollectionExpression.h in Headers */,
 				D3349F4017581DFD00B53167 /* PKSpan.h in Headers */,
 				D351BC1A1733346C0051C1B3 /* PKError.h in Headers */,
@@ -478,7 +471,6 @@
 				D34066E51756FA57006EEC69 /* PKPatternExpression.m in Sources */,
 				D34067191757A4D5006EEC69 /* PKExpressionModifier.m in Sources */,
 				D340671D1757A8C3006EEC69 /* PKModifiedExpression.m in Sources */,
-				D34067211757BABD006EEC69 /* PKParameters.m in Sources */,
 				D34067251757BFBC006EEC69 /* PKCollectionExpression.m in Sources */,
 				D3349F4117581DFD00B53167 /* PKSpan.m in Sources */,
 			);

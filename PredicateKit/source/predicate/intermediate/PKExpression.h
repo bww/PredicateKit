@@ -11,7 +11,11 @@
 /**
  * An expression.
  */
-@interface PKExpression : NSObject
+@interface PKExpression : NSObject {
+  
+  PKSpan * _span;
+  
+}
 
 -(id)initWithSpan:(PKSpan *)span;
 

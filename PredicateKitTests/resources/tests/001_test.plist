@@ -10,7 +10,7 @@
 	</dict>
 	<dict>
 		<key>expression</key>
-		<string>a.b</string>
+		<string>a. b</string>
 		<key>result</key>
 		<string>value A</string>
 	</dict>

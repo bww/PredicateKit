@@ -13,7 +13,6 @@
 #include "PKExpressionModifier.h"
 #include "PKModifiedExpression.h"
 #include "PKCollectionExpression.h"
-#include "PKParameters.h"
 }
 
 %name "__PKParser"
@@ -269,12 +268,12 @@ set(A) ::= LBRACE(B) parameters(C) RBRACE(D). {
 
 parameters(A) ::= parameters(B) COMMA expression(C). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [(PKMutableParameters *)B.node addExpression:C.node];
+    [(NSMutableArray *)(A.node = B.node) addObject:C.node];
   }
 }
 parameters(A) ::= expression(B). {
   if(context != NULL && context->state != kPKStateError){
-    A.node = [PKMutableParameters mutableParametersWithExpression:B.node];
+    A.node = [NSMutableArray arrayWithObject:B.node];
   }
 }
 

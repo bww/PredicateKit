@@ -7,7 +7,6 @@
 // 
 
 #import "PKExpression.h"
-#import "PKParameters.h"
 
 /**
  * Abstract collection expression
@@ -21,11 +20,11 @@
  */
 @interface PKSetExpression : PKCollectionExpression
 
-+(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters;
++(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(NSArray *)parameters;
 
--(id)initWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters;
+-(id)initWithSpan:(PKSpan *)span parameters:(NSArray *)parameters;
 
-@property (readonly) PKParameters * parameters;
+@property (readonly) NSArray * parameters;
 
 @end
 

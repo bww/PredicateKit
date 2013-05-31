@@ -16,7 +16,7 @@
 
 @synthesize parameters = _parameters;
 
-+(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters {
++(PKSetExpression *)setExpressionWithSpan:(PKSpan *)span parameters:(NSArray *)parameters {
   return [[[self alloc] initWithSpan:span parameters:parameters] autorelease];
 }
 
@@ -25,7 +25,7 @@
   [super dealloc];
 }
 
--(id)initWithSpan:(PKSpan *)span parameters:(PKParameters *)parameters {
+-(id)initWithSpan:(PKSpan *)span parameters:(NSArray *)parameters {
   if((self = [super initWithSpan:span]) != nil){
     _parameters = [parameters retain];
   }
@@ -33,7 +33,16 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"{ %@ }", [_parameters description]];
+  NSMutableString *string = [NSMutableString string];
+  [string appendString:@"{ "];
+  
+  for(int i = 0; i < [_parameters count]; i++){
+    if(i > 0) [string appendString:@", "];
+    [string appendString:[[_parameters objectAtIndex:i] description]];
+  }
+  
+  [string appendString:@" }"];
+  return string;
 }
 
 @end

@@ -399,7 +399,7 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
 -(id)evaluateSetExpression:(PKSetExpression *)expression object:(id)object error:(NSError **)error {
   NSMutableSet *set = [NSMutableSet set];
   
-  for(PKExpression *parameter in [expression.parameters expressions]){
+  for(PKExpression *parameter in expression.parameters){
     id result;
     if((result = [self evaluateExpression:parameter object:object error:error]) != nil){
       [set addObject:result];
