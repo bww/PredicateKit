@@ -337,15 +337,6 @@ literal(A) ::= DOUBLE(B). {
     A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:B.value.asDouble]];
   }
 }
-/*
-literal(A) ::= IDENT(B). {
-  if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
-    A.node = [PKIdentifierExpression identifierExpressionWithSpan:span identifier:[NSString stringWithUTF8String:B.value.asString]];
-    free((void *)B.value.asString); B.value.asString = NULL;
-  }
-}
-*/
 literal(A) ::= QUOTED_STRING(B). {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
