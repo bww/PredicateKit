@@ -8,6 +8,7 @@
 #include "PKBitwiseExpression.h"
 #include "PKComparisonExpression.h"
 #include "PKIdentifierExpression.h"
+#include "PKDereferenceExpression.h"
 #include "PKLiteralExpression.h"
 #include "PKPatternExpression.h"
 #include "PKExpressionModifier.h"
@@ -225,15 +226,36 @@ unary(A) ::= dereference(B). {
 
 /* Dereference */
 
-dereference ::= dereference DOT IDENT. {
+dereference(A) ::= components(B). {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKDereferenceExpression dereferenceExpressionWithSpan:span identifiers:B.node]; // B.node is an NSArray of identifier expressions
   }
 }
 dereference(A) ::= primary(B). {
   if(context != NULL && context->state != kPKStateError){
     A.node = B.node;
+  }
+}
+
+components(A) ::= components(B) DOT identifier(C). {
+  if(context != NULL && context->state != kPKStateError){
+    [(NSMutableArray *)(A.node = B.node) addObject:C.node];
+  }
+}
+components(A) ::= identifier(B). {
+  if(context != NULL && context->state != kPKStateError){
+    A.node = [NSMutableArray arrayWithObject:B.node];
+  }
+}
+
+/* Identifier */
+
+identifier(A) ::= IDENT(B). {
+  if(context != NULL && context->state != kPKStateError){
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    A.node = [PKIdentifierExpression identifierExpressionWithSpan:span identifier:[NSString stringWithUTF8String:B.value.asString]];
+    free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
 
@@ -315,6 +337,7 @@ literal(A) ::= DOUBLE(B). {
     A.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:B.value.asDouble]];
   }
 }
+/*
 literal(A) ::= IDENT(B). {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
@@ -322,6 +345,7 @@ literal(A) ::= IDENT(B). {
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
+*/
 literal(A) ::= QUOTED_STRING(B). {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];

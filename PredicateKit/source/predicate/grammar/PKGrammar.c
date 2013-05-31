@@ -15,12 +15,13 @@
 #include "PKBitwiseExpression.h"
 #include "PKComparisonExpression.h"
 #include "PKIdentifierExpression.h"
+#include "PKDereferenceExpression.h"
 #include "PKLiteralExpression.h"
 #include "PKPatternExpression.h"
 #include "PKExpressionModifier.h"
 #include "PKModifiedExpression.h"
 #include "PKCollectionExpression.h"
-#line 24 "PKGrammar.c"
+#line 25 "PKGrammar.c"
 /* Next is all token values, in a form suitable for use by makeheaders.
 ** This section will be null unless lemon is run with the -m switch.
 */
@@ -71,13 +72,13 @@
 **                       defined, then do no error processing.
 */
 #define YYCODETYPE unsigned char
-#define YYNOCODE 55
+#define YYNOCODE 57
 #define YYACTIONTYPE unsigned char
 #define __PKParserTOKENTYPE  PKToken 
 typedef union {
   int yyinit;
   __PKParserTOKENTYPE yy0;
-  PKToken yy89;
+  PKToken yy41;
 } YYMINORTYPE;
 #ifndef YYSTACKDEPTH
 #define YYSTACKDEPTH 100
@@ -86,8 +87,8 @@ typedef union {
 #define __PKParserARG_PDECL , PKParserContext *context 
 #define __PKParserARG_FETCH  PKParserContext *context  = yypParser->context 
 #define __PKParserARG_STORE yypParser->context  = context 
-#define YYNSTATE 65
-#define YYNRULE 41
+#define YYNSTATE 67
+#define YYNRULE 43
 #define YY_NO_ACTION      (YYNSTATE+YYNRULE+2)
 #define YY_ACCEPT_ACTION  (YYNSTATE+YYNRULE+1)
 #define YY_ERROR_ACTION   (YYNSTATE+YYNRULE)
@@ -156,79 +157,83 @@ static const YYMINORTYPE yyzerominor = { 0 };
 **                     shifting non-terminals after a reduce.
 **  yy_default[]       Default action for each state.
 */
-#define YY_ACTTAB_COUNT (204)
+#define YY_ACTTAB_COUNT (230)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */     3,   65,    1,    7,    8,    6,   17,   18,   43,   64,
- /*    10 */    23,   21,   31,   20,   19,   25,   57,   56,   55,   22,
- /*    20 */    63,   21,   31,   20,   19,   25,   57,   56,   55,   46,
- /*    30 */    30,   52,   51,   50,   49,   48,   47,   45,   44,  107,
- /*    40 */    32,   64,   23,   21,   31,   20,   19,   25,   57,   56,
- /*    50 */    55,    3,   61,    1,   24,   64,   23,   21,   31,   20,
- /*    60 */    19,   25,   57,   56,   55,   33,   21,   31,   20,   19,
- /*    70 */    25,   57,   56,   55,   60,   19,   25,   57,   56,   55,
- /*    80 */    46,   29,   52,   51,   50,   49,   48,   47,   45,   44,
- /*    90 */    53,   64,   23,   21,   31,   20,   19,   25,   57,   56,
- /*   100 */    55,   62,   31,   20,   19,   25,   57,   56,   55,   35,
- /*   110 */    31,   20,   19,   25,   57,   56,   55,   34,   31,   20,
- /*   120 */    19,   25,   57,   56,   55,   38,   19,   25,   57,   56,
- /*   130 */    55,   37,   19,   25,   57,   56,   55,   36,   19,   25,
- /*   140 */    57,   56,   55,   59,   25,   57,   56,   55,   41,   25,
- /*   150 */    57,   56,   55,   40,   25,   57,   56,   55,   39,   25,
- /*   160 */    57,   56,   55,   12,   11,   28,   57,   56,   55,   10,
- /*   170 */    16,   15,   14,   13,    5,    4,   54,    9,   26,   57,
- /*   180 */    56,   55,   27,   42,  108,   58,  108,  108,  108,  108,
- /*   190 */   108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
- /*   200 */   108,  108,  108,    2,
+ /*     0 */    41,   66,   24,   22,   29,   21,   20,   52,   26,   57,
+ /*    10 */    56,   55,   54,   23,  111,   30,   66,   24,   22,   29,
+ /*    20 */    21,   20,   52,   26,   57,   56,   55,   54,    3,   67,
+ /*    30 */     1,    7,    8,    6,   17,   18,   25,   66,   24,   22,
+ /*    40 */    29,   21,   20,   52,   26,   57,   56,   55,   54,   62,
+ /*    50 */    20,   52,   26,   57,   56,   55,   54,   58,   28,   49,
+ /*    60 */    48,   47,   46,   45,   44,   43,   42,   50,   66,   24,
+ /*    70 */    22,   29,   21,   20,   52,   26,   57,   56,   55,   54,
+ /*    80 */     3,   51,    1,   65,   22,   29,   21,   20,   52,   26,
+ /*    90 */    57,   56,   55,   54,   64,   29,   21,   20,   52,   26,
+ /*   100 */    57,   56,   55,   54,   16,   15,   14,   13,    2,   58,
+ /*   110 */    27,   49,   48,   47,   46,   45,   44,   43,   42,   31,
+ /*   120 */    22,   29,   21,   20,   52,   26,   57,   56,   55,   54,
+ /*   130 */    33,   29,   21,   20,   52,   26,   57,   56,   55,   54,
+ /*   140 */    32,   29,   21,   20,   52,   26,   57,   56,   55,   54,
+ /*   150 */    36,   20,   52,   26,   57,   56,   55,   54,   63,   35,
+ /*   160 */    20,   52,   26,   57,   56,   55,   54,   34,   20,   52,
+ /*   170 */    26,   57,   56,   55,   54,   61,   52,   26,   57,   56,
+ /*   180 */    55,   54,   39,   52,   26,   57,   56,   55,   54,   38,
+ /*   190 */    52,   26,   57,   56,   55,   54,   37,   52,   26,   57,
+ /*   200 */    56,   55,   54,   60,   26,   57,   56,   55,   54,   53,
+ /*   210 */    26,   57,   56,   55,   54,   12,   11,    5,    4,   19,
+ /*   220 */    40,   10,   59,   58,  112,  112,  112,  112,  112,    9,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */     1,    0,    3,   11,   12,   13,    7,    8,   42,   43,
- /*    10 */    44,   45,   46,   47,   48,   49,   50,   51,   52,   53,
- /*    20 */    44,   45,   46,   47,   48,   49,   50,   51,   52,   30,
- /*    30 */     5,   32,   33,   34,   35,   36,   37,   38,   39,   41,
- /*    40 */    42,   43,   44,   45,   46,   47,   48,   49,   50,   51,
- /*    50 */    52,    1,    6,    3,   42,   43,   44,   45,   46,   47,
- /*    60 */    48,   49,   50,   51,   52,   44,   45,   46,   47,   48,
- /*    70 */    49,   50,   51,   52,   47,   48,   49,   50,   51,   52,
- /*    80 */    30,   27,   32,   33,   34,   35,   36,   37,   38,   39,
- /*    90 */    42,   43,   44,   45,   46,   47,   48,   49,   50,   51,
- /*   100 */    52,   45,   46,   47,   48,   49,   50,   51,   52,   45,
- /*   110 */    46,   47,   48,   49,   50,   51,   52,   45,   46,   47,
- /*   120 */    48,   49,   50,   51,   52,   47,   48,   49,   50,   51,
- /*   130 */    52,   47,   48,   49,   50,   51,   52,   47,   48,   49,
- /*   140 */    50,   51,   52,   48,   49,   50,   51,   52,   48,   49,
- /*   150 */    50,   51,   52,   48,   49,   50,   51,   52,   48,   49,
- /*   160 */    50,   51,   52,   14,   15,   49,   50,   51,   52,   20,
- /*   170 */    16,   17,   18,   19,    9,   10,    4,   28,   49,   50,
- /*   180 */    51,   52,   29,    2,   54,   30,   54,   54,   54,   54,
- /*   190 */    54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
- /*   200 */    54,   54,   54,   31,
+ /*     0 */    42,   43,   44,   45,   46,   47,   48,   49,   50,   51,
+ /*    10 */    52,   53,   54,   55,   41,   42,   43,   44,   45,   46,
+ /*    20 */    47,   48,   49,   50,   51,   52,   53,   54,    1,    0,
+ /*    30 */     3,   11,   12,   13,    7,    8,   42,   43,   44,   45,
+ /*    40 */    46,   47,   48,   49,   50,   51,   52,   53,   54,   47,
+ /*    50 */    48,   49,   50,   51,   52,   53,   54,   30,    5,   32,
+ /*    60 */    33,   34,   35,   36,   37,   38,   39,   42,   43,   44,
+ /*    70 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
+ /*    80 */     1,    4,    3,   44,   45,   46,   47,   48,   49,   50,
+ /*    90 */    51,   52,   53,   54,   45,   46,   47,   48,   49,   50,
+ /*   100 */    51,   52,   53,   54,   16,   17,   18,   19,   31,   30,
+ /*   110 */    27,   32,   33,   34,   35,   36,   37,   38,   39,   44,
+ /*   120 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
+ /*   130 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
+ /*   140 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
+ /*   150 */    47,   48,   49,   50,   51,   52,   53,   54,    6,   47,
+ /*   160 */    48,   49,   50,   51,   52,   53,   54,   47,   48,   49,
+ /*   170 */    50,   51,   52,   53,   54,   48,   49,   50,   51,   52,
+ /*   180 */    53,   54,   48,   49,   50,   51,   52,   53,   54,   48,
+ /*   190 */    49,   50,   51,   52,   53,   54,   48,   49,   50,   51,
+ /*   200 */    52,   53,   54,   49,   50,   51,   52,   53,   54,   49,
+ /*   210 */    50,   51,   52,   53,   54,   14,   15,    9,   10,   29,
+ /*   220 */     2,   20,   52,   30,   56,   56,   56,   56,   56,   28,
 };
-#define YY_SHIFT_USE_DFLT (-9)
-#define YY_SHIFT_COUNT (32)
-#define YY_SHIFT_MIN   (-8)
-#define YY_SHIFT_MAX   (181)
+#define YY_SHIFT_USE_DFLT (-1)
+#define YY_SHIFT_COUNT (30)
+#define YY_SHIFT_MIN   (0)
+#define YY_SHIFT_MAX   (218)
 static const short yy_shift_ofst[] = {
- /*     0 */    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
- /*    10 */    -1,   -1,   -1,   -1,   -1,   -1,   -1,   50,   50,  154,
- /*    20 */   149,   -8,  172,  165,  181,  153,  153,  155,  153,   46,
- /*    30 */    54,   25,    1,
+ /*     0 */    27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
+ /*    10 */    27,   27,   27,   27,   27,   27,   27,   79,   79,  193,
+ /*    20 */    88,  201,   20,   77,  208,  218,  190,  152,   83,   53,
+ /*    30 */    29,
 };
-#define YY_REDUCE_USE_DFLT (-35)
-#define YY_REDUCE_COUNT (18)
-#define YY_REDUCE_MIN   (-34)
-#define YY_REDUCE_MAX   (129)
+#define YY_REDUCE_USE_DFLT (-43)
+#define YY_REDUCE_COUNT (19)
+#define YY_REDUCE_MIN   (-42)
+#define YY_REDUCE_MAX   (170)
 static const short yy_reduce_ofst[] = {
- /*     0 */    -2,  -34,   48,   12,   21,  -24,   72,   64,   56,   90,
- /*    10 */    84,   78,   27,  110,  105,  100,   95,  129,  116,
+ /*     0 */   -27,  -42,   25,   -6,   75,   39,   95,   85,   49,  120,
+ /*    10 */   112,  103,    2,  148,  141,  134,  127,  160,  154,  170,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */   106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
- /*    10 */   106,  106,  106,  106,  106,  106,  106,  106,  106,   85,
- /*    20 */    80,   73,  106,   69,  106,   88,   87,  106,   86,  106,
- /*    30 */   106,   75,  106,   68,   72,   71,   79,   78,   77,   84,
- /*    40 */    83,   82,   93,   96,  105,  104,  103,  102,  101,  100,
- /*    50 */    99,   98,   97,   95,   94,   92,   91,   90,   89,   81,
- /*    60 */    76,   74,   70,   67,   66,
+ /*     0 */   110,  110,  110,  110,  110,  110,  110,  110,  110,  110,
+ /*    10 */   110,  110,  110,  110,  110,  110,  110,  110,  110,  110,
+ /*    20 */    87,   82,   75,  110,   71,  110,   91,  110,  110,   77,
+ /*    30 */   110,   70,   74,   73,   81,   80,   79,   86,   85,   84,
+ /*    40 */    98,  101,  109,  108,  107,  106,  105,  104,  103,  102,
+ /*    50 */   100,   99,   90,   89,   97,   96,   94,   92,   95,   93,
+ /*    60 */    88,   83,   78,   76,   72,   69,   68,
 };
 
 /* The next table maps tokens into fallback tokens.  If a construct
@@ -333,8 +338,8 @@ static const char *const yyTokenName[] = {
   "FLOAT",         "DOUBLE",        "QUOTED_STRING",  "REGEX",       
   "error",         "predicate",     "expression",    "logical",     
   "bitwise",       "modified",      "equality",      "relational",  
-  "unary",         "dereference",   "primary",       "literal",     
-  "set",           "parameters",  
+  "unary",         "dereference",   "components",    "primary",     
+  "identifier",    "literal",       "set",           "parameters",  
 };
 #endif /* NDEBUG */
 
@@ -366,23 +371,25 @@ static const char *const yyRuleName[] = {
  /*  21 */ "unary ::= BNOT dereference",
  /*  22 */ "unary ::= LNOT dereference",
  /*  23 */ "unary ::= dereference",
- /*  24 */ "dereference ::= dereference DOT IDENT",
+ /*  24 */ "dereference ::= components",
  /*  25 */ "dereference ::= primary",
- /*  26 */ "primary ::= literal",
- /*  27 */ "primary ::= set",
- /*  28 */ "primary ::= LPAREN expression RPAREN",
- /*  29 */ "set ::= LBRACE parameters RBRACE",
- /*  30 */ "parameters ::= parameters COMMA expression",
- /*  31 */ "parameters ::= expression",
- /*  32 */ "literal ::= BOOL",
- /*  33 */ "literal ::= NULL",
- /*  34 */ "literal ::= INT",
- /*  35 */ "literal ::= LONG",
- /*  36 */ "literal ::= FLOAT",
- /*  37 */ "literal ::= DOUBLE",
- /*  38 */ "literal ::= IDENT",
- /*  39 */ "literal ::= QUOTED_STRING",
- /*  40 */ "literal ::= REGEX",
+ /*  26 */ "components ::= components DOT identifier",
+ /*  27 */ "components ::= identifier",
+ /*  28 */ "identifier ::= IDENT",
+ /*  29 */ "primary ::= literal",
+ /*  30 */ "primary ::= set",
+ /*  31 */ "primary ::= LPAREN expression RPAREN",
+ /*  32 */ "set ::= LBRACE parameters RBRACE",
+ /*  33 */ "parameters ::= parameters COMMA expression",
+ /*  34 */ "parameters ::= expression",
+ /*  35 */ "literal ::= BOOL",
+ /*  36 */ "literal ::= NULL",
+ /*  37 */ "literal ::= INT",
+ /*  38 */ "literal ::= LONG",
+ /*  39 */ "literal ::= FLOAT",
+ /*  40 */ "literal ::= DOUBLE",
+ /*  41 */ "literal ::= QUOTED_STRING",
+ /*  42 */ "literal ::= REGEX",
 };
 #endif /* NDEBUG */
 
@@ -640,13 +647,13 @@ static void yyStackOverflow(yyParser *yypParser, YYMINORTYPE *yypMinor){
    while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
    /* Here code is inserted which will execute if the parser
    ** stack every overflows */
-#line 39 "PKGrammar.y"
+#line 40 "PKGrammar.y"
 
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Stack overvlow.");
     context->state = kPKStateError;
   }
-#line 650 "PKGrammar.c"
+#line 657 "PKGrammar.c"
    __PKParserARG_STORE; /* Suppress warning about unused %extra_argument var */
 }
 
@@ -727,23 +734,25 @@ static const struct {
   { 48, 2 },
   { 48, 2 },
   { 48, 1 },
-  { 49, 3 },
   { 49, 1 },
-  { 50, 1 },
-  { 50, 1 },
+  { 49, 1 },
   { 50, 3 },
-  { 52, 3 },
-  { 53, 3 },
+  { 50, 1 },
+  { 52, 1 },
+  { 51, 1 },
+  { 51, 1 },
+  { 51, 3 },
+  { 54, 3 },
+  { 55, 3 },
+  { 55, 1 },
   { 53, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
-  { 51, 1 },
+  { 53, 1 },
+  { 53, 1 },
+  { 53, 1 },
+  { 53, 1 },
+  { 53, 1 },
+  { 53, 1 },
+  { 53, 1 },
 };
 
 static void yy_accept(yyParser*);  /* Forward Declaration */
@@ -799,14 +808,14 @@ static void yy_reduce(
   **     break;
   */
       case 0: /* predicate ::= expression */
-#line 63 "PKGrammar.y"
+#line 64 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    context->expression = yymsp[0].minor.yy89.node;
+    context->expression = yymsp[0].minor.yy41.node;
     context->state = kPKStateFinished;
   }
 }
-#line 810 "PKGrammar.c"
+#line 819 "PKGrammar.c"
         break;
       case 1: /* expression ::= logical */
       case 4: /* logical ::= bitwise */ yytestcase(yyruleno==4);
@@ -816,319 +825,321 @@ static void yy_reduce(
       case 20: /* relational ::= unary */ yytestcase(yyruleno==20);
       case 23: /* unary ::= dereference */ yytestcase(yyruleno==23);
       case 25: /* dereference ::= primary */ yytestcase(yyruleno==25);
-      case 26: /* primary ::= literal */ yytestcase(yyruleno==26);
-      case 27: /* primary ::= set */ yytestcase(yyruleno==27);
-#line 72 "PKGrammar.y"
+      case 29: /* primary ::= literal */ yytestcase(yyruleno==29);
+      case 30: /* primary ::= set */ yytestcase(yyruleno==30);
+#line 73 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    yygotominor.yy89.node = yymsp[0].minor.yy89.node;
+    yygotominor.yy41.node = yymsp[0].minor.yy41.node;
   }
 }
-#line 828 "PKGrammar.c"
+#line 837 "PKGrammar.c"
         break;
       case 2: /* logical ::= bitwise LAND bitwise */
-#line 80 "PKGrammar.y"
+#line 81 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalAnd expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 838 "PKGrammar.c"
+#line 847 "PKGrammar.c"
         break;
       case 3: /* logical ::= bitwise LOR bitwise */
-#line 86 "PKGrammar.y"
+#line 87 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalOr expressions:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 848 "PKGrammar.c"
+#line 857 "PKGrammar.c"
         break;
       case 5: /* bitwise ::= modified BOR modified */
-#line 100 "PKGrammar.y"
+#line 101 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 858 "PKGrammar.c"
+#line 867 "PKGrammar.c"
         break;
       case 6: /* bitwise ::= modified BAND modified */
-#line 106 "PKGrammar.y"
+#line 107 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseAnd operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 868 "PKGrammar.c"
+#line 877 "PKGrammar.c"
         break;
       case 7: /* bitwise ::= modified BXOR modified */
-#line 112 "PKGrammar.y"
+#line 113 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseExclusiveOr operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 878 "PKGrammar.c"
+#line 887 "PKGrammar.c"
         break;
       case 9: /* modified ::= equality LBRACK MODIFIER RBRACK */
-#line 126 "PKGrammar.y"
+#line 127 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span;
     span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy0.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-2].minor.yy0.range.location)];
     PKExpressionModifier *modifier = [PKExpressionModifier expressionModifierWithSpan:span flags:yymsp[-1].minor.yy0.value.asString];
-    span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-3].minor.yy89.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-3].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKModifiedExpression modifiedExpressionWithSpan:span expression:yymsp[-3].minor.yy89.node modifier:modifier];
+    span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-3].minor.yy41.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-3].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKModifiedExpression modifiedExpressionWithSpan:span expression:yymsp[-3].minor.yy41.node modifier:modifier];
     if(yymsp[-2].minor.yy0.value.asString) free((void *)yymsp[-2].minor.yy0.value.asString);
   }
 }
-#line 892 "PKGrammar.c"
+#line 901 "PKGrammar.c"
         break;
       case 11: /* equality ::= relational EQ relational */
-#line 144 "PKGrammar.y"
+#line 145 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 902 "PKGrammar.c"
+#line 911 "PKGrammar.c"
         break;
       case 12: /* equality ::= relational NE relational */
-#line 150 "PKGrammar.y"
+#line 151 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonNotEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 912 "PKGrammar.c"
+#line 921 "PKGrammar.c"
         break;
       case 13: /* equality ::= relational MATCH relational */
-#line 156 "PKGrammar.y"
+#line 157 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonMatches operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 922 "PKGrammar.c"
+#line 931 "PKGrammar.c"
         break;
       case 14: /* equality ::= relational IN relational */
-#line 162 "PKGrammar.y"
+#line 163 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonIn operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 932 "PKGrammar.c"
+#line 941 "PKGrammar.c"
         break;
       case 16: /* relational ::= unary GT unary */
-#line 176 "PKGrammar.y"
+#line 177 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 942 "PKGrammar.c"
+#line 951 "PKGrammar.c"
         break;
       case 17: /* relational ::= unary GE unary */
-#line 182 "PKGrammar.y"
+#line 183 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonGreaterThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 952 "PKGrammar.c"
+#line 961 "PKGrammar.c"
         break;
       case 18: /* relational ::= unary LT unary */
-#line 188 "PKGrammar.y"
+#line 189 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThan operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 962 "PKGrammar.c"
+#line 971 "PKGrammar.c"
         break;
       case 19: /* relational ::= unary LE unary */
-#line 194 "PKGrammar.y"
+#line 195 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy89.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-2].minor.yy89.range.location)];
-    yygotominor.yy89.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy89.node, yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy41.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-2].minor.yy41.range.location)];
+    yygotominor.yy41.node = [PKComparisonExpression comparisonExpressionWithSpan:span type:kPKComparisonLessThanOrEqualTo operands:[NSArray arrayWithObjects:yymsp[-2].minor.yy41.node, yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 972 "PKGrammar.c"
+#line 981 "PKGrammar.c"
         break;
       case 21: /* unary ::= BNOT dereference */
-#line 208 "PKGrammar.y"
+#line 209 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-1].minor.yy0.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-1].minor.yy0.range.location)];
-    yygotominor.yy89.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-1].minor.yy0.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-1].minor.yy0.range.location)];
+    yygotominor.yy41.node = [PKBitwiseExpression bitwiseExpressionWithSpan:span type:kPKBitwiseNot operands:[NSArray arrayWithObjects:yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 982 "PKGrammar.c"
+#line 991 "PKGrammar.c"
         break;
       case 22: /* unary ::= LNOT dereference */
-#line 214 "PKGrammar.y"
+#line 215 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-1].minor.yy0.range.location, (yymsp[0].minor.yy89.range.location + yymsp[0].minor.yy89.range.length) - yymsp[-1].minor.yy0.range.location)];
-    yygotominor.yy89.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy89.node, nil]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-1].minor.yy0.range.location, (yymsp[0].minor.yy41.range.location + yymsp[0].minor.yy41.range.length) - yymsp[-1].minor.yy0.range.location)];
+    yygotominor.yy41.node = [PKLogicalExpression compoundExpressionWithSpan:span type:kPKLogicalNot expressions:[NSArray arrayWithObjects:yymsp[0].minor.yy41.node, nil]];
   }
 }
-#line 992 "PKGrammar.c"
+#line 1001 "PKGrammar.c"
         break;
-      case 24: /* dereference ::= dereference DOT IDENT */
-#line 228 "PKGrammar.y"
+      case 24: /* dereference ::= components */
+#line 229 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Language feature is not supported.");
-    context->state = kPKStateError;
-  }
-}
-#line 1002 "PKGrammar.c"
-        break;
-      case 28: /* primary ::= LPAREN expression RPAREN */
-#line 252 "PKGrammar.y"
-{
-  if(context != NULL && context->state != kPKStateError){
-    yygotominor.yy89.node = yymsp[-1].minor.yy89.node;
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy41.range)];
+    yygotominor.yy41.node = [PKDereferenceExpression dereferenceExpressionWithSpan:span identifiers:yymsp[0].minor.yy41.node]; // yymsp[0].minor.yy41.node is an NSArray of identifier expressions
   }
 }
 #line 1011 "PKGrammar.c"
         break;
-      case 29: /* set ::= LBRACE parameters RBRACE */
-#line 260 "PKGrammar.y"
+      case 26: /* components ::= components DOT identifier */
+      case 33: /* parameters ::= parameters COMMA expression */ yytestcase(yyruleno==33);
+#line 241 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy0.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-2].minor.yy0.range.location)];
-    yygotominor.yy89.node = [PKSetExpression setExpressionWithSpan:span parameters:yymsp[-1].minor.yy89.node];
+    [(NSMutableArray *)(yygotominor.yy41.node = yymsp[-2].minor.yy41.node) addObject:yymsp[0].minor.yy41.node];
   }
 }
 #line 1021 "PKGrammar.c"
         break;
-      case 30: /* parameters ::= parameters COMMA expression */
-#line 269 "PKGrammar.y"
+      case 27: /* components ::= identifier */
+      case 34: /* parameters ::= expression */ yytestcase(yyruleno==34);
+#line 246 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    [(NSMutableArray *)(yygotominor.yy89.node = yymsp[-2].minor.yy89.node) addObject:yymsp[0].minor.yy89.node];
+    yygotominor.yy41.node = [NSMutableArray arrayWithObject:yymsp[0].minor.yy41.node];
   }
 }
-#line 1030 "PKGrammar.c"
+#line 1031 "PKGrammar.c"
         break;
-      case 31: /* parameters ::= expression */
+      case 28: /* identifier ::= IDENT */
+#line 254 "PKGrammar.y"
+{
+  if(context != NULL && context->state != kPKStateError){
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
+    yygotominor.yy41.node = [PKIdentifierExpression identifierExpressionWithSpan:span identifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
+    free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
+  }
+}
+#line 1042 "PKGrammar.c"
+        break;
+      case 31: /* primary ::= LPAREN expression RPAREN */
 #line 274 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    yygotominor.yy89.node = [NSMutableArray arrayWithObject:yymsp[0].minor.yy89.node];
+    yygotominor.yy41.node = yymsp[-1].minor.yy41.node;
   }
 }
-#line 1039 "PKGrammar.c"
+#line 1051 "PKGrammar.c"
         break;
-      case 32: /* literal ::= BOOL */
+      case 32: /* set ::= LBRACE parameters RBRACE */
 #line 282 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]];
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy0.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-2].minor.yy0.range.location)];
+    yygotominor.yy41.node = [PKSetExpression setExpressionWithSpan:span parameters:yymsp[-1].minor.yy41.node];
   }
 }
-#line 1049 "PKGrammar.c"
+#line 1061 "PKGrammar.c"
         break;
-      case 33: /* literal ::= NULL */
-#line 288 "PKGrammar.y"
+      case 35: /* literal ::= BOOL */
+#line 304 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNull null]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]];
   }
 }
-#line 1059 "PKGrammar.c"
+#line 1071 "PKGrammar.c"
         break;
-      case 34: /* literal ::= INT */
-#line 294 "PKGrammar.y"
+      case 36: /* literal ::= NULL */
+#line 310 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNull null]];
   }
 }
-#line 1069 "PKGrammar.c"
+#line 1081 "PKGrammar.c"
         break;
-      case 35: /* literal ::= LONG */
-#line 300 "PKGrammar.y"
+      case 37: /* literal ::= INT */
+#line 316 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]];
   }
 }
-#line 1079 "PKGrammar.c"
+#line 1091 "PKGrammar.c"
         break;
-      case 36: /* literal ::= FLOAT */
-#line 306 "PKGrammar.y"
+      case 38: /* literal ::= LONG */
+#line 322 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]];
   }
 }
-#line 1089 "PKGrammar.c"
+#line 1101 "PKGrammar.c"
         break;
-      case 37: /* literal ::= DOUBLE */
-#line 312 "PKGrammar.y"
+      case 39: /* literal ::= FLOAT */
+#line 328 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]];
   }
 }
-#line 1099 "PKGrammar.c"
+#line 1111 "PKGrammar.c"
         break;
-      case 38: /* literal ::= IDENT */
-#line 318 "PKGrammar.y"
+      case 40: /* literal ::= DOUBLE */
+#line 334 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKIdentifierExpression identifierExpressionWithSpan:span identifier:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
-    free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
-  }
-}
-#line 1110 "PKGrammar.c"
-        break;
-      case 39: /* literal ::= QUOTED_STRING */
-#line 325 "PKGrammar.y"
-{
-  if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
-    free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]];
   }
 }
 #line 1121 "PKGrammar.c"
         break;
-      case 40: /* literal ::= REGEX */
-#line 332 "PKGrammar.y"
+      case 41: /* literal ::= QUOTED_STRING */
+#line 349 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
-    yygotominor.yy89.node = [PKPatternExpression patternExpressionWithSpan:span pattern:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
+    yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
     free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
   }
 }
 #line 1132 "PKGrammar.c"
+        break;
+      case 42: /* literal ::= REGEX */
+#line 356 "PKGrammar.y"
+{
+  if(context != NULL && context->state != kPKStateError){
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
+    yygotominor.yy41.node = [PKPatternExpression patternExpressionWithSpan:span pattern:[NSString stringWithUTF8String:yymsp[0].minor.yy0.value.asString]];
+    free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
+  }
+}
+#line 1143 "PKGrammar.c"
         break;
       default:
         break;
@@ -1176,13 +1187,13 @@ static void yy_parse_failed(
   while( yypParser->yyidx>=0 ) yy_pop_parser_stack(yypParser);
   /* Here code is inserted which will be executed whenever the
   ** parser fails */
-#line 25 "PKGrammar.y"
+#line 26 "PKGrammar.y"
 
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Confused by errors; bailing out.");
     context->state = kPKStateError;
   }
-#line 1186 "PKGrammar.c"
+#line 1197 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
@@ -1197,13 +1208,13 @@ static void yy_syntax_error(
 ){
   __PKParserARG_FETCH;
 #define TOKEN (yyminor.yy0)
-#line 32 "PKGrammar.y"
+#line 33 "PKGrammar.y"
 
   if(context != NULL && context->state != kPKStateError){
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Syntax error.");
     context->state = kPKStateError;
   }
-#line 1207 "PKGrammar.c"
+#line 1218 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 

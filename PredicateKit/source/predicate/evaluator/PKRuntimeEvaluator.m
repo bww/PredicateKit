@@ -14,6 +14,7 @@
 #import "PKComparisonExpression.h"
 #import "PKLogicalExpression.h"
 #import "PKIdentifierExpression.h"
+#import "PKDereferenceExpression.h"
 #import "PKLiteralExpression.h"
 #import "PKPatternExpression.h"
 #import "PKExpressionModifier.h"
@@ -70,6 +71,8 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
     return [self evaluateBitwiseExpression:(PKBitwiseExpression *)expression object:object error:error];
   }else if(type == [PKIdentifierExpression class]){
     return [self evaluateIdentifierExpression:(PKIdentifierExpression *)expression object:object error:error];
+  }else if(type == [PKDereferenceExpression class]){
+    return [self evaluateDereferenceExpression:(PKDereferenceExpression *)expression object:object error:error];
   }else if(type == [PKLiteralExpression class]){
     return [self evaluateLiteralExpression:(PKLiteralExpression *)expression object:object error:error];
   }else if(type == [PKModifiedExpression class]){
@@ -409,6 +412,14 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   }
   
   return set;
+}
+
+/**
+ * Evaluate a dereference expression
+ */
+-(id)evaluateDereferenceExpression:(PKIdentifierExpression *)expression object:(id)object error:(NSError **)error {
+  NSLog(@"DEREF");
+  return UNSUPPORTED_EXPRESSION(expression, error);
 }
 
 /**
