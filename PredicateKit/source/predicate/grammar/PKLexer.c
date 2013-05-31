@@ -363,8 +363,8 @@ static void yy_fatal_error (yyconst char msg[] ,yyscan_t yyscanner );
 	*yy_cp = '\0'; \
 	yyg->yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 51
-#define YY_END_OF_BUFFER 52
+#define YY_NUM_RULES 52
+#define YY_END_OF_BUFFER 53
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -374,21 +374,21 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[152] =
     {   0,
-        0,    0,    0,    0,    0,    0,   52,   50,   39,   38,
-       16,   50,   49,   27,   23,   17,   18,   29,   30,   33,
-       31,   32,   28,   42,   42,   15,   50,   14,   21,   50,
-       22,   25,   46,   49,   49,   49,   49,   19,   24,   20,
-       26,   51,    2,    6,    5,    6,   39,   10,    0,   47,
-        0,   49,    0,    7,    0,    3,    1,    0,    0,    0,
-       40,    0,   42,   13,    9,   11,   12,    0,    0,   46,
-       49,   34,   49,   49,    8,    4,    0,    0,    0,    0,
-       48,    0,    0,   44,   44,    0,   43,   43,    0,    0,
-       49,   49,   49,    0,    0,    0,    0,    0,    0,   45,
+        0,    0,    0,    0,    0,    0,   53,   51,   40,   39,
+       17,   51,   50,   28,   24,   18,   19,   30,   31,   34,
+       32,   33,   29,   43,   43,   16,   51,   15,   22,   51,
+       23,   26,   47,   50,   50,   50,   50,   20,   25,   21,
+       27,    2,    3,    7,    6,    7,   40,   11,    0,   48,
+        0,   50,    0,    8,    0,    4,    1,    0,    0,    0,
+       41,    0,   43,   14,   10,   12,   13,    0,    0,   47,
+       50,   35,   50,   50,    9,    5,    0,    0,    0,    0,
+       49,    0,    0,   45,   45,    0,   44,   44,    0,    0,
+       50,   50,   50,    0,    0,    0,    0,    0,    0,   46,
 
-        0,   44,   42,    0,   41,   43,   43,    0,    0,   49,
-       37,   35,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,   36,    0,    0,    0,    0,    0,    0,   44,
-       43,    0,   49,    0,    0,    0,    0,    0,    0,    0,
+        0,   45,   43,    0,   42,   44,   44,    0,    0,   50,
+       38,   36,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,   37,    0,    0,    0,    0,    0,    0,   45,
+       44,    0,   50,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0
     } ;
@@ -614,11 +614,11 @@ static yyconst flex_int16_t yy_chk[528] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[52] =
+static yyconst flex_int32_t yy_rule_can_match_eol[53] =
     {   0,
-0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -1017,265 +1017,270 @@ YY_RULE_SETUP
 { BEGIN(S_COMMENT); pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
 #line 99 "PKLexer.l"
-{ BEGIN(INITIAL); pk_context_newline(yyextra); }
+{ pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 3:
+/* rule 3 can match eol */
 YY_RULE_SETUP
 #line 100 "PKLexer.l"
-{ BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
+{ BEGIN(INITIAL); pk_context_newline(yyextra); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 101 "PKLexer.l"
-{ BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
+#line 102 "PKLexer.l"
+{ BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 5:
-/* rule 5 can match eol */
-YY_RULE_SETUP
-#line 102 "PKLexer.l"
-{ BEGIN(INITIAL); pk_context_newline(yyextra); }
-	YY_BREAK
-case 6:
 YY_RULE_SETUP
 #line 103 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); }
+{ BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
+	YY_BREAK
+case 6:
+/* rule 6 can match eol */
+YY_RULE_SETUP
+#line 104 "PKLexer.l"
+{ BEGIN(INITIAL); pk_context_newline(yyextra); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 105 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LAND; }
+{ pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 106 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LOR; }
+#line 107 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LAND; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 107 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_EQ; }
+#line 108 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LOR; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 108 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_NE; }
+#line 109 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_EQ; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 109 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_MATCH; }
+#line 110 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_NE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 110 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_GE; }
+#line 111 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_MATCH; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 111 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LE; }
+#line 112 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_GE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 112 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_GT; }
+#line 113 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 113 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LT; }
+#line 114 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_GT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 114 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LNOT; }
+#line 115 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 116 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LPAREN; }
+{ pk_context_increment(yyextra, yytext); return T_LNOT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 117 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_RPAREN; }
+#line 118 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LPAREN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 118 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LBRACE; }
+#line 119 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_RPAREN; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 119 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_RBRACE; }
+#line 120 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LBRACE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 120 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_LBRACK; }
+#line 121 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_RBRACE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 121 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_RBRACK; }
+#line 122 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_LBRACK; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 123 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_BAND; }
+{ pk_context_increment(yyextra, yytext); return T_RBRACK; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 124 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_BOR; }
+#line 125 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_BAND; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 125 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_BXOR; }
+#line 126 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_BOR; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 126 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_BNOT; }
+#line 127 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_BXOR; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 128 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_MOD; }
+{ pk_context_increment(yyextra, yytext); return T_BNOT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 129 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_DIV; }
+#line 130 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_MOD; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 130 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_MUL; }
+#line 131 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_DIV; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 131 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_ADD; }
+#line 132 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_MUL; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 132 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_SUB; }
+#line 133 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_ADD; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 134 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_DOT; }
+{ pk_context_increment(yyextra, yytext); return T_SUB; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 135 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_COMMA; }
+#line 136 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_DOT; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 137 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); return T_IN; }
+{ pk_context_increment(yyextra, yytext); return T_COMMA; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 138 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
+#line 139 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); return T_IN; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 139 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
+#line 140 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asBool = 1; return T_BOOL; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 140 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); bzero(yylval, sizeof(PKValue)); return T_NULL; }
+#line 141 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asBool = 0; return T_BOOL; }
 	YY_BREAK
 case 38:
-/* rule 38 can match eol */
 YY_RULE_SETUP
 #line 142 "PKLexer.l"
-{ pk_context_newline(yyextra); }
+{ pk_context_increment(yyextra, yytext); bzero(yylval, sizeof(PKValue)); return T_NULL; }
 	YY_BREAK
 case 39:
+/* rule 39 can match eol */
 YY_RULE_SETUP
-#line 143 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); }
+#line 144 "PKLexer.l"
+{ pk_context_newline(yyextra); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 145 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
+{ pk_context_increment(yyextra, yytext); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 146 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
+#line 147 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 147 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
+#line 148 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 148 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
+#line 149 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 149 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
+#line 150 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 150 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
+#line 151 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 151 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_MODIFIER; }
+#line 152 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 152 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
+#line 153 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_MODIFIER; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 153 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
+#line 154 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 154 "PKLexer.l"
-{ pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
+#line 155 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 156 "PKLexer.l"
+{ pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
+	YY_BREAK
+case 51:
+YY_RULE_SETUP
+#line 158 "PKLexer.l"
 {
-  pk_context_increment(yyextra, yytext);
   PKSpan *where = [PKSpan spanWithDocument:yyextra->document source:yyextra->source range:NSMakeRange(yyextra->location, 1)];
-  yyextra->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, where, @"Unrecognized character '%s'.", yytext);
+  pk_context_increment(yyextra, yytext); // increment our location after we setup the error text span
+  yyextra->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, where, @"Syntax error: unrecognized character '%s'.", yytext);
   yyextra->state = kPKStateError;
   return -1;
 }
 	YY_BREAK
-case 51:
+case 52:
 YY_RULE_SETUP
-#line 164 "PKLexer.l"
+#line 166 "PKLexer.l"
 ECHO;
 	YY_BREAK
-#line 1279 "PKLexer.c"
+#line 1284 "PKLexer.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(S_COMMENT):
 case YY_STATE_EOF(M_COMMENT):
@@ -2454,7 +2459,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 164 "PKLexer.l"
+#line 166 "PKLexer.l"
 
 
 

@@ -90,6 +90,12 @@
 	</dict>
 	<dict>
 		<key>expression</key>
+		<string>&quot;&quot;</string>
+		<key>result</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>&quot;hi \&quot;quoted\&quot; ok&quot;</string>
 		<key>result</key>
 		<string>hi &quot;quoted&quot; ok</string>

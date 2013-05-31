@@ -96,7 +96,9 @@ WS          [ \t]
 %%
 
 "//"            { BEGIN(S_COMMENT); pk_context_increment(yyextra, yytext); }
+<S_COMMENT>.    { pk_context_increment(yyextra, yytext); }
 <S_COMMENT>\n   { BEGIN(INITIAL); pk_context_newline(yyextra); }
+
 "/*"            { BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
 <M_COMMENT>"*/" { BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
 <M_COMMENT>\n   { BEGIN(INITIAL); pk_context_newline(yyextra); }
@@ -154,9 +156,9 @@ WS          [ \t]
 {IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
 
 . {
-  pk_context_increment(yyextra, yytext);
   PKSpan *where = [PKSpan spanWithDocument:yyextra->document source:yyextra->source range:NSMakeRange(yyextra->location, 1)];
-  yyextra->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, where, @"Unrecognized character '%s'.", yytext);
+  pk_context_increment(yyextra, yytext); // increment our location after we setup the error text span
+  yyextra->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, where, @"Syntax error: unrecognized character '%s'.", yytext);
   yyextra->state = kPKStateError;
   return -1;
 }
