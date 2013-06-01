@@ -92,7 +92,7 @@
   BOOL truncated = range.location + range.length > end;
   NSUInteger columnNumber = range.location - start;
   NSUInteger underline = MIN(range.length, end - range.location);
-  NSString *excerpt = [[source substringWithRange:NSMakeRange(start, end - start)] retain];
+  NSString *excerpt = [source substringWithRange:NSMakeRange(start, end - start)];
   
   return [NSDictionary dictionaryWithObjectsAndKeys:
     [NSNumber numberWithInteger:columnNumber], PKSpanLayoutInfoColumnNumberKey,

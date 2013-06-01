@@ -23,7 +23,7 @@ extern char **environ;
   [super tearDown];
 }
 
--(void)testExample {
+-(void)testGrammar {
   
   NSArray *tests = [[NSArray alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"001_test.plist" ofType:nil]];
   STAssertNotNil(tests, @"Tests must not be nil");
