@@ -72,6 +72,13 @@
 			remoteGlobalIDString = D351BBA917332F3D0051C1B3;
 			remoteInfo = PredicateKit;
 		};
+		D3C63AED175E8F1F00F576F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D351BB9E17332F3D0051C1B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D3C63AE9175E8EC900F576F1;
+			remoteInfo = Grammar;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -377,6 +384,23 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
+/* Begin PBXLegacyTarget section */
+		D3C63AE9175E8EC900F576F1 /* Grammar */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = D3C63AEA175E8EC900F576F1 /* Build configuration list for PBXLegacyTarget "Grammar" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)/PredicateKit/source/predicate/grammar";
+			dependencies = (
+			);
+			name = Grammar;
+			passBuildSettingsInEnvironment = 1;
+			productName = Grammar;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		D351BBA917332F3D0051C1B3 /* PredicateKit */ = {
 			isa = PBXNativeTarget;
@@ -390,6 +414,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D3C63AEE175E8F1F00F576F1 /* PBXTargetDependency */,
 			);
 			name = PredicateKit;
 			productName = PredicateKit;
@@ -439,6 +464,7 @@
 			targets = (
 				D351BBA917332F3D0051C1B3 /* PredicateKit */,
 				D351BBBA17332F3E0051C1B3 /* PredicateKitTests */,
+				D3C63AE9175E8EC900F576F1 /* Grammar */,
 			);
 		};
 /* End PBXProject section */
@@ -524,6 +550,11 @@
 			isa = PBXTargetDependency;
 			target = D351BBA917332F3D0051C1B3 /* PredicateKit */;
 			targetProxy = D351BBC317332F3E0051C1B3 /* PBXContainerItemProxy */;
+		};
+		D3C63AEE175E8F1F00F576F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D3C63AE9175E8EC900F576F1 /* Grammar */;
+			targetProxy = D3C63AED175E8F1F00F576F1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -641,6 +672,38 @@
 			};
 			name = Release;
 		};
+		D3C63AEB175E8EC900F576F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUGGING_SYMBOLS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D3C63AEC175E8EC900F576F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -670,6 +733,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D3C63AEA175E8EC900F576F1 /* Build configuration list for PBXLegacyTarget "Grammar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3C63AEB175E8EC900F576F1 /* Debug */,
+				D3C63AEC175E8EC900F576F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
