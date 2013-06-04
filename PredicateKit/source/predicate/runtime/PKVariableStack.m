@@ -48,10 +48,9 @@
  */
 -(id)valueForKey:(NSString *)key maximumDepth:(NSInteger)maximumDepth {
   NSInteger depth = 0;
-  id value;
   for(NSInteger i = [_stack count] - 1; i >= 0 && (maximumDepth < 1 || depth < maximumDepth); i--, depth++){
     NSDictionary *frame = [_stack objectAtIndex:i];
-    if((value = [frame objectForKey:value]) != nil) return value;
+    id value; if((value = [frame objectForKey:key]) != nil) return value;
   }
   return nil;
 }
@@ -85,7 +84,7 @@
  * Push an empty frame onto the top of the stack.
  */
 -(void)pushEmptyFrame {
-  NSMutableDictionary *mutable = [NSMutableDictionary dictionary];
+  NSMutableDictionary *mutable = [[NSMutableDictionary alloc] init];
   [_stack addObject:mutable];
   [mutable release];
 }
@@ -103,6 +102,21 @@
 -(NSMutableDictionary *)currentFrame {
   if([_stack count] < 1) [self pushEmptyFrame];
   return [_stack lastObject];
+}
+
+/**
+ * Obtain a string description
+ */
+-(NSString *)description {
+  NSMutableString *string = [NSMutableString string];
+  
+  for(NSInteger i = [_stack count] - 1; i >= 0; i--){
+    [string appendFormat:@"#%ld: ", i];
+    [string appendString:[[_stack objectAtIndex:i] description]];
+    [string appendString:@"\n\n"];
+  }
+  
+  return string;
 }
 
 @end

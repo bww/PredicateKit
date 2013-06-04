@@ -52,6 +52,7 @@
 		D3A7DE981741CD2000DE8AE1 /* PKRuntimeEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */; };
 		D3C63A93175DA5A000F576F1 /* PKVariableStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C63A91175DA5A000F576F1 /* PKVariableStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3C63A94175DA5A000F576F1 /* PKVariableStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C63A92175DA5A000F576F1 /* PKVariableStack.m */; };
+		D3C63ADE175E649700F576F1 /* PredicateKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C63ADD175E649700F576F1 /* PredicateKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3E0D4151755A16E00084524 /* PKLogicalExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E0D4131755A16E00084524 /* PKLogicalExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3E0D4161755A16E00084524 /* PKLogicalExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E0D4141755A16E00084524 /* PKLogicalExpression.m */; };
 /* End PBXBuildFile section */
@@ -124,6 +125,7 @@
 		D3A7DE961741CD2000DE8AE1 /* PKRuntimeEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRuntimeEvaluator.m; sourceTree = "<group>"; };
 		D3C63A91175DA5A000F576F1 /* PKVariableStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKVariableStack.h; sourceTree = "<group>"; };
 		D3C63A92175DA5A000F576F1 /* PKVariableStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKVariableStack.m; sourceTree = "<group>"; };
+		D3C63ADD175E649700F576F1 /* PredicateKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredicateKit.h; sourceTree = "<group>"; };
 		D3E0D4131755A16E00084524 /* PKLogicalExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLogicalExpression.h; sourceTree = "<group>"; };
 		D3E0D4141755A16E00084524 /* PKLogicalExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLogicalExpression.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -258,6 +260,7 @@
 				D351BC121733346C0051C1B3 /* PKPredicate.m */,
 				D3A7DE901741CB4D00DE8AE1 /* PKEvaluator.h */,
 				D3A7DE911741CB4D00DE8AE1 /* PKEvaluator.m */,
+				D3C63ADD175E649700F576F1 /* PredicateKit.h */,
 			);
 			name = predicate;
 			path = source/predicate;
@@ -347,6 +350,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C63ADE175E649700F576F1 /* PredicateKit.h in Headers */,
 				D3C63A93175DA5A000F576F1 /* PKVariableStack.h in Headers */,
 				D3349F4817585C2F00B53167 /* PKDereferenceExpression.h in Headers */,
 				D351BC171733346C0051C1B3 /* PKLexer.h in Headers */,
