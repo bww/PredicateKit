@@ -33,6 +33,10 @@
   return self;
 }
 
+-(NSString *)description {
+  return [NSString stringWithFormat:@"<%ld +%ld>", (unsigned long)self.range.location, (unsigned long)self.range.length];
+}
+
 @end
 
 @implementation PKSpanFormatter

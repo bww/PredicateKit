@@ -36,6 +36,13 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
 @implementation PKRuntimeEvaluator
 
 /**
+ * Create a default runtime evaluator
+ */
++(PKRuntimeEvaluator *)runtimeEvaluator {
+  return [[[self alloc] init] autorelease];
+}
+
+/**
  * Clean up
  */
 -(void)dealloc {
@@ -448,10 +455,15 @@ static inline id RUNTIME_ERROR(NSError **output, NSError *input) {
   @try {
     value = [object valueForKey:expression.identifier];
   }@catch(NSException *exception){
-    if(strictMode) return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"No such property '%@' of <%@ %p>", expression.identifier, [object class], object));
+    // ignore this
   }
   
-  return (value != nil) ? value : [NSNull null];
+  if(strictMode && value == nil){
+    return RUNTIME_ERROR(error, NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, expression.span, @"No such variable '%@' exists", expression.identifier));
+  }else{
+    return (value != nil) ? value : [NSNull null];
+  }
+  
 }
 
 /**

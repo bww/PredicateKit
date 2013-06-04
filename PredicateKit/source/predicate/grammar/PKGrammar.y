@@ -229,7 +229,9 @@ unary(A) ::= dereference(B). {
 
 dereference(A) ::= components(B). {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
+    NSUInteger min = NSNotFound, max = 0;
+    for(PKExpression *expr in (NSArray *)B.node){ min = MIN(min, expr.span.range.location); max = MAX(max, expr.span.range.location + expr.span.range.length); }
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(min, max - min)];
     A.node = [PKDereferenceExpression dereferenceExpressionWithSpan:span identifiers:B.node]; // B.node is an NSArray of identifier expressions
   }
 }

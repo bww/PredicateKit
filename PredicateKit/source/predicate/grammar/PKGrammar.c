@@ -1003,34 +1003,36 @@ static void yy_reduce(
 #line 230 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
-    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy41.range)];
+    NSUInteger min = NSNotFound, max = 0;
+    for(PKExpression *expr in (NSArray *)yymsp[0].minor.yy41.node){ min = MIN(min, expr.span.range.location); max = MAX(max, expr.span.range.location + expr.span.range.length); }
+    PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(min, max - min)];
     yygotominor.yy41.node = [PKDereferenceExpression dereferenceExpressionWithSpan:span identifiers:yymsp[0].minor.yy41.node]; // yymsp[0].minor.yy41.node is an NSArray of identifier expressions
   }
 }
-#line 1011 "PKGrammar.c"
+#line 1013 "PKGrammar.c"
         break;
       case 26: /* components ::= components DOT identifier */
       case 33: /* parameters ::= parameters COMMA expression */ yytestcase(yyruleno==33);
-#line 242 "PKGrammar.y"
+#line 244 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     [(NSMutableArray *)(yygotominor.yy41.node = yymsp[-2].minor.yy41.node) addObject:yymsp[0].minor.yy41.node];
   }
 }
-#line 1021 "PKGrammar.c"
+#line 1023 "PKGrammar.c"
         break;
       case 27: /* components ::= identifier */
       case 34: /* parameters ::= expression */ yytestcase(yyruleno==34);
-#line 247 "PKGrammar.y"
+#line 249 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy41.node = [NSMutableArray arrayWithObject:yymsp[0].minor.yy41.node];
   }
 }
-#line 1031 "PKGrammar.c"
+#line 1033 "PKGrammar.c"
         break;
       case 28: /* identifier ::= IDENT */
-#line 255 "PKGrammar.y"
+#line 257 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
@@ -1038,89 +1040,89 @@ static void yy_reduce(
     free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
   }
 }
-#line 1042 "PKGrammar.c"
+#line 1044 "PKGrammar.c"
         break;
       case 31: /* primary ::= LPAREN expression RPAREN */
-#line 275 "PKGrammar.y"
+#line 277 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     yygotominor.yy41.node = yymsp[-1].minor.yy41.node;
   }
 }
-#line 1051 "PKGrammar.c"
+#line 1053 "PKGrammar.c"
         break;
       case 32: /* set ::= LBRACE parameters RBRACE */
-#line 283 "PKGrammar.y"
+#line 285 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSMakeRange(yymsp[-2].minor.yy0.range.location, (yymsp[0].minor.yy0.range.location + yymsp[0].minor.yy0.range.length) - yymsp[-2].minor.yy0.range.location)];
     yygotominor.yy41.node = [PKSetExpression setExpressionWithSpan:span parameters:yymsp[-1].minor.yy41.node];
   }
 }
-#line 1061 "PKGrammar.c"
+#line 1063 "PKGrammar.c"
         break;
       case 35: /* literal ::= BOOL */
-#line 305 "PKGrammar.y"
+#line 307 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithBool:yymsp[0].minor.yy0.value.asBool]];
   }
 }
-#line 1071 "PKGrammar.c"
+#line 1073 "PKGrammar.c"
         break;
       case 36: /* literal ::= NULL */
-#line 311 "PKGrammar.y"
+#line 313 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNull null]];
   }
 }
-#line 1081 "PKGrammar.c"
+#line 1083 "PKGrammar.c"
         break;
       case 37: /* literal ::= INT */
-#line 317 "PKGrammar.y"
+#line 319 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithInt:yymsp[0].minor.yy0.value.asInt]];
   }
 }
-#line 1091 "PKGrammar.c"
+#line 1093 "PKGrammar.c"
         break;
       case 38: /* literal ::= LONG */
-#line 323 "PKGrammar.y"
+#line 325 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithLongLong:yymsp[0].minor.yy0.value.asLong]];
   }
 }
-#line 1101 "PKGrammar.c"
+#line 1103 "PKGrammar.c"
         break;
       case 39: /* literal ::= FLOAT */
-#line 329 "PKGrammar.y"
+#line 331 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithFloat:yymsp[0].minor.yy0.value.asFloat]];
   }
 }
-#line 1111 "PKGrammar.c"
+#line 1113 "PKGrammar.c"
         break;
       case 40: /* literal ::= DOUBLE */
-#line 335 "PKGrammar.y"
+#line 337 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
     yygotominor.yy41.node = [PKLiteralExpression literalExpressionWithSpan:span value:[NSNumber numberWithDouble:yymsp[0].minor.yy0.value.asDouble]];
   }
 }
-#line 1121 "PKGrammar.c"
+#line 1123 "PKGrammar.c"
         break;
       case 41: /* literal ::= QUOTED_STRING */
-#line 341 "PKGrammar.y"
+#line 343 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
@@ -1128,10 +1130,10 @@ static void yy_reduce(
     free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
   }
 }
-#line 1132 "PKGrammar.c"
+#line 1134 "PKGrammar.c"
         break;
       case 42: /* literal ::= REGEX */
-#line 348 "PKGrammar.y"
+#line 350 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(yymsp[0].minor.yy0.range)];
@@ -1139,7 +1141,7 @@ static void yy_reduce(
     free((void *)yymsp[0].minor.yy0.value.asString); yymsp[0].minor.yy0.value.asString = NULL;
   }
 }
-#line 1143 "PKGrammar.c"
+#line 1145 "PKGrammar.c"
         break;
       default:
         break;
@@ -1193,7 +1195,7 @@ static void yy_parse_failed(
     context->error = NSERROR(PKPredicateErrorDomain, PKStatusError, @"Confused by errors; bailing out");
     context->state = kPKStateError;
   }
-#line 1197 "PKGrammar.c"
+#line 1199 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
@@ -1215,7 +1217,7 @@ static void yy_syntax_error(
     context->error = NSERROR_WITH_SPAN(PKPredicateErrorDomain, PKStatusError, span, @"Syntax error");
     context->state = kPKStateError;
   }
-#line 1219 "PKGrammar.c"
+#line 1221 "PKGrammar.c"
   __PKParserARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 

@@ -13,5 +13,7 @@
  */
 @interface PKRuntimeEvaluator : PKEvaluator
 
++(PKRuntimeEvaluator *)runtimeEvaluator;
+
 @end
 
