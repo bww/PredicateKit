@@ -11,13 +11,14 @@
 /**
  * A stack of variable frames
  */
-@interface PKVariableStack : NSObject {
+@interface PKVariableStack : NSObject <NSCopying> {
   
   NSMutableArray  * _stack;
   
 }
 
 +(PKVariableStack *)stack;
++(PKVariableStack *)stackWithVariables:(PKVariableStack *)stack;
 
 -(id)valueForKey:(NSString *)key;
 -(id)valueForKey:(NSString *)key maximumDepth:(NSInteger)maximumDepth;

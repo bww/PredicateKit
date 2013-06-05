@@ -11,10 +11,17 @@
 @implementation PKVariableStack
 
 /**
- * Create an evaluator
+ * Create a variable stack
  */
 +(PKVariableStack *)stack {
   return [[[self alloc] init] autorelease];
+}
+
+/**
+ * Create a variable stack with the contents of the provided stack
+ */
++(PKVariableStack *)stackWithVariables:(PKVariableStack *)stack {
+  return [[stack copy] autorelease];
 }
 
 /**
@@ -33,6 +40,15 @@
     _stack = [[NSMutableArray alloc] init];
   }
   return self;
+}
+
+/**
+ * Create a copy of this stack
+ */
+-(PKVariableStack *)copyWithZone:(NSZone *)zone {
+  PKVariableStack *variables = [[PKVariableStack alloc] init];
+  for(NSMutableDictionary *frame in _stack) [variables->_stack addObject:[[frame mutableCopy] autorelease]];
+  return variables;
 }
 
 /**
