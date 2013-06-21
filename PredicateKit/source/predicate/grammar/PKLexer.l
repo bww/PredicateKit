@@ -172,13 +172,6 @@ WS          [ \t]
 %%
 
 /**
- * Split a set of delimited strings.
- */
-char ** pk_string_copy_literal_list(const char *string, size_t length, const char delim) {
-  return NULL;
-}
-
-/**
  * Copy a string literal by unescaping. The provided string must not include any
  * bounding delimiters (e.g., quotation marks). To process a quoted string, for
  * example, use:
