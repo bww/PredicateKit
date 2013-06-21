@@ -87,8 +87,8 @@ STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|{UCN})*\"
 /* MODIFIERS: modifier flags */
 MODIFIER    [cdg]+
 
-/* REGEX: anything between /two slashes/ except newlines; just considers \/ and \\ characters with optional trailing modifiers */
-REGEX       \/([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
+/* REGEX: anything that does not begin with '*' or '/', between /two slashes/, except newlines */
+REGEX       \/[^\*\/]([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
@@ -101,8 +101,8 @@ WS          [ \t]
 
 "/*"            { BEGIN(M_COMMENT); pk_context_increment(yyextra, yytext); }
 <M_COMMENT>"*/" { BEGIN(INITIAL); pk_context_increment(yyextra, yytext); }
-<M_COMMENT>\n   { BEGIN(INITIAL); pk_context_newline(yyextra); }
 <M_COMMENT>.    { pk_context_increment(yyextra, yytext); }
+<M_COMMENT>\n   { pk_context_newline(yyextra); }
 
 "&&"            { pk_context_increment(yyextra, yytext); return T_LAND; }
 "||"            { pk_context_increment(yyextra, yytext); return T_LOR; }

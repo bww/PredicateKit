@@ -45,6 +45,10 @@
   }
 }
 
+%destructor predicate {
+  (void)context; // prevent a compiler warning because context is not used in the destructor function
+}
+
 %nonassoc LPAREN RPAREN LBRACE RBRACE LBRACK RBRACK.
 
 %right LNOT BNOT.

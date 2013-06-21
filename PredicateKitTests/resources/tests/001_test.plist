@@ -10,6 +10,12 @@
 	</dict>
 	<dict>
 		<key>expression</key>
+		<string>&quot;a&quot; == &quot;a&quot; // +/zzz $%^ single line comment</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
 		<string>a</string>
 		<key>result</key>
 		<string>value A</string>
@@ -92,6 +98,18 @@
 		<key>expression</key>
 		<string>25 =~ /a+/</string>
 		<key>error:runtime</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>&quot;alpha&quot; =~ /a*/</string>
+		<key>result</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>expression</key>
+		<string>&quot;alpha&quot; =~ /*/</string>
+		<key>error:compile</key>
 		<true/>
 	</dict>
 	<dict>

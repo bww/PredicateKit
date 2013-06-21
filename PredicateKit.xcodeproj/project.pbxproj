@@ -103,7 +103,7 @@
 		D351BBC817332F3E0051C1B3 /* PredicateKitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PredicateKitTests-Info.plist"; path = "resources/PredicateKitTests-Info.plist"; sourceTree = "<group>"; };
 		D351BBDA17332FCF0051C1B3 /* PredicateKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredicateKitTests.h; sourceTree = "<group>"; };
 		D351BBDB17332FCF0051C1B3 /* PredicateKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredicateKitTests.m; sourceTree = "<group>"; };
-		D351BBF41733326A0051C1B3 /* project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = project.xcconfig; path = ../../project.xcconfig; sourceTree = "<group>"; };
+		D351BBF41733326A0051C1B3 /* project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = project.xcconfig; path = PredicateKit/config/project.xcconfig; sourceTree = "<group>"; };
 		D351BC0B1733346C0051C1B3 /* PKLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLexer.h; sourceTree = "<group>"; };
 		D351BC0D1733346C0051C1B3 /* PKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTypes.h; sourceTree = "<group>"; };
 		D351BC0E1733346C0051C1B3 /* PKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKError.h; sourceTree = "<group>"; };
@@ -741,6 +741,7 @@
 				D3C63AEC175E8EC900F576F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
