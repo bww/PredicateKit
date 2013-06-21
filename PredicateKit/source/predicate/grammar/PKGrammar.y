@@ -351,7 +351,7 @@ literal(A) ::= QUOTED_STRING(B). {
     free((void *)B.value.asString); B.value.asString = NULL;
   }
 }
-literal(A) ::= REGEX(B). {
+literal(A) ::= MATCHER(B). {
   if(context != NULL && context->state != kPKStateError){
     PKSpan *span = [PKSpan spanWithDocument:context->document source:context->source range:NSRangeFromPKRange(B.range)];
     A.node = [PKPatternExpression patternExpressionWithSpan:span pattern:[NSString stringWithUTF8String:B.value.asString]];

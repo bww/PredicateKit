@@ -24,7 +24,7 @@ static inline void pk_context_newline(PKScannerContext *context) {
   }
 }
 
-char * pk_string_copy_literal(const char *string, const char delim);
+char * pk_string_copy_literal(const char *string, size_t length, const char delim);
 
 %}
 
@@ -87,8 +87,14 @@ STRING      \"([^"\\\n]|\\['"?\\abfnrtv]|{UCN})*\"
 /* MODIFIERS: modifier flags */
 MODIFIER    [cdg]+
 
-/* REGEX: anything that does not begin with '*' or '/', between /two slashes/, except newlines */
-REGEX       \/[^\*\/]([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*\/
+/* PATTERN: a regular expression pattern */
+PATTERN     [^\*\/]([^\/\\\n]|\\['\/?\\abfnrtv]|{UCN})*
+
+/* MATCHER: a regular expression pattern */
+MATCHER     \/{PATTERN}\/
+
+/* REPLACE: a regular expression pattern with a replacement component */
+REPLACE     {MATCHER}{PATTERN}\/
 
 /* WHITESPACE: non-newline whitespace (space, tab) */
 WS          [ \t]
@@ -144,16 +150,16 @@ WS          [ \t]
 \n              { pk_context_newline(yyextra); }
 {WS}+           { pk_context_increment(yyextra, yytext); }
 
-{LONG}          { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
-{HEX_LONG}      { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
 {INTEGER}       { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 10); return T_INT; }
 {HEX_INTEGER}   { pk_context_increment(yyextra, yytext); yylval->asInt = (int32_t)strtol(yytext, NULL, 16); return T_INT; }
+{LONG}          { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 10); return T_LONG; }
+{HEX_LONG}      { pk_context_increment(yyextra, yytext); yylval->asLong = strtoll(yytext, NULL, 16); return T_LONG; }
 {FLOAT}         { pk_context_increment(yyextra, yytext); yylval->asFloat = (float)atof(yytext); return T_FLOAT; }
 {DOUBLE}        { pk_context_increment(yyextra, yytext); yylval->asFloat = atof(yytext); return T_DOUBLE; }
 {MODIFIER}      { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_MODIFIER; }
-{STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '"'); return T_QUOTED_STRING; }
-{REGEX}         { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext, '/'); return T_REGEX; }
 {IDENT}         { pk_context_increment(yyextra, yytext); yylval->asString = strdup(yytext); return T_IDENT; }
+{STRING}        { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext + 1, strlen(yytext) - 2, '"'); return T_QUOTED_STRING; }
+{MATCHER}       { pk_context_increment(yyextra, yytext); yylval->asString = pk_string_copy_literal(yytext + 1, strlen(yytext) - 2, '/'); return T_MATCHER; }
 
 . {
   PKSpan *where = [PKSpan spanWithDocument:yyextra->document source:yyextra->source range:NSMakeRange(yyextra->location, 1)];
@@ -166,23 +172,38 @@ WS          [ \t]
 %%
 
 /**
- * Copy a string literal by unescaping
+ * Split a set of delimited strings.
  */
-char * pk_string_copy_literal(const char *string, const char delim) {
-  size_t length = strlen(string);
+char ** pk_string_copy_literal_list(const char *string, size_t length, const char delim) {
+  return NULL;
+}
+
+/**
+ * Copy a string literal by unescaping. The provided string must not include any
+ * bounding delimiters (e.g., quotation marks). To process a quoted string, for
+ * example, use:
+ *  
+ *  pk_string_copy_literal(yytext + 1, strlen(yytext) - 2, '"').
+ *  
+ */
+char * pk_string_copy_literal(const char *string, size_t length, const char delim) {
+  BOOL status = FALSE;
   const char escape = '\\';
   const char *sp;
-  BOOL status = FALSE;
   int esc = 0;
-  
-  if(length < 2) return NULL;
   
   // the unescaped string cannot be larger (in bytes) than the escaped string, so we can
   // just allocate the same number of bytes as the escaped string.
   char *ep = malloc(length);
   
+  // short-circuit for an empty string
+  if(length < 1){
+    ep[0] = 0;
+    return ep;
+  }
+  
   // skip past the leading delimiter and adjust the length accordingly
-  sp = string + 1; length -= 2;
+  sp = string;
   
   size_t j = 0;
   for(size_t i = 0; i < length; i++){

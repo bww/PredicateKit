@@ -335,7 +335,7 @@ static const char *const yyTokenName[] = {
   "DIV",           "MOD",           "EXP",           "MODIFIER",    
   "IN",            "DOT",           "IDENT",         "COMMA",       
   "BOOL",          "NULL",          "INT",           "LONG",        
-  "FLOAT",         "DOUBLE",        "QUOTED_STRING",  "REGEX",       
+  "FLOAT",         "DOUBLE",        "QUOTED_STRING",  "MATCHER",     
   "error",         "predicate",     "expression",    "logical",     
   "bitwise",       "modified",      "equality",      "relational",  
   "unary",         "dereference",   "components",    "primary",     
@@ -389,7 +389,7 @@ static const char *const yyRuleName[] = {
  /*  39 */ "literal ::= FLOAT",
  /*  40 */ "literal ::= DOUBLE",
  /*  41 */ "literal ::= QUOTED_STRING",
- /*  42 */ "literal ::= REGEX",
+ /*  42 */ "literal ::= MATCHER",
 };
 #endif /* NDEBUG */
 
@@ -1141,7 +1141,7 @@ static void yy_reduce(
 }
 #line 1143 "PKGrammar.c"
         break;
-      case 42: /* literal ::= REGEX */
+      case 42: /* literal ::= MATCHER */
 #line 354 "PKGrammar.y"
 {
   if(context != NULL && context->state != kPKStateError){

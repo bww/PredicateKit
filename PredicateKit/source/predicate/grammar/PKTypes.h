@@ -2,21 +2,29 @@
 #import <stdint.h>
 #import "PKPredicate.h"
 
+/* Match/Replace */
+
+typedef struct {
+  const char  * pattern;
+  const char  * replace;
+} PKMatchReplace;
+
 /* Values */
 
 typedef union {
-  uint8_t       asBool;
-  uint8_t       asByte;
-  int32_t       asInt;
-  int64_t       asLong;
-  float         asFloat;
-  double        asDouble;
-  const char  * asString;
+  uint8_t         asBool;
+  uint8_t         asByte;
+  int32_t         asInt;
+  int64_t         asLong;
+  float           asFloat;
+  double          asDouble;
+  const char    * asString;
+  PKMatchReplace  asMatchReplace;
 } PKValue;
 
 /* Range */
 
-typedef struct PKRange {
+typedef struct {
   unsigned int location;
   unsigned int length;
 } PKRange;
@@ -39,7 +47,7 @@ typedef enum {
 
 /* Token */
 
-typedef struct PKToken {
+typedef struct {
   unsigned int  token;
   PKValue       value;
   PKRange       range;
@@ -58,7 +66,7 @@ static inline PKToken PKTokenMakeZero() {
 
 /* Scanner Context */
 
-typedef struct PKScannerContext {
+typedef struct {
   NSURL         * document;
   NSString      * source;
   PKState         state;
@@ -80,7 +88,7 @@ static inline PKScannerContext PKScannerContextMakeZero() {
 
 /* Parser Context */
 
-typedef struct PKParserContext {
+typedef struct {
   NSURL         * document;
   NSString      * source;
   PKState         state;
